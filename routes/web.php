@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('', [HomeController::class, 'index'])->name('home');
+Route::get('partnership', [HomeController::class, 'partnership'])->name('partnership');
 
 Route::group(['as' => 'public.'], function () {
     Route::group(['prefix' => 'post', 'as' => 'post.'], function () {});

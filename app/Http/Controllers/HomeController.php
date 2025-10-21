@@ -12,4 +12,9 @@ class HomeController extends Controller
     {
         return Inertia::render('home');
     }
+
+    public function partnership()
+    {
+        return Inertia::render('partnership');
+    }
 }
