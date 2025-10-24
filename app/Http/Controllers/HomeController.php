@@ -17,4 +17,14 @@ class HomeController extends Controller
     {
         return Inertia::render('partnership');
     }
+
+    public function about()
+    {
+        return Inertia::render('about');
+    }
+
+    public function privacy_policy()
+    {
+        return Inertia::render('privacy-policy');
+    }
 }
