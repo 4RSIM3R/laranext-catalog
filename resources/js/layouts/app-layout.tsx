@@ -28,10 +28,31 @@ import { FormResponse } from '@/lib/constant';
 import { initial_name } from '@/lib/format';
 import { logout } from '@/routes';
 import backoffice from '@/routes/backoffice';
+import banner from '@/routes/master/banner';
+import category from '@/routes/master/category';
+import event from '@/routes/master/event';
+import file from '@/routes/master/file';
+import post from '@/routes/master/post';
+import product from '@/routes/master/product';
+import user from '@/routes/master/user';
+import video from '@/routes/master/video';
+import page from '@/routes/setting/page';
+import setting from '@/routes/setting/setting';
 import { SharedData } from '@/types';
 import { MenuGroup } from '@/types/ui';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { ChevronsUpDown, LogOut, SlidersIcon, UserIcon } from 'lucide-react';
+import {
+    CalendarIcon,
+    ChevronsUpDown,
+    FileIcon,
+    ListIcon,
+    LogOut,
+    Settings2Icon,
+    ShoppingCartIcon,
+    SlidersIcon,
+    UserIcon,
+    VideoIcon,
+} from 'lucide-react';
 import * as React from 'react';
 
 const navigations: MenuGroup[] = [
@@ -40,16 +61,70 @@ const navigations: MenuGroup[] = [
         title: 'Master',
         items: [
             {
-                id: 'slide',
-                title: 'Slide',
+                id: 'banner',
+                title: 'Banner',
                 icon: SlidersIcon,
-                url: '#',
+                url: banner.index().url,
             },
             {
-                id: 'account',
-                title: 'Account',
+                id: 'category',
+                title: 'Category',
+                icon: ListIcon,
+                url: category.index().url,
+            },
+            {
+                id: 'event',
+                title: 'Event',
+                icon: CalendarIcon,
+                url: event.index().url,
+            },
+            {
+                id: 'file',
+                title: 'File',
+                icon: ListIcon,
+                url: file.index().url,
+            },
+            {
+                id: 'post',
+                title: 'Post',
+                icon: SlidersIcon,
+                url: post.index().url,
+            },
+            {
+                id: 'product',
+                title: 'Product',
+                icon: ShoppingCartIcon,
+                url: product.index().url,
+            },
+            {
+                id: 'user',
+                title: 'User',
                 icon: UserIcon,
-                url: '#',
+                url: user.index().url,
+            },
+            {
+                id: 'video',
+                title: 'Video',
+                icon: VideoIcon,
+                url: video.index().url,
+            },
+        ],
+    },
+    {
+        id: 'setting',
+        title: 'Setting',
+        items: [
+            {
+                id: 'page',
+                title: 'Page',
+                icon: FileIcon,
+                url: page.index().url,
+            },
+            {
+                id: 'system',
+                title: 'System',
+                icon: Settings2Icon,
+                url: setting.index().url,
             },
         ],
     },
@@ -131,15 +206,17 @@ export function AppLayout({ children }: AppLayoutProps) {
                                                 alt="User"
                                             />
                                             <AvatarFallback className="rounded-lg">
-                                                {initial_name(auth.user.name)}
+                                                {initial_name(
+                                                    auth.user?.name ?? '',
+                                                )}
                                             </AvatarFallback>
                                         </Avatar>
                                         <div className="grid flex-1 text-left text-sm leading-tight">
                                             <span className="truncate font-semibold">
-                                                {auth.user.name}
+                                                {auth.user?.name ?? ''}
                                             </span>
                                             <span className="truncate text-xs text-muted-foreground">
-                                                {auth.user.email}
+                                                {auth.user?.email ?? ''}
                                             </span>
                                         </div>
                                         <ChevronsUpDown className="ml-auto size-4" />
