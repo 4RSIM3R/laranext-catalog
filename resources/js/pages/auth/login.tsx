@@ -28,17 +28,14 @@ export default function Login() {
 
     return (
         <div className="mx-auto flex h-full max-w-sm flex-col items-center justify-center gap-1">
-            <div className="flex flex-row items-center gap-4 mb-4">
-                <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT100pK2seZtmKj5GAqz3h3RDedoR0l5HpS6w&s"
-                    className="size-16 w-auto object-cover"
-                />
+            <div className="mb-4 flex flex-row items-center gap-4">
+                <img src="/logo.png" className="size-16 w-auto object-cover" />
                 <div className="flex flex-col">
                     <h2 className="font-semibold text-gray-900">
-                        SVS File Viewer
+                        Lokal Berdaya
                     </h2>
                     <p className="text-sm text-gray-500">
-                        Fakultas Kedokteran Universitas Brawijaya
+                        Superadmin Control Panel
                     </p>
                 </div>
             </div>
@@ -47,9 +44,7 @@ export default function Login() {
                 onSubmit={onSubmit}
             >
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="email">
-                        Email address
-                    </Label>
+                    <Label htmlFor="email">Email address</Label>
                     <Input
                         id="email"
                         type="email"
