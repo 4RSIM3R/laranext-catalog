@@ -57,15 +57,22 @@ export default function BannerIndex() {
         }),
         helper.accessor('title', {
             id: 'title',
-            header: 'Name',
+            header: 'Title',
             enableColumnFilter: false,
             enableHiding: false,
         }),
-        helper.accessor('slug', {
-            id: 'slug',
-            header: 'Slug',
+        helper.accessor('button_link', {
+            id: 'button_link',
+            header: 'Preview Banner',
             enableColumnFilter: false,
             enableHiding: false,
+            cell: (row) => (
+                <Link href={row.row.original.button_link} target="_blank">
+                    <Button variant="outline" size="sm">
+                        <Eye /> Preview
+                    </Button>
+                </Link>
+            ),
         }),
         helper.display({
             id: 'created_at',
@@ -124,17 +131,13 @@ export default function BannerIndex() {
             <DeleteDialog id={id} onDelete={onDelete} onOpenChange={setId} />
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
-                    <h1 className="text-xl font-semibold">
-                        Account Management
-                    </h1>
-                    <p className="text-sm text-gray-500">
-                        Manage your restaurant's account
-                    </p>
+                    <h1 className="text-xl font-semibold">Banner Management</h1>
+                    <p className="text-sm text-gray-500">Manage your banners</p>
                 </div>
                 <Link href={banner.create().url}>
                     <Button>
                         <Plus className="size-4" />
-                        Add Account
+                        Add Banner
                     </Button>
                 </Link>
             </div>

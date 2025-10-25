@@ -109,12 +109,8 @@ export default function VideoIndex() {
             <DeleteDialog id={id} onDelete={onDelete} onOpenChange={setId} />
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
-                    <h1 className="text-xl font-semibold">
-                        Video Management
-                    </h1>
-                    <p className="text-sm text-gray-500">
-                        Manage your restaurant's video
-                    </p>
+                    <h1 className="text-xl font-semibold">Video Management</h1>
+                    <p className="text-sm text-gray-500">Manage your videos</p>
                 </div>
                 <Link href={video.create().url}>
                     <Button>

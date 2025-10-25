@@ -122,9 +122,7 @@ export default function UserIndex() {
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-xl font-semibold">User Management</h1>
-                    <p className="text-sm text-gray-500">
-                        Manage your restaurant's user
-                    </p>
+                    <p className="text-sm text-gray-500">Manage your users</p>
                 </div>
                 <Link href={user.create().url}>
                     <Button>

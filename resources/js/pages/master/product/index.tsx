@@ -116,7 +116,7 @@ export default function ProductIndex() {
                         Product Management
                     </h1>
                     <p className="text-sm text-gray-500">
-                        Manage your restaurant's product
+                        Manage your products
                     </p>
                 </div>
                 <Link href={product.create().url}>

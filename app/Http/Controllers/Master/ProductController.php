@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Contract\Master\ProductContract;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
+use App\Utils\WebResponse;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
 
-    protected PageContract $service;
+    protected ProductContract $service;
 
-    public function __construct(PageContract $service)
+    public function __construct(ProductContract $service)
     {
         $this->service = $service;
     }
 
     public function index()
     {
-        return Inertia::render('setting/page/index');
+        return Inertia::render('master/product/index');
     }
 
     public function fetch()
@@ -36,25 +40,25 @@ class ProductController extends Controller
     public function show($id)
     {
         $data = $this->service->find($id, []);
-        return Inertia::render('setting/page/form', [
+        return Inertia::render('master/product/form', [
             "user" => $data,
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('setting/page/form');
+        return Inertia::render('master/product/form');
     }
 
-    public function store(PageRequest $request)
+    public function store(ProductRequest $request)
     {
         $payload = $request->validated();
 
         $result = $this->service->create($payload);
-        return WebResponse::response($result, 'setting.page.index');
+        return WebResponse::response($result, 'master.product.index');
     }
 
-    public function update(PageRequest $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $payload = $request->validated();
 
@@ -64,12 +68,12 @@ class ProductController extends Controller
             ],
             $payload
         );
-        return WebResponse::response($result, 'setting.page.index');
+        return WebResponse::response($result, 'master.product.index');
     }
 
     public function destroy($id)
     {
         $result = $this->service->destroy($id);
-        return WebResponse::response($result, 'setting.page.index');
+        return WebResponse::response($result, 'master.product.index');
     }
 }

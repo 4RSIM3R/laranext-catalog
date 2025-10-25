@@ -113,10 +113,10 @@ export default function EventIndex() {
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-xl font-semibold">
-                        Account Management
+                        Event Management
                     </h1>
                     <p className="text-sm text-gray-500">
-                        Manage your restaurant's account
+                        Manage your events
                     </p>
                 </div>
                 <Link href={event.create().url}>

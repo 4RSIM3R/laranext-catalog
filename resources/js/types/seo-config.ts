@@ -1,0 +1,23 @@
+export type SeoConfig = {
+    title?: string;
+    description?: string;
+    keywords?: string;
+    author?: string;
+    robots?: string;
+    canonical?: string;
+    locale?: string;
+    language: string;
+    type?: string;
+    url?: string;
+    image?: string;
+    image_width?: number;
+    image_height?: number;
+    image_alt?: string;
+    site_name?: string;
+    twitter_card?: string;
+    twitter_image?: string;
+    twitter_site?: string;
+    twitter_creator?: string;
+    structured_data?: any;
+    breadcrumbs?: any;
+};

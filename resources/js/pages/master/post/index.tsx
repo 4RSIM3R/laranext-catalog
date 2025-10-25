@@ -110,9 +110,7 @@ export default function PostIndex() {
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-xl font-semibold">Post Management</h1>
-                    <p className="text-sm text-gray-500">
-                        Manage your restaurant's post
-                    </p>
+                    <p className="text-sm text-gray-500">Manage your posts</p>
                 </div>
                 <Link href={post.create().url}>
                     <Button>

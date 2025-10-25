@@ -110,10 +110,10 @@ export default function FileIndex() {
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-xl font-semibold">
-                        Account Management
+                        File Management
                     </h1>
                     <p className="text-sm text-gray-500">
-                        Manage your restaurant's account
+                        Manage your files
                     </p>
                 </div>
                 <Link href={file.create().url}>
