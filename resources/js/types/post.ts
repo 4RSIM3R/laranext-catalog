@@ -1,3 +1,4 @@
+import { Media } from './media';
 import { Model } from './model';
 
 export interface Post extends Model {
@@ -8,4 +9,5 @@ export interface Post extends Model {
     tags: string;
     seo_config: Record<string, any>;
     status: string;
+    media: Media | File | null;
 }

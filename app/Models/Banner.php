@@ -11,4 +11,16 @@ class Banner extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\BannerFactory> */
     use HasFactory, InteractsWithMedia;
+
+    protected $appends = ['thumbnail'];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('thumbnail')->singleFile();
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->getMedia('thumbnail')->first();
+    }
 }

@@ -14,11 +14,11 @@ import { date_format } from '@/lib/format';
 import post from '@/routes/master/post';
 import { Base } from '@/types/base';
 import { Post } from '@/types/post';
-import { useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import axios from 'axios';
-import { Eye, Link, Plus, Trash } from 'lucide-react';
+import { Eye, Plus, Trash } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
 export default function PostIndex() {

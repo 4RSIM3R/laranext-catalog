@@ -1,3 +1,4 @@
+import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,19 +17,17 @@ import { Banner } from '@/types/banner';
 import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
 
-type FormData = {
-    title: string;
-    slug: string;
-};
-
 type Props = {
     props?: Banner;
 };
 
 export default function BannerForm({ props }: Props) {
-    const { data, setData, post, put, processing, errors } = useForm<FormData>({
+    const { data, setData, post, put, processing, errors } = useForm({
         title: props?.title || '',
-        slug: props?.slug || '',
+        subtitle: props?.subtitle || '',
+        button_text: props?.button_text || '',
+        button_link: props?.button_link || '',
+        thumbnail: props?.thumbnail || null,
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,40 +61,52 @@ export default function BannerForm({ props }: Props) {
                 </CardHeader>
                 <CardContent className="flex h-fit flex-col gap-4">
                     <div className="flex flex-col gap-1.5">
-                        <Label>Name</Label>
+                        <Label>Title</Label>
                         <Input
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                            value={data.title}
+                            onChange={(e) => setData('title', e.target.value)}
                         />
-                        <InputError message={errors?.name} />
+                        <InputError message={errors?.title} />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <Label>Email</Label>
+                        <Label>Subtitle</Label>
                         <Input
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                        />
-                        <InputError message={errors?.email} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Password</Label>
-                        <PasswordInput
-                            value={data.password}
+                            value={data.subtitle}
                             onChange={(e) =>
-                                setData('password', e.target.value)
+                                setData('subtitle', e.target.value)
                             }
                         />
-                        <InputError message={errors?.password} />
+                        <InputError message={errors?.subtitle} />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <Label>Password Confirmation</Label>
-                        <PasswordInput
-                            value={data.password_confirmation}
+                        <Label>Button Text</Label>
+                        <Input
+                            value={data.button_text}
                             onChange={(e) =>
-                                setData('password_confirmation', e.target.value)
+                                setData('button_text', e.target.value)
                             }
                         />
-                        <InputError message={errors?.password_confirmation} />
+                        <InputError message={errors?.button_text} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Button Link</Label>
+                        <Input
+                            value={data.button_link}
+                            onChange={(e) =>
+                                setData('button_link', e.target.value)
+                            }
+                        />
+                        <InputError message={errors?.button_link} />
+                    </div>
+                    <div className="col-span-12 flex flex-col gap-y-1.5">
+                        <Label className="text-base">Thumbnail</Label>
+                        <FileUpload
+                            media={data.thumbnail || props?.thumbnail}
+                            onChange={(file) => setData('thumbnail', file)}
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            maxSize={2 * 1024 * 1024}
+                            id="thumbnail"
+                        />
                     </div>
                 </CardContent>
             </Card>

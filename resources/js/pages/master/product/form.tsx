@@ -67,26 +67,6 @@ export default function ProductForm() {
                         />
                         <InputError message={errors?.email} />
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Password</Label>
-                        <PasswordInput
-                            value={data.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                        />
-                        <InputError message={errors?.password} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Password Confirmation</Label>
-                        <PasswordInput
-                            value={data.password_confirmation}
-                            onChange={(e) =>
-                                setData('password_confirmation', e.target.value)
-                            }
-                        />
-                        <InputError message={errors?.password_confirmation} />
-                    </div>
                 </CardContent>
             </Card>
         </form>

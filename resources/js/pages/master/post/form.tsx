@@ -1,3 +1,4 @@
+import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,24 +11,32 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AppLayout } from '@/layouts/app-layout';
+import { Post } from '@/types/post';
+import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
 
-export default function PostForm() {
-    const { data, setData, post, put, processing, errors } = useForm<FormData>({
-        name: user?.name || '',
-        email: user?.email || '',
-        password: '',
-        password_confirmation: '',
+type Props = {
+    props?: Post;
+};
+
+export default function PostForm({ props }: Props) {
+    const { data, setData, post, put, processing, errors } = useForm({
+        thumbnail: props?.thumbnail || null,
+        title: props?.title || '',
+        slug: props?.slug || '',
+        excerpt: props?.excerpt || '',
+        tags: props?.tags || '',
+        content: props?.content || '',
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (user?.id) {
-            put(master.user.update(user.id).url, FormResponse);
-        } else {
-            post(master.user.store().url, FormResponse);
-        }
+        // if (user?.id) {
+        //     put(master.user.update(user.id).url, FormResponse);
+        // } else {
+        //     post(master.user.store().url, FormResponse);
+        // }
     };
 
     return (
@@ -36,22 +45,22 @@ export default function PostForm() {
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div>
                         <CardTitle className="text-lg font-semibold">
-                            Account Form
+                            Post Form
                         </CardTitle>
                         <CardDescription>
-                            Enter the account data here.
+                            Enter the post data here.
                         </CardDescription>
                     </div>
                     <Button>
                         {processing && (
                             <Loader2 className="ml-2 animate-spin" />
                         )}
-                        Save Account
+                        Save Post
                     </Button>
                 </CardHeader>
                 <CardContent className="flex h-fit flex-col gap-4">
                     <div className="flex flex-col gap-1.5">
-                        <Label>Name</Label>
+                        <Label>Title</Label>
                         <Input
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
@@ -59,32 +68,46 @@ export default function PostForm() {
                         <InputError message={errors?.name} />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <Label>Email</Label>
+                        <Label>Slug</Label>
                         <Input
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
                         />
-                        <InputError message={errors?.email} />
+                        <InputError message={errors?.name} />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <Label>Password</Label>
-                        <PasswordInput
-                            value={data.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
+                        <Label>Excerpt</Label>
+                        <Input
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
                         />
-                        <InputError message={errors?.password} />
+                        <InputError message={errors?.name} />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <Label>Password Confirmation</Label>
-                        <PasswordInput
-                            value={data.password_confirmation}
-                            onChange={(e) =>
-                                setData('password_confirmation', e.target.value)
-                            }
+                        <Label>Tags</Label>
+                        <Input
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
                         />
-                        <InputError message={errors?.password_confirmation} />
+                        <InputError message={errors?.name} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Content</Label>
+                        <Input
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                        />
+                        <InputError message={errors?.name} />
+                    </div>
+                    <div className="col-span-12 flex flex-col gap-y-1.5">
+                        <Label className="text-base">Thumbnail</Label>
+                        <FileUpload
+                            media={data.thumbnail || props?.thumbnail}
+                            onChange={(file) => setData('thumbnail', file)}
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            maxSize={2 * 1024 * 1024}
+                            id="thumbnail"
+                        />
                     </div>
                 </CardContent>
             </Card>
