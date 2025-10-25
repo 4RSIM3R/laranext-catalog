@@ -41,7 +41,7 @@ class CategoryController extends Controller
     {
         $data = $this->service->find($id, []);
         return Inertia::render('master/category/form', [
-            "user" => $data,
+            "props" => $data,
         ]);
     }
 

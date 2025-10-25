@@ -55,6 +55,18 @@ export default function CategoryIndex() {
             enableColumnFilter: false,
             enableHiding: false,
         }),
+        helper.accessor('name', {
+            id: 'name',
+            header: 'Name',
+            enableColumnFilter: false,
+            enableHiding: false,
+        }),
+        helper.accessor('slug', {
+            id: 'slug',
+            header: 'Slug',
+            enableColumnFilter: false,
+            enableHiding: false,
+        }),
         helper.display({
             id: 'created_at',
             header: 'Created At',
@@ -113,16 +125,16 @@ export default function CategoryIndex() {
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-xl font-semibold">
-                        Account Management
+                        Category Management
                     </h1>
                     <p className="text-sm text-gray-500">
-                        Manage your restaurant's account
+                        Manage your global categories
                     </p>
                 </div>
                 <Link href={category.create().url}>
                     <Button>
                         <Plus className="size-4" />
-                        Add Account
+                        Add Category
                     </Button>
                 </Link>
             </div>

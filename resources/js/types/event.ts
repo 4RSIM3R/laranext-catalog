@@ -1,7 +1,6 @@
-export interface Event {
-    id: number;
+import { Model } from './model';
+
+export interface Event extends Model {
     title: string;
     slug: string;
-    created_at: string;
-    updated_at: string;
 }

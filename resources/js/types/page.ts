@@ -1,7 +1,9 @@
-export interface Page {
-    id: number;
-    title: string;
+import { Model } from './model';
+
+export interface Page extends Model {
+    name: string;
     slug: string;
-    created_at: string;
-    updated_at: string;
+    content: Record<string, any>;
+    seo_config: Record<string, any>;
+    is_active: boolean;
 }

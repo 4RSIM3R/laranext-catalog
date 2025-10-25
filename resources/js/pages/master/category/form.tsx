@@ -11,28 +11,34 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AppLayout } from '@/layouts/app-layout';
 import { FormResponse } from '@/lib/constant';
+import { slugify } from '@/lib/utils';
+import category from '@/routes/master/category';
+import { Category } from '@/types/category';
 import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
 
-type FormData = {};
+type FormData = {
+    name: string;
+    slug: string;
+};
 
-type Props = {};
+type Props = {
+    props?: Category;
+};
 
-export default function CategoryForm() {
+export default function CategoryForm({ props }: Props) {
     const { data, setData, post, put, processing, errors } = useForm<FormData>({
-        name: user?.name || '',
-        email: user?.email || '',
-        password: '',
-        password_confirmation: '',
+        name: props?.name || '',
+        slug: props?.slug || '',
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (user?.id) {
-            put(master.user.update(user.id).url, FormResponse);
+        if (props?.id) {
+            put(category.update(props.id).url, FormResponse);
         } else {
-            post(master.user.store().url, FormResponse);
+            post(category.store().url, FormResponse);
         }
     };
 
@@ -42,17 +48,17 @@ export default function CategoryForm() {
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div>
                         <CardTitle className="text-lg font-semibold">
-                            Account Form
+                            Category Form
                         </CardTitle>
                         <CardDescription>
-                            Enter the account data here.
+                            Enter the category data here.
                         </CardDescription>
                     </div>
                     <Button>
                         {processing && (
                             <Loader2 className="ml-2 animate-spin" />
                         )}
-                        Save Account
+                        Save Category
                     </Button>
                 </CardHeader>
                 <CardContent className="flex h-fit flex-col gap-4">
@@ -60,37 +66,21 @@ export default function CategoryForm() {
                         <Label>Name</Label>
                         <Input
                             value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                            onChange={(e) => {
+                                setData('name', e.target.value);
+                                setData('slug', slugify(e.target.value));
+                            }}
                         />
                         <InputError message={errors?.name} />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <Label>Email</Label>
+                        <Label>Slug</Label>
                         <Input
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
+                            value={data.slug}
+                            readOnly={true}
+                            disabled={true}
                         />
-                        <InputError message={errors?.email} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Password</Label>
-                        <PasswordInput
-                            value={data.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                        />
-                        <InputError message={errors?.password} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Password Confirmation</Label>
-                        <PasswordInput
-                            value={data.password_confirmation}
-                            onChange={(e) =>
-                                setData('password_confirmation', e.target.value)
-                            }
-                        />
-                        <InputError message={errors?.password_confirmation} />
+                        <InputError message={errors?.slug} />
                     </div>
                 </CardContent>
             </Card>

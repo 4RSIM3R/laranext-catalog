@@ -1,7 +1,8 @@
-export interface Banner {
-    id: number;
+import { Model } from './model';
+
+export interface Banner extends Model {
     title: string;
-    slug: string;
-    created_at: string;
-    updated_at: string;
+    subtitle: string;
+    button_text: string;
+    button_link: string;
 }
