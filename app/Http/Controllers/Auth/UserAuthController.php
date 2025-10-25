@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Contract\Auth\UserAuthContract;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Utils\WebResponse;
 use Inertia\Inertia;
-use Laravel\Fortify\Http\Requests\LoginRequest;
 
 class UserAuthController extends Controller
 {
