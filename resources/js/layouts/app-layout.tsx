@@ -37,7 +37,7 @@ import product from '@/routes/master/product';
 import user from '@/routes/master/user';
 import video from '@/routes/master/video';
 import page from '@/routes/setting/page';
-import setting from '@/routes/setting/setting';
+import system from '@/routes/setting/system';
 import { SharedData } from '@/types';
 import { MenuGroup } from '@/types/ui';
 import { Link, useForm, usePage } from '@inertiajs/react';
@@ -124,7 +124,7 @@ const navigations: MenuGroup[] = [
                 id: 'system',
                 title: 'System',
                 icon: Settings2Icon,
-                url: setting.index().url,
+                url: system.index().url,
             },
         ],
     },

@@ -20,7 +20,7 @@ class SettingController extends Controller
 
     public function index()
     {
-        return Inertia::render('setting/setting/index');
+        return Inertia::render('setting/system/index');
     }
 
     public function fetch()
@@ -40,14 +40,14 @@ class SettingController extends Controller
     public function show($id)
     {
         $data = $this->service->find($id, []);
-        return Inertia::render('setting/setting/form', [
-            "user" => $data,
+        return Inertia::render('setting/system/form', [
+            "props" => $data,
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('setting/setting/form');
+        return Inertia::render('setting/system/form');
     }
 
     public function store(SettingRequest $request)
@@ -55,7 +55,7 @@ class SettingController extends Controller
         $payload = $request->validated();
 
         $result = $this->service->create($payload);
-        return WebResponse::response($result, 'setting.setting.index');
+        return WebResponse::response($result, 'setting.system.index');
     }
 
     public function update(SettingRequest $request, $id)
@@ -68,12 +68,12 @@ class SettingController extends Controller
             ],
             $payload
         );
-        return WebResponse::response($result, 'setting.setting.index');
+        return WebResponse::response($result, 'setting.system.index');
     }
 
     public function destroy($id)
     {
         $result = $this->service->destroy($id);
-        return WebResponse::response($result, 'setting.setting.index');
+        return WebResponse::response($result, 'setting.system.index');
     }
 }
