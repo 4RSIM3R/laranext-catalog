@@ -53,7 +53,7 @@ class BannerController extends Controller
     public function store(BannerRequest $request)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
         $result = $this->service->create($payload);
         return WebResponse::response($result, 'master.banner.index');
     }
@@ -61,7 +61,7 @@ class BannerController extends Controller
     public function update(BannerRequest $request, $id)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
         $result = $this->service->update(
             [
                 ['id', '=', $id]

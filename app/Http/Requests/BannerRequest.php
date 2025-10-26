@@ -11,7 +11,7 @@ class BannerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,16 @@ class BannerRequest extends FormRequest
      */
     public function rules(): array
     {
+        $thumbnailRule = $this->isMethod('post')
+            ? 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            : 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+
         return [
-            //
+            'title' => 'required|string|max:255',
+            'subtitle' => 'required|string|max:255',
+            'button_text' => 'required|string|max:255',
+            'button_link' => 'required|url',
+            'thumbnail' => $thumbnailRule,
         ];
     }
 }

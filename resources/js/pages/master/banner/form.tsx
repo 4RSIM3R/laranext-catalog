@@ -22,7 +22,8 @@ type Props = {
 };
 
 export default function BannerForm({ props }: Props) {
-    const { data, setData, post, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
+        _method: props?.id ? 'put' : 'post',
         title: props?.title || '',
         subtitle: props?.subtitle || '',
         button_text: props?.button_text || '',
@@ -34,7 +35,7 @@ export default function BannerForm({ props }: Props) {
         e.preventDefault();
 
         if (props?.id) {
-            put(banner.update(props.id).url, FormResponse);
+            post(banner.update(props.id).url, FormResponse);
         } else {
             post(banner.store().url, FormResponse);
         }
@@ -46,17 +47,17 @@ export default function BannerForm({ props }: Props) {
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div>
                         <CardTitle className="text-lg font-semibold">
-                            Account Form
+                            Banner Form
                         </CardTitle>
                         <CardDescription>
-                            Enter the account data here.
+                            Enter the banner data here.
                         </CardDescription>
                     </div>
                     <Button>
                         {processing && (
                             <Loader2 className="ml-2 animate-spin" />
                         )}
-                        Save Account
+                        Save Banner
                     </Button>
                 </CardHeader>
                 <CardContent className="flex h-fit flex-col gap-4">
