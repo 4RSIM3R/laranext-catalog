@@ -32,11 +32,11 @@ export default function PostForm({ props }: Props) {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // if (user?.id) {
-        //     put(master.user.update(user.id).url, FormResponse);
-        // } else {
-        //     post(master.user.store().url, FormResponse);
-        // }
+        if (props?.id) {
+            put(master.user.update(user.id).url, FormResponse);
+        } else {
+            post(master.user.store().url, FormResponse);
+        }
     };
 
     return (

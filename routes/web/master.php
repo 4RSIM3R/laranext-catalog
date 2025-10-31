@@ -26,8 +26,8 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('fetch', [BannerController::class, 'fetch'])->name('fetch');
         Route::get('create', [BannerController::class, 'create'])->name('create');
         Route::post('store', [BannerController::class, 'store'])->name('store');
+        Route::put('{id}', [BannerController::class, 'update'])->name('update');
         Route::get('{id}', [BannerController::class, 'show'])->name('show');
-        Route::post('{id}', [BannerController::class, 'update'])->name('update');
         Route::delete('{id}', [BannerController::class, 'destroy'])->name('destroy');
     });
 

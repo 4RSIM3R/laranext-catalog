@@ -53,7 +53,7 @@ class EventController extends Controller
     public function store(EventRequest $request)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
         $result = $this->service->create($payload);
         return WebResponse::response($result, 'master.event.index');
     }
@@ -61,7 +61,7 @@ class EventController extends Controller
     public function update(EventRequest $request, $id)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
         $result = $this->service->update(
             [
                 ['id', '=', $id]

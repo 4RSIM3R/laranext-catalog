@@ -107,6 +107,9 @@
         /* Completeness */
         // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
         "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+
+        /* Note: TypeScript error 2589 (excessively deep type instantiation) cannot be disabled via compiler options.
+           To suppress this error in specific files, use: // @ts-expect-error TS2589 or // @ts-ignore TS2589 above the problematic line. */
         "baseUrl": ".",
         "paths": {
             "@/*": ["./resources/js/*"]

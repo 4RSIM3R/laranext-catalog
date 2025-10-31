@@ -41,7 +41,7 @@ class VideoController extends Controller
     {
         $data = $this->service->find($id, []);
         return Inertia::render('master/video/form', [
-            "user" => $data,
+            "props" => $data,
         ]);
     }
 
@@ -53,7 +53,8 @@ class VideoController extends Controller
     public function store(VideoRequest $request)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
+        unset($payload['video']);
         $result = $this->service->create($payload);
         return WebResponse::response($result, 'master.video.index');
     }
@@ -61,7 +62,8 @@ class VideoController extends Controller
     public function update(VideoRequest $request, $id)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
+        unset($payload['video']);
         $result = $this->service->update(
             [
                 ['id', '=', $id]

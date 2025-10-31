@@ -11,4 +11,18 @@ class Event extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\EventFactory> */
     use HasFactory, InteractsWithMedia;
+
+    protected $guarded = [];
+
+    protected $appends = ['thumbnail'];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('thumbnail')->singleFile();
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->getMedia('thumbnail')->first();
+    }
 }

@@ -11,7 +11,7 @@ class EventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class EventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:events,slug,' . $this->id,
+            'content' => 'required|string',
+            'thumbnail' => $this->isMethod('post')
+                ? 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                : 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'date' => 'required|date',
         ];
     }
 }

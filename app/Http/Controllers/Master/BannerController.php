@@ -41,7 +41,7 @@ class BannerController extends Controller
     {
         $data = $this->service->find($id, []);
         return Inertia::render('master/banner/form', [
-            "user" => $data,
+            "props" => $data,
         ]);
     }
 

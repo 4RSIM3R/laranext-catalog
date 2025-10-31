@@ -1,5 +1,6 @@
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
     Card,
     CardContent,
@@ -9,42 +10,23 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
 import { AppLayout } from '@/layouts/app-layout';
+import { cn, slugify } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
-import { Loader2 } from 'lucide-react';
-import RichTextEditor, { BaseKit } from 'reactjs-tiptap-editor';
-import { Bold } from 'reactjs-tiptap-editor/bold';
-import { BulletList } from 'reactjs-tiptap-editor/bulletlist';
-import { Clear } from 'reactjs-tiptap-editor/clear';
-import { Code } from 'reactjs-tiptap-editor/code';
-import { CodeBlock } from 'reactjs-tiptap-editor/codeblock';
-import { Color } from 'reactjs-tiptap-editor/color';
-import { Emoji } from 'reactjs-tiptap-editor/emoji';
-import { FontFamily } from 'reactjs-tiptap-editor/fontfamily';
-import { FontSize } from 'reactjs-tiptap-editor/fontsize';
-import { FormatPainter } from 'reactjs-tiptap-editor/formatpainter';
-import { Heading } from 'reactjs-tiptap-editor/heading';
-import { Highlight } from 'reactjs-tiptap-editor/highlight';
-import { Iframe } from 'reactjs-tiptap-editor/iframe';
-import { Indent } from 'reactjs-tiptap-editor/indent';
-import { Italic } from 'reactjs-tiptap-editor/italic';
-import { Katex } from 'reactjs-tiptap-editor/katex';
-import { LineHeight } from 'reactjs-tiptap-editor/lineheight';
-import { MoreMark } from 'reactjs-tiptap-editor/moremark';
-import { OrderedList } from 'reactjs-tiptap-editor/orderedlist';
-import { SearchAndReplace } from 'reactjs-tiptap-editor/searchandreplace';
-import { SlashCommand } from 'reactjs-tiptap-editor/slashcommand';
-import { Strike } from 'reactjs-tiptap-editor/strike';
-import { SubAndSuperScript } from 'reactjs-tiptap-editor/subandsuperscript';
-import { TaskList } from 'reactjs-tiptap-editor/tasklist';
-import { TextAlign } from 'reactjs-tiptap-editor/textalign';
-import { TextDirection } from 'reactjs-tiptap-editor/textdirection';
-import { TextUnderline } from 'reactjs-tiptap-editor/textunderline';
+import { format } from 'date-fns';
+import { CalendarIcon, Loader2 } from 'lucide-react';
+import RichTextEditor from 'reactjs-tiptap-editor';
 
 // Import CSS
 import FileUpload from '@/components/file-upload';
+import { extensions, FormResponse } from '@/lib/constant';
+import event from '@/routes/master/event';
 import { Event } from '@/types/event';
-import { useState } from 'react';
 import 'reactjs-tiptap-editor/style.css';
 
 type Props = {
@@ -52,62 +34,24 @@ type Props = {
 };
 
 export default function EventForm({ props }: Props) {
-    const [content, setContent] = useState<string>('');
-
-    const { data, setData, processing, errors } = useForm({
+    const { data, setData, processing, errors, post } = useForm<any>({
+        _method: props?.id ? 'put' : 'post',
         title: props?.title || '',
         slug: props?.slug || '',
         content: props?.content || '',
         thumbnail: props?.thumbnail || null,
+        date: props?.date || '',
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // if (event?.id) {
-        //     put(master.event.update(event.id).url);
-        // } else {
-        //     post(master.event.store().url);
-        // }
+        if (props?.id) {
+            post(event.update(props.id).url, FormResponse);
+        } else {
+            post(event.store().url, FormResponse);
+        }
     };
-
-    const essentialFormatting = [Heading, Bold, Italic, TextUnderline];
-    const advancedFormatting = [Strike, Code, Highlight, Color, Clear];
-    const listsAndStructure = [BulletList, OrderedList, TaskList];
-    const advancedFeatures = [
-        CodeBlock,
-        TextAlign,
-        Indent,
-        LineHeight,
-        FontFamily,
-        FontSize,
-        TextDirection,
-        Iframe,
-        Emoji,
-        Katex,
-        SubAndSuperScript,
-        MoreMark.configure({
-            subscript: false,
-            superscript: false,
-        }),
-        FormatPainter,
-        SearchAndReplace,
-        SlashCommand,
-    ];
-
-    const extensions = [
-        BaseKit.configure({
-            placeholder: {
-                placeholder: 'Write your content here...',
-                showOnlyCurrent: true,
-            },
-        }),
-        ...essentialFormatting,
-        ...advancedFormatting,
-        ...listsAndStructure,
-
-        ...advancedFeatures,
-    ];
 
     return (
         <form onSubmit={onSubmit}>
@@ -133,9 +77,12 @@ export default function EventForm({ props }: Props) {
                         <Label>Title</Label>
                         <Input
                             value={data.title}
-                            onChange={(e) => setData('title', e.target.value)}
+                            onChange={(e) => {
+                                setData('title', e.target.value);
+                                setData('slug', slugify(e.target.value));
+                            }}
                         />
-                        <InputError message={errors?.title} />
+                        <InputError message={errors?.title as string} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Slug</Label>
@@ -144,41 +91,69 @@ export default function EventForm({ props }: Props) {
                             readOnly={true}
                             disabled={true}
                         />
-                        <InputError message={errors?.slug} />
+                        <InputError message={errors?.slug as string} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Date</Label>
-                        <Input
-                            value={data.title}
-                            onChange={(e) => setData('title', e.target.value)}
-                        />
-                        <InputError message={errors?.title} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Tag</Label>
-                        <Input
-                            value={data.title}
-                            onChange={(e) => setData('title', e.target.value)}
-                        />
-                        <InputError message={errors?.title} />
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className={cn(
+                                        'w-full justify-start text-left font-normal',
+                                        !data.date && 'text-muted-foreground',
+                                    )}
+                                >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {data.date ? (
+                                        format(new Date(data.date), 'PPP')
+                                    ) : (
+                                        <span>Pick a date</span>
+                                    )}
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                            >
+                                <Calendar
+                                    mode="single"
+                                    selected={
+                                        data.date
+                                            ? new Date(data.date)
+                                            : undefined
+                                    }
+                                    onSelect={(date: any) =>
+                                        setData(
+                                            'date',
+                                            date?.toISOString() || '',
+                                        )
+                                    }
+                                    initialFocus
+                                />
+                            </PopoverContent>
+                        </Popover>
+                        <InputError message={errors?.date as string} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Content</Label>
                         <RichTextEditor
                             output="html"
-                            content={content}
-                            onChangeContent={(content) => setContent(content)}
+                            content={data.content}
+                            onChangeContent={(content) =>
+                                setData('content', content)
+                            }
                             extensions={extensions}
                             dark={false}
                             contentClass="prose prose-sm max-w-none min-h-[300px] p-4"
                         />
-                        <InputError message={errors?.content} />
+                        <InputError message={errors?.content as string} />
                     </div>
                     <div className="col-span-12 flex flex-col gap-y-1.5">
                         <Label className="text-base">Thumbnail</Label>
                         <FileUpload
                             media={data.thumbnail || props?.thumbnail}
-                            onChange={(file) => setData('thumbnail', file)}
+                            onChange={(file: any) => setData('thumbnail', file)}
                             accept="image/jpeg,image/png,image/gif,image/webp"
                             maxSize={2 * 1024 * 1024}
                             id="thumbnail"

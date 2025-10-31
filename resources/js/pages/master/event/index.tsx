@@ -3,7 +3,9 @@ import NextTable from '@/components/next-table';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
+    DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -14,10 +16,6 @@ import event from '@/routes/master/event';
 import { Base } from '@/types/base';
 import { Event } from '@/types/event';
 import { Link, useForm } from '@inertiajs/react';
-import {
-    DropdownMenuContent,
-    DropdownMenuSeparator,
-} from '@radix-ui/react-dropdown-menu';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import axios from 'axios';
 import { Eye, Plus, Trash } from 'lucide-react';
@@ -54,7 +52,19 @@ export default function EventIndex() {
             enableColumnFilter: false,
             enableHiding: false,
         }),
-
+        helper.accessor('title', {
+            id: 'title',
+            header: 'Title',
+            enableColumnFilter: false,
+            enableHiding: false,
+        }),
+        helper.accessor('date', {
+            id: 'date',
+            header: 'Date',
+            enableColumnFilter: false,
+            enableHiding: false,
+            cell: (row) => date_format(row.row.original.date),
+        }),
         helper.display({
             id: 'created_at',
             header: 'Created At',
@@ -112,12 +122,8 @@ export default function EventIndex() {
             <DeleteDialog id={id} onDelete={onDelete} onOpenChange={setId} />
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
-                    <h1 className="text-xl font-semibold">
-                        Event Management
-                    </h1>
-                    <p className="text-sm text-gray-500">
-                        Manage your events
-                    </p>
+                    <h1 className="text-xl font-semibold">Event Management</h1>
+                    <p className="text-sm text-gray-500">Manage your events</p>
                 </div>
                 <Link href={event.create().url}>
                     <Button>
