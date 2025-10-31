@@ -1,19 +1,20 @@
-import { EventCard } from '@/components/event-card';
+import { PostCard } from '@/components/post-card';
 import { SimplePagination } from '@/components/simple-pagination';
+import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { PublicLayout } from '@/layouts/public-layout';
+import { Article } from '@/types/article';
 import { Base } from '@/types/base';
-import { Event } from '@/types/event';
 import { router } from '@inertiajs/react';
-import { Calendar, Search } from 'lucide-react';
+import { BookOpen, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 type Props = {
-    props: Base<Event[]>;
+    props: Base<Article[]>;
 };
 
-export default function EventIndex({ props }: Props) {
-    const events = props.items || [];
+export default function PostIndex({ props }: Props) {
+    const articles = props.items || [];
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
@@ -42,26 +43,20 @@ export default function EventIndex({ props }: Props) {
         return () => clearTimeout(timeoutId);
     }, [searchQuery]);
 
-    const stripHtml = (html: string) => {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText || '';
-    };
-
     return (
         <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header Section */}
                 <div className="mb-12 text-center">
                     <div className="mb-4 flex items-center justify-center">
-                        <Calendar className="mr-2 h-8 w-8 text-primary" />
+                        <BookOpen className="mr-2 h-8 w-8 text-primary" />
                         <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
-                            Acara & Kegiatan
+                            Blog & Artikel
                         </h1>
                     </div>
                     <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
-                        Temukan dan daftar untuk berbagai acara dan kegiatan
-                        menarik dari Lokal Berdaya
+                        Temukan berbagai artikel menarik, tips, dan insights
+                        dari Lokal Berdaya
                     </p>
                 </div>
 
@@ -71,7 +66,7 @@ export default function EventIndex({ props }: Props) {
                         <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
                         <Input
                             type="search"
-                            placeholder="Cari acara berdasarkan nama..."
+                            placeholder="Cari artikel berdasarkan judul..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="h-12 pl-12 text-base"
@@ -79,46 +74,54 @@ export default function EventIndex({ props }: Props) {
                     </div>
                 </div>
 
-                {/* Events Grid */}
-                {events.length === 0 ? (
+                {/* Articles Grid */}
+                {articles.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-16 text-center">
                         <div className="mb-4 text-gray-400 dark:text-gray-600">
-                            <Calendar className="mx-auto h-24 w-24" />
+                            <BookOpen className="mx-auto h-24 w-24" />
                         </div>
                         <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
                             {searchQuery
-                                ? 'Tidak ada acara ditemukan'
-                                : 'Belum Ada Acara'}
+                                ? 'Tidak ada artikel ditemukan'
+                                : 'Belum Ada Artikel'}
                         </h3>
                         <p className="text-gray-600 dark:text-gray-400">
                             {searchQuery
-                                ? `Tidak ada acara yang sesuai dengan "${searchQuery}"`
-                                : 'Acara akan muncul di sini ketika sudah tersedia.'}
+                                ? `Tidak ada artikel yang sesuai dengan "${searchQuery}"`
+                                : 'Artikel akan muncul di sini ketika sudah tersedia.'}
                         </p>
                     </div>
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                            {events.map((event) => (
-                                <EventCard
-                                    key={event.id}
-                                    id={event.id}
-                                    title={event.title}
-                                    description={stripHtml(
-                                        event.content,
-                                    ).substring(0, 150)}
-                                    date={event.date}
-                                    image={
-                                        event.thumbnail &&
-                                        typeof event.thumbnail === 'object' &&
-                                        'original_url' in event.thumbnail
-                                            ? event.thumbnail.original_url ||
-                                              '/logo.png'
-                                            : '/logo.png'
-                                    }
-                                    url={`/event/${event.slug || event.id}`}
-                                    registerUrl={`/event/${event.slug || event.id}`}
-                                />
+                        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            {articles.map((article) => (
+                                <div key={article.id}>
+                                    <PostCard
+                                        id={article.id}
+                                        title={article.title}
+                                        author="Lokal Berdaya"
+                                        date={article.created_at}
+                                        image={
+                                            article.thumbnail &&
+                                            typeof article.thumbnail ===
+                                                'object' &&
+                                            'original_url' in article.thumbnail
+                                                ? article.thumbnail
+                                                      .original_url ||
+                                                  '/logo.png'
+                                                : '/logo.png'
+                                        }
+                                        url={`/article/${article.slug || article.id}`}
+                                    />
+                                    {article.category && (
+                                        <Badge
+                                            variant="secondary"
+                                            className="mt-3"
+                                        >
+                                            {article.category.name}
+                                        </Badge>
+                                    )}
+                                </div>
                             ))}
                         </div>
 
@@ -135,6 +138,6 @@ export default function EventIndex({ props }: Props) {
     );
 }
 
-EventIndex.layout = (page: React.ReactNode) => (
+PostIndex.layout = (page: React.ReactNode) => (
     <PublicLayout>{page}</PublicLayout>
 );

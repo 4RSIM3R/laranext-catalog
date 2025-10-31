@@ -16,6 +16,8 @@ class Event extends Model implements HasMedia
 
     protected $appends = ['thumbnail'];
 
+    protected $hidden = ['media'];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('thumbnail')->singleFile();

@@ -1,3 +1,4 @@
+import { Category } from './category';
 import { Media } from './media';
 import { Model } from './model';
 
@@ -7,4 +8,5 @@ export interface Article extends Model {
     content: string;
     excerpt: string;
     thumbnail: Media | File | null;
+    category?: Category;
 }

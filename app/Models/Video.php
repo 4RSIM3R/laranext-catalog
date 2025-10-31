@@ -14,7 +14,7 @@ class Video extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected $appends = ['thumbnail'];
+    protected $appends = ['thumbnail', 'video'];
 
     protected $hidden = ['media'];
 
