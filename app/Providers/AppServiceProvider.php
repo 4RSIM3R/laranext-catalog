@@ -49,7 +49,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryContract::class, CategoryService::class);
         $this->app->bind(EventContract::class, EventService::class);
         $this->app->bind(FileContract::class, FileService::class);
-        $this->app->bind(PostContract::class, PostService::class);
         $this->app->bind(ProductContract::class, ProductService::class);
         $this->app->bind(UserContract::class, UserService::class);
         $this->app->bind(VideoContract::class, VideoService::class);

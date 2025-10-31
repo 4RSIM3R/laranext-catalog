@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AppLayout } from '@/layouts/app-layout';
-import { Post } from '@/types/post';
+import { Post } from '@/types/article';
 import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
 
