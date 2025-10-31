@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Master\ArticleController;
 use App\Http\Controllers\Master\BannerController;
 use App\Http\Controllers\Master\CategoryController;
 use App\Http\Controllers\Master\EventController;
@@ -31,6 +32,16 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::delete('{id}', [BannerController::class, 'destroy'])->name('destroy');
     });
 
+    Route::group(['prefix' => 'article', 'as' => 'article.'], function () {
+        Route::get('', [ArticleController::class, 'index'])->name('index');
+        Route::get('fetch', [ArticleController::class, 'fetch'])->name('fetch');
+        Route::get('create', [ArticleController::class, 'create'])->name('create');
+        Route::post('store', [ArticleController::class, 'store'])->name('store');
+        Route::get('{id}', [ArticleController::class, 'show'])->name('show');
+        Route::put('{id}', [ArticleController::class, 'update'])->name('update');
+        Route::delete('{id}', [ArticleController::class, 'destroy'])->name('destroy');
+    });
+
     Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
         Route::get('', [CategoryController::class, 'index'])->name('index');
         Route::get('fetch', [CategoryController::class, 'fetch'])->name('fetch');
@@ -59,16 +70,6 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('{id}', [FileController::class, 'show'])->name('show');
         Route::put('{id}', [FileController::class, 'update'])->name('update');
         Route::delete('{id}', [FileController::class, 'destroy'])->name('destroy');
-    });
-
-    Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
-        Route::get('', [PostController::class, 'index'])->name('index');
-        Route::get('fetch', [PostController::class, 'fetch'])->name('fetch');
-        Route::get('create', [PostController::class, 'create'])->name('create');
-        Route::post('store', [PostController::class, 'store'])->name('store');
-        Route::get('{id}', [PostController::class, 'show'])->name('show');
-        Route::put('{id}', [PostController::class, 'update'])->name('update');
-        Route::delete('{id}', [PostController::class, 'destroy'])->name('destroy');
     });
 
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {

@@ -4,7 +4,7 @@ import { Model } from './model';
 export interface Article extends Model {
     title: string;
     slug: string;
-    content: Record<string, any>;
+    content: string;
     excerpt: string;
     thumbnail: Media | File | null;
 }

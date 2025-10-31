@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Contract\Auth\UserAuthContract;
 use App\Contract\AuthContract;
 use App\Contract\BaseContract;
+use App\Contract\Master\ArticleContract;
 use App\Contract\Master\BannerContract;
 use App\Contract\Master\CategoryContract;
 use App\Contract\Master\EventContract;
@@ -19,6 +20,7 @@ use App\Service\Setting\SettingService;
 use App\Service\Auth\UserAuthService;
 use App\Service\AuthService;
 use App\Service\BaseService;
+use App\Service\Master\ArticleService;
 use App\Service\Master\BannerService;
 use App\Service\Master\CategoryService;
 use App\Service\Master\EventService;
@@ -52,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProductContract::class, ProductService::class);
         $this->app->bind(UserContract::class, UserService::class);
         $this->app->bind(VideoContract::class, VideoService::class);
+        $this->app->bind(ArticleContract::class, ArticleService::class);
 
         // setting
         $this->app->bind(SettingContract::class, SettingService::class);

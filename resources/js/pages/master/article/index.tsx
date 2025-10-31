@@ -11,8 +11,9 @@ import { Input } from '@/components/ui/input';
 import { AppLayout } from '@/layouts/app-layout';
 import { FormResponse } from '@/lib/constant';
 import { date_format } from '@/lib/format';
+import article from '@/routes/master/article';
 import post from '@/routes/master/post';
-import { Post } from '@/types/article';
+import { Article } from '@/types/article';
 import { Base } from '@/types/base';
 import { Link, useForm } from '@inertiajs/react';
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
@@ -24,17 +25,20 @@ import { useCallback, useState } from 'react';
 export default function PostIndex() {
     const [id, setId] = useState<any>();
     const { delete: destroy } = useForm();
-    const helper = createColumnHelper<Post>();
+    const helper = createColumnHelper<Article>();
     const [customParams, setCustomParams] = useState<Record<string, any>>({});
 
     const load = useCallback(
         async (params: Record<string, any>) => {
-            const response = await axios.get<Base<Post[]>>(post.fetch().url, {
-                params: {
-                    ...params,
-                    ...customParams,
+            const response = await axios.get<Base<Article[]>>(
+                article.fetch().url,
+                {
+                    params: {
+                        ...params,
+                        ...customParams,
+                    },
                 },
-            });
+            );
             return response.data;
         },
         [customParams],
@@ -45,7 +49,7 @@ export default function PostIndex() {
         destroy(post.destroy(id).url, FormResponse);
     };
 
-    const columns: ColumnDef<Post, any>[] = [
+    const columns: ColumnDef<Article, any>[] = [
         helper.accessor('id', {
             id: 'id',
             header: 'ID',
@@ -119,7 +123,7 @@ export default function PostIndex() {
                     </Button>
                 </Link>
             </div>
-            <NextTable<Post>
+            <NextTable<Article>
                 enableSelect={false}
                 load={load}
                 id="id"

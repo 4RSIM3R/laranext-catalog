@@ -10,13 +10,17 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { AppLayout } from '@/layouts/app-layout';
-import { Post } from '@/types/article';
+import { extensions, FormResponse } from '@/lib/constant';
+import article from '@/routes/master/article';
+import { Article } from '@/types/article';
 import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
+import RichTextEditor from 'reactjs-tiptap-editor';
 
 type Props = {
-    props?: Post;
+    props?: Article;
 };
 
 export default function PostForm({ props }: Props) {
@@ -25,7 +29,6 @@ export default function PostForm({ props }: Props) {
         title: props?.title || '',
         slug: props?.slug || '',
         excerpt: props?.excerpt || '',
-        tags: props?.tags || '',
         content: props?.content || '',
     });
 
@@ -33,9 +36,9 @@ export default function PostForm({ props }: Props) {
         e.preventDefault();
 
         if (props?.id) {
-            put(master.user.update(user.id).url, FormResponse);
+            put(article.update(props.id).url, FormResponse);
         } else {
-            post(master.user.store().url, FormResponse);
+            post(article.store().url, FormResponse);
         }
     };
 
@@ -62,42 +65,45 @@ export default function PostForm({ props }: Props) {
                     <div className="flex flex-col gap-1.5">
                         <Label>Title</Label>
                         <Input
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                            value={data.title}
+                            onChange={(e) => {
+                                setData('title', e.target.value);
+                                setData('slug', slugify(e.target.value));
+                            }}
                         />
-                        <InputError message={errors?.name} />
+                        <InputError message={errors?.title} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Slug</Label>
                         <Input
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                            value={data.slug}
+                            readOnly={true}
+                            disabled={true}
                         />
-                        <InputError message={errors?.name} />
+                        <InputError message={errors?.slug} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Excerpt</Label>
-                        <Input
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                        <Textarea
+                            value={data.excerpt}
+                            onChange={(e) => setData('excerpt', e.target.value)}
+                            rows={3}
                         />
-                        <InputError message={errors?.name} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Tags</Label>
-                        <Input
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
-                        />
-                        <InputError message={errors?.name} />
+                        <InputError message={errors?.excerpt} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Content</Label>
-                        <Input
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                        <RichTextEditor
+                            output="html"
+                            content={data.content}
+                            onChangeContent={(content) =>
+                                setData('content', content)
+                            }
+                            extensions={extensions}
+                            dark={false}
+                            contentClass="prose prose-sm max-w-none min-h-[300px] p-4"
                         />
-                        <InputError message={errors?.name} />
+                        <InputError message={errors?.content} />
                     </div>
                     <div className="col-span-12 flex flex-col gap-y-1.5">
                         <Label className="text-base">Thumbnail</Label>
