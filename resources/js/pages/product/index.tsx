@@ -1,6 +1,12 @@
 import { PublicLayout } from "@/layouts/public-layout";
+import { Base } from "@/types/base";
+import { Product } from "@/types/product";
 
-export default function ProductIndex() {
+type Props = {
+    props: Base<Product[]>;
+}
+
+export default function ProductIndex({ props }: Props) {
     return (
         <div>
             <h1>Product Index</h1>

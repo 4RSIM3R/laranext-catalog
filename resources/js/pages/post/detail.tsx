@@ -1,6 +1,14 @@
 import { PublicLayout } from '@/layouts/public-layout';
+import { Article } from '@/types/article';
 
-export default function PostDetail() {
+type Props = {
+    props: {
+        article: Article;
+        related: Article[];
+    }
+}
+
+export default function PostDetail({ props }: Props) {
     return (
         <div>
             <h1>Post Detail</h1>

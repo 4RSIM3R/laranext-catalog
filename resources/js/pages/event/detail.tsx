@@ -1,6 +1,14 @@
 import { PublicLayout } from '@/layouts/public-layout';
+import { Event } from '@/types/event';
 
-export default function EventDetail() {
+type Props = {
+    props: {
+        event: Event;
+        related: Event[];
+    }
+}
+
+export default function EventDetail({ props }: Props) {
     return (
         <div>
             <h1>Event Detail</h1>

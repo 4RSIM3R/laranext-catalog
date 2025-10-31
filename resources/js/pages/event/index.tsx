@@ -1,6 +1,11 @@
 import { PublicLayout } from '@/layouts/public-layout';
+import { Base } from '@/types/base';
 
-export default function EventIndex() {
+type Props = {
+    props: Base<Event[]>
+}
+
+export default function EventIndex({ props }: Props) {
     return (
         <div>
             <h1>Event Index</h1>

@@ -1,6 +1,14 @@
 import { PublicLayout } from '@/layouts/public-layout';
+import { Product } from '@/types/product';
 
-export default function ProductDetail() {
+type Props = {
+    props: {
+        product: Product;
+        related: Product[];
+    }
+}
+
+export default function ProductDetail({ props }: Props) {
     return (
         <div>
             <h1>Product Detail</h1>
