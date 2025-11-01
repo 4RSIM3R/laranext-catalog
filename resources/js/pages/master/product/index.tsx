@@ -5,6 +5,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -15,7 +16,6 @@ import product from '@/routes/master/product';
 import { Base } from '@/types/base';
 import { Product } from '@/types/product';
 import { Link, useForm } from '@inertiajs/react';
-import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import axios from 'axios';
 import { Eye, Plus, Trash } from 'lucide-react';
@@ -55,6 +55,20 @@ export default function ProductIndex() {
             enableColumnFilter: false,
             enableHiding: false,
         }),
+        helper.accessor('category.name', {
+            id: 'category',
+            header: 'Category',
+            enableColumnFilter: false,
+            enableHiding: false,
+            cell: (row) => row.row.original.category?.name,
+        }),
+        helper.accessor('title', {
+            id: 'title',
+            header: 'Title',
+            enableColumnFilter: false,
+            enableHiding: false,
+            cell: (row) => row.row.original.title,
+        }),
         helper.display({
             id: 'created_at',
             header: 'Created At',
@@ -74,7 +88,7 @@ export default function ProductIndex() {
             header: 'Action',
             enableColumnFilter: false,
             enableHiding: false,
-            cell: (row) => (
+            cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm">
@@ -83,7 +97,7 @@ export default function ProductIndex() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="center">
                         <Link
-                            href={product.show(row.row.original.id).url}
+                            href={product.show(row.original.id).url}
                             method="get"
                         >
                             <DropdownMenuItem>
@@ -95,7 +109,7 @@ export default function ProductIndex() {
                             className="text-red-500 hover:text-red-500"
                             onClick={(e) => {
                                 e.preventDefault();
-                                setId(row.row.original.id);
+                                setId(row.original.id);
                             }}
                         >
                             <Trash className="text-red-500" />
