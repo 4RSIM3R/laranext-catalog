@@ -41,7 +41,7 @@ class ProductController extends Controller
     {
         $data = $this->service->find($id, ['category']);
         return Inertia::render('master/product/form', [
-            "user" => $data,
+            "props" => $data,
         ]);
     }
 
