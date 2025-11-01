@@ -34,9 +34,9 @@ class PublicEventController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $event = $this->service->find($id, []);
+        $event = $this->service->findWhere(['slug' => $slug], []);
 
         // Get related events (upcoming events, excluding current)
         $related = $this->service->all(
@@ -47,7 +47,7 @@ class PublicEventController extends Controller
             order_column: 'date',
             order_position: 'asc',
             conditions: [
-                ['id', '!=', $id]
+                ['id', '!=', $event->id]
             ],
             relation: []
         );

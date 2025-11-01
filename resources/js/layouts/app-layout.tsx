@@ -26,7 +26,6 @@ import { Toaster } from '@/components/ui/sonner';
 import { useSidebarState } from '@/hooks/use-sidebar-state';
 import { FormResponse } from '@/lib/constant';
 import { initial_name } from '@/lib/format';
-import { logout } from '@/routes';
 import backoffice from '@/routes/backoffice';
 import article from '@/routes/master/article';
 import banner from '@/routes/master/banner';
@@ -143,7 +142,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
     const onLogout = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
-        post(logout().url, FormResponse);
+        // post(logout().url, FormResponse);
     };
 
     return (

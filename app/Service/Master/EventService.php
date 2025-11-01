@@ -11,7 +11,7 @@ class EventService extends BaseService implements EventContract
 {
     protected Model $model;
 
-    protected array $relation = ['thumbnail'];
+    protected array $fileKeys = ['thumbnail'];
 
     public function __construct(Event $model)
     {

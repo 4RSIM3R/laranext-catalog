@@ -34,9 +34,9 @@ class PublicVideoController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $video = $this->service->find($id, []);
+        $video = $this->service->findWhere(['slug' => $slug], []);
 
         // Get related videos (same category or recent videos, excluding current)
         $related = $this->service->all(
@@ -47,7 +47,7 @@ class PublicVideoController extends Controller
             order_column: 'created_at',
             order_position: 'desc',
             conditions: [
-                ['id', '!=', $id]
+                ['id', '!=', $video->id]
             ],
             relation: []
         );

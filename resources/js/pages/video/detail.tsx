@@ -99,9 +99,9 @@ export default function VideoDetail({ props }: Props) {
                                 <div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                                     <div className="flex items-center gap-2">
                                         <Calendar className="h-4 w-4" />
-                                        <span>
+                                        {/* <span>
                                             {formatDate(video.created_at)}
-                                        </span>
+                                        </span> */}
                                     </div>
                                     <Badge variant="secondary">
                                         <Eye className="mr-1 h-3 w-3" />

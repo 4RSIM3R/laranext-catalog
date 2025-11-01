@@ -34,9 +34,9 @@ class PublicArticleController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $article = $this->service->find($id, ['category']);
+        $article = $this->service->findWhere(['slug' => $slug], ['category']);
 
         // Get related articles (same category or recent articles, excluding current)
         $related = $this->service->all(
@@ -47,7 +47,7 @@ class PublicArticleController extends Controller
             order_column: 'created_at',
             order_position: 'desc',
             conditions: [
-                ['id', '!=', $id]
+                ['id', '!=', $article->id]
             ],
             relation: ['category']
         );
