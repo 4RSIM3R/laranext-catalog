@@ -1,5 +1,9 @@
+import { Category } from './category';
+import { Media } from './media';
+
 export interface Product {
     id: number;
+    category_id: number | null;
     title: string;
     slug: string;
     content: string;
@@ -9,4 +13,6 @@ export interface Product {
     phone_number: string;
     price: number;
     status: string;
+    thumbnail: File | Media | null;
+    category?: Category;
 }

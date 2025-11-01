@@ -21,8 +21,6 @@ import { useForm } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { CalendarIcon, Loader2 } from 'lucide-react';
 import RichTextEditor from 'reactjs-tiptap-editor';
-
-// Import CSS
 import FileUpload from '@/components/file-upload';
 import { extensions, FormResponse } from '@/lib/constant';
 import event from '@/routes/master/event';
@@ -126,7 +124,7 @@ export default function EventForm({ props }: Props) {
                                     onSelect={(date: any) =>
                                         setData(
                                             'date',
-                                            date?.toISOString() || '',
+                                            format(date, 'yyyy-MM-dd') || '',
                                         )
                                     }
                                     initialFocus
@@ -140,8 +138,8 @@ export default function EventForm({ props }: Props) {
                         <RichTextEditor
                             output="html"
                             content={data.content}
-                            onChangeContent={(content) =>
-                                setData('content', content)
+                            onChangeContent={(content: string) =>
+                                setData('content', content as string)
                             }
                             extensions={extensions}
                             dark={false}

@@ -1,4 +1,6 @@
+import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
+import { MultiSelect } from '@/components/multi-select';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -9,12 +11,17 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { AppLayout } from '@/layouts/app-layout';
-import { FormResponse } from '@/lib/constant';
+import { extensions, FormResponse } from '@/lib/constant';
+import { fetchCategory } from '@/lib/select';
+import { slugify } from '@/lib/utils';
 import product from '@/routes/master/product';
 import { Product } from '@/types/product';
 import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
+import RichTextEditor from 'reactjs-tiptap-editor';
+import 'reactjs-tiptap-editor/style.css';
 
 type Props = {
     props?: Product;
@@ -23,12 +30,14 @@ type Props = {
 export default function ProductForm({ props }: Props) {
     const { data, setData, post, put, processing, errors } = useForm({
         _method: props?.id ? 'put' : 'post',
+        category_id: props?.category_id || null,
         title: props?.title || '',
         slug: props?.slug || '',
         content: props?.content || '',
         excerpt: props?.excerpt || '',
         phone_number: props?.phone_number || '',
-        price: props?.price || 0,
+        price: props?.price || '',
+        thumbnail: props?.thumbnail || null,
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,10 +71,26 @@ export default function ProductForm({ props }: Props) {
                 </CardHeader>
                 <CardContent className="flex h-fit flex-col gap-4">
                     <div className="flex flex-col gap-1.5">
+                        <Label>Category</Label>
+                        <MultiSelect
+                            loadOptions={fetchCategory}
+                            defaultValue={{
+                                value: props?.category_id,
+                                label: props?.category?.name ?? '',
+                            }}
+                            onChange={(v: any) =>
+                                setData('category_id', v?.value)
+                            }
+                        />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
                         <Label>Title</Label>
                         <Input
                             value={data.title}
-                            onChange={(e) => setData('title', e.target.value)}
+                            onChange={(e) => {
+                                setData('title', e.target.value);
+                                setData('slug', slugify(e.target.value));
+                            }}
                         />
                         <InputError message={errors?.title} />
                     </div>
@@ -73,21 +98,28 @@ export default function ProductForm({ props }: Props) {
                         <Label>Slug</Label>
                         <Input
                             value={data.slug}
-                            onChange={(e) => setData('slug', e.target.value)}
+                            readOnly={true}
+                            disabled={true}
                         />
                         <InputError message={errors?.slug} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Content</Label>
-                        <Input
-                            value={data.content}
-                            onChange={(e) => setData('content', e.target.value)}
+                        <RichTextEditor
+                            output="html"
+                            content={data.content}
+                            onChangeContent={(content: string) =>
+                                setData('content', content as string)
+                            }
+                            extensions={extensions}
+                            dark={false}
+                            contentClass="prose prose-sm max-w-none min-h-[300px] p-4"
                         />
                         <InputError message={errors?.content} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Excerpt</Label>
-                        <Input
+                        <Textarea
                             value={data.excerpt}
                             onChange={(e) => setData('excerpt', e.target.value)}
                         />
@@ -102,6 +134,26 @@ export default function ProductForm({ props }: Props) {
                             }
                         />
                         <InputError message={errors?.phone_number} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Price</Label>
+                        <Input
+                            inputMode="numeric"
+                            type="number"
+                            value={data.price}
+                            onChange={(e) => setData('price', e.target.value)}
+                        />
+                        <InputError message={errors?.price} />
+                    </div>
+                    <div className="col-span-12 flex flex-col gap-y-1.5">
+                        <Label className="text-base">Thumbnail</Label>
+                        <FileUpload
+                            media={data.thumbnail || props?.thumbnail}
+                            onChange={(file: any) => setData('thumbnail', file)}
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            maxSize={2 * 1024 * 1024}
+                            id="thumbnail"
+                        />
                     </div>
                 </CardContent>
             </Card>

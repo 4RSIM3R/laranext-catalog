@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('excerpt');
             $table->string('phone_number')->nullable();
             $table->integer('price')->nullable();
-            $table->string('status')->default('published');
+            $table->timestamps();
         });
     }
 

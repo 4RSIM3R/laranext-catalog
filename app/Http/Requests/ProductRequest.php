@@ -23,11 +23,10 @@ class ProductRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'slug' => 'required|string|max:255|unique:products,slug,' . $this->id,
             'content' => 'required|string',
             'excerpt' => 'required|string',
-            'created_at' => 'required|date',
-            'updated_at' => 'required|date',
             'phone_number' => 'nullable|string|max:255',
             'price' => 'nullable|numeric',
             'thumbnail' => $this->isMethod('post') ? 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
