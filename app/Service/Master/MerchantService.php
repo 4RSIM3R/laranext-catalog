@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class MerchantService extends BaseService implements MerchantContract
 {
     protected Model $model;
-
     protected array $relation = ['thumbnail'];
 
     public function __construct(Merchant $model)

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->integer('price')->nullable();
             $table->timestamps();
+            $table->index(['slug']);
         });
     }
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->date('date');
             $table->timestamps();
+            $table->index(['slug']);
         });
     }
 
