@@ -1,5 +1,6 @@
 import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
+import { MultiSelect } from '@/components/multi-select';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -13,18 +14,23 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { AppLayout } from '@/layouts/app-layout';
 import { extensions, FormResponse } from '@/lib/constant';
+import { fetchCategory } from '@/lib/select';
+import { slugify } from '@/lib/utils';
 import article from '@/routes/master/article';
 import { Article } from '@/types/article';
 import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
 import RichTextEditor from 'reactjs-tiptap-editor';
+import 'reactjs-tiptap-editor/style.css';
 
 type Props = {
     props?: Article;
 };
 
 export default function PostForm({ props }: Props) {
-    const { data, setData, post, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
+        _method: props?.id ? 'put' : 'post',
+        category_id: props?.category_id || null,
         thumbnail: props?.thumbnail || null,
         title: props?.title || '',
         slug: props?.slug || '',
@@ -35,11 +41,17 @@ export default function PostForm({ props }: Props) {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (props?.id) {
-            put(article.update(props.id).url, FormResponse);
-        } else {
-            post(article.store().url, FormResponse);
+        // Only include thumbnail if it's a new File object
+        if (!(data.thumbnail instanceof File)) {
+            data.thumbnail = null;
         }
+
+        // Always use POST when dealing with files (multipart/form-data)
+        // The _method field will tell Laravel to treat it as PUT if updating
+        const url = props?.id
+            ? article.update(props.id).url
+            : article.store().url;
+        post(url, FormResponse);
     };
 
     return (
@@ -48,20 +60,33 @@ export default function PostForm({ props }: Props) {
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div>
                         <CardTitle className="text-lg font-semibold">
-                            Post Form
+                            Article Form
                         </CardTitle>
                         <CardDescription>
-                            Enter the post data here.
+                            Enter the article data here.
                         </CardDescription>
                     </div>
                     <Button>
                         {processing && (
                             <Loader2 className="ml-2 animate-spin" />
                         )}
-                        Save Post
+                        Save Article
                     </Button>
                 </CardHeader>
                 <CardContent className="flex h-fit flex-col gap-4">
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Category</Label>
+                        <MultiSelect
+                            loadOptions={fetchCategory}
+                            defaultValue={{
+                                value: props?.category_id,
+                                label: props?.category?.name ?? '',
+                            }}
+                            onChange={(v: any) =>
+                                setData('category_id', v?.value)
+                            }
+                        />
+                    </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Title</Label>
                         <Input

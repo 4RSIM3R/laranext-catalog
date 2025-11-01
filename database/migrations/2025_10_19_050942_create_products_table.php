@@ -18,8 +18,8 @@ return new class extends Migration
             $table->text('slug')->unique();
             $table->text('content');
             $table->string('excerpt');
-            $table->string('tags')->nullable();
-            $table->json('seo_config')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->integer('price')->nullable();
             $table->string('status')->default('published');
         });
     }

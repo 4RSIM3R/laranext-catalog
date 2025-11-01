@@ -41,7 +41,7 @@ class EventController extends Controller
     {
         $data = $this->service->find($id, []);
         return Inertia::render('master/event/form', [
-            "user" => $data,
+            "props" => $data,
         ]);
     }
 

@@ -52,6 +52,12 @@ export default function VideoIndex() {
             enableColumnFilter: false,
             enableHiding: false,
         }),
+        helper.accessor('title', {
+            id: 'title',
+            header: 'Title',
+            enableColumnFilter: false,
+            enableHiding: false,
+        }),
         helper.display({
             id: 'created_at',
             header: 'Created At',

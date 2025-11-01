@@ -53,7 +53,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
         $result = $this->service->create($payload);
         return WebResponse::response($result, 'master.product.index');
     }
@@ -61,7 +61,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
         $payload = $request->validated();
-
+        unset($payload['thumbnail']);
         $result = $this->service->update(
             [
                 ['id', '=', $id]

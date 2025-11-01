@@ -1,11 +1,30 @@
+import InputError from '@/components/input-error';
+import { PasswordInput } from '@/components/password-input';
+import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { AppLayout } from '@/layouts/app-layout';
 import { FormResponse } from '@/lib/constant';
+import user from '@/routes/master/user';
+import { User } from '@/types';
 import { useForm } from '@inertiajs/react';
+import { Loader2 } from 'lucide-react';
 
-export default function UserForm() {
-    const { data, setData, post, put, processing, errors } = useForm<FormData>({
-        name: user?.name || '',
-        email: user?.email || '',
+type Props = {
+    props?: User;
+};
+
+export default function UserForm({ props }: Props) {
+    const { data, setData, post, put, processing, errors } = useForm({
+        name: props?.name || '',
+        email: props?.email || '',
         password: '',
         password_confirmation: '',
     });
@@ -13,10 +32,10 @@ export default function UserForm() {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (user?.id) {
-            put(master.user.update(user.id).url, FormResponse);
+        if (props?.id) {
+            put(user.update(props.id).url, FormResponse);
         } else {
-            post(master.user.store().url, FormResponse);
+            post(user.store().url, FormResponse);
         }
     };
 
@@ -33,7 +52,9 @@ export default function UserForm() {
                         </CardDescription>
                     </div>
                     <Button>
-                        {processing && <Loader className="ml-2 animate-spin" />}
+                        {processing && (
+                            <Loader2 className="ml-2 animate-spin" />
+                        )}
                         Save Account
                     </Button>
                 </CardHeader>

@@ -27,7 +27,7 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('fetch', [BannerController::class, 'fetch'])->name('fetch');
         Route::get('create', [BannerController::class, 'create'])->name('create');
         Route::post('store', [BannerController::class, 'store'])->name('store');
-        Route::put('{id}', [BannerController::class, 'update'])->name('update');
+        Route::match(['put', 'post'], '{id}', [BannerController::class, 'update'])->name('update');
         Route::get('{id}', [BannerController::class, 'show'])->name('show');
         Route::delete('{id}', [BannerController::class, 'destroy'])->name('destroy');
     });
@@ -38,7 +38,7 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('create', [ArticleController::class, 'create'])->name('create');
         Route::post('store', [ArticleController::class, 'store'])->name('store');
         Route::get('{id}', [ArticleController::class, 'show'])->name('show');
-        Route::put('{id}', [ArticleController::class, 'update'])->name('update');
+        Route::match(['put', 'post'], '{id}', [ArticleController::class, 'update'])->name('update');
         Route::delete('{id}', [ArticleController::class, 'destroy'])->name('destroy');
     });
 
@@ -58,7 +58,7 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('create', [EventController::class, 'create'])->name('create');
         Route::post('store', [EventController::class, 'store'])->name('store');
         Route::get('{id}', [EventController::class, 'show'])->name('show');
-        Route::put('{id}', [EventController::class, 'update'])->name('update');
+        Route::match(['put', 'post'], '{id}', [EventController::class, 'update'])->name('update');
         Route::delete('{id}', [EventController::class, 'destroy'])->name('destroy');
     });
 
@@ -78,7 +78,7 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('create', [ProductController::class, 'create'])->name('create');
         Route::post('store', [ProductController::class, 'store'])->name('store');
         Route::get('{id}', [ProductController::class, 'show'])->name('show');
-        Route::put('{id}', [ProductController::class, 'update'])->name('update');
+        Route::match(['put', 'post'], '{id}', [ProductController::class, 'update'])->name('update');
         Route::delete('{id}', [ProductController::class, 'destroy'])->name('destroy');
     });
 
@@ -88,7 +88,7 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('create', [VideoController::class, 'create'])->name('create');
         Route::post('store', [VideoController::class, 'store'])->name('store');
         Route::get('{id}', [VideoController::class, 'show'])->name('show');
-        Route::put('{id}', [VideoController::class, 'update'])->name('update');
+        Route::match(['put', 'post'], '{id}', [VideoController::class, 'update'])->name('update');
         Route::delete('{id}', [VideoController::class, 'destroy'])->name('destroy');
     });
 });

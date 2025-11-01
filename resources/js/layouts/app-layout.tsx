@@ -28,11 +28,11 @@ import { FormResponse } from '@/lib/constant';
 import { initial_name } from '@/lib/format';
 import { logout } from '@/routes';
 import backoffice from '@/routes/backoffice';
+import article from '@/routes/master/article';
 import banner from '@/routes/master/banner';
 import category from '@/routes/master/category';
 import event from '@/routes/master/event';
 import file from '@/routes/master/file';
-import post from '@/routes/master/post';
 import product from '@/routes/master/product';
 import user from '@/routes/master/user';
 import video from '@/routes/master/video';
@@ -45,6 +45,7 @@ import {
     CalendarIcon,
     ChevronsUpDown,
     FileIcon,
+    FileTextIcon,
     ListIcon,
     LogOut,
     Settings2Icon,
@@ -85,10 +86,10 @@ const navigations: MenuGroup[] = [
                 url: file.index().url,
             },
             {
-                id: 'post',
-                title: 'Post',
-                icon: SlidersIcon,
-                url: post.index().url,
+                id: 'article',
+                title: 'Article',
+                icon: FileTextIcon,
+                url: article.index().url,
             },
             {
                 id: 'product',

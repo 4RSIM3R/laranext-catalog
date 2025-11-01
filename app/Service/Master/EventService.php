@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Service\Master;
 
@@ -11,9 +11,10 @@ class EventService extends BaseService implements EventContract
 {
     protected Model $model;
 
+    protected array $relation = ['thumbnail'];
+
     public function __construct(Event $model)
     {
         $this->model = $model;
     }
-
 }

@@ -12,7 +12,6 @@ import { AppLayout } from '@/layouts/app-layout';
 import { FormResponse } from '@/lib/constant';
 import { date_format } from '@/lib/format';
 import article from '@/routes/master/article';
-import post from '@/routes/master/post';
 import { Article } from '@/types/article';
 import { Base } from '@/types/base';
 import { Link, useForm } from '@inertiajs/react';
@@ -46,13 +45,25 @@ export default function PostIndex() {
 
     const onDelete = (e: { preventDefault: () => void }) => {
         e.preventDefault();
-        destroy(post.destroy(id).url, FormResponse);
+        destroy(article.destroy(id).url, FormResponse);
     };
 
     const columns: ColumnDef<Article, any>[] = [
         helper.accessor('id', {
             id: 'id',
             header: 'ID',
+            enableColumnFilter: false,
+            enableHiding: false,
+        }),
+        helper.accessor('category.name', {
+            id: 'category',
+            header: 'Category',
+            enableColumnFilter: false,
+            enableHiding: false,
+        }),
+        helper.accessor('title', {
+            id: 'title',
+            header: 'Title',
             enableColumnFilter: false,
             enableHiding: false,
         }),
@@ -84,7 +95,7 @@ export default function PostIndex() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="center">
                         <Link
-                            href={post.show(row.row.original.id).url}
+                            href={article.show(row.row.original.id).url}
                             method="get"
                         >
                             <DropdownMenuItem>
@@ -113,13 +124,17 @@ export default function PostIndex() {
             <DeleteDialog id={id} onDelete={onDelete} onOpenChange={setId} />
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-col">
-                    <h1 className="text-xl font-semibold">Post Management</h1>
-                    <p className="text-sm text-gray-500">Manage your posts</p>
+                    <h1 className="text-xl font-semibold">
+                        Article Management
+                    </h1>
+                    <p className="text-sm text-gray-500">
+                        Manage your articles
+                    </p>
                 </div>
-                <Link href={post.create().url}>
+                <Link href={article.create().url}>
                     <Button>
                         <Plus className="size-4" />
-                        Add Post
+                        Add Article
                     </Button>
                 </Link>
             </div>
