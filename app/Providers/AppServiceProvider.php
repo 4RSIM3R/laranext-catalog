@@ -10,6 +10,8 @@ use App\Contract\Master\BannerContract;
 use App\Contract\Master\CategoryContract;
 use App\Contract\Master\EventContract;
 use App\Contract\Master\FileContract;
+use App\Contract\Master\MerchantContract;
+use App\Contract\Master\PartnerContract;
 use App\Contract\Master\PostContract;
 use App\Contract\Master\ProductContract;
 use App\Contract\Master\UserContract;
@@ -25,6 +27,8 @@ use App\Service\Master\BannerService;
 use App\Service\Master\CategoryService;
 use App\Service\Master\EventService;
 use App\Service\Master\FileService;
+use App\Service\Master\MerchantService;
+use App\Service\Master\PartnerService;
 use App\Service\Master\PostService;
 use App\Service\Master\ProductService;
 use App\Service\Master\UserService;
@@ -55,6 +59,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserContract::class, UserService::class);
         $this->app->bind(VideoContract::class, VideoService::class);
         $this->app->bind(ArticleContract::class, ArticleService::class);
+        $this->app->bind(PartnerContract::class, PartnerService::class);
+        $this->app->bind(MerchantContract::class, MerchantService::class);
 
         // setting
         $this->app->bind(SettingContract::class, SettingService::class);
