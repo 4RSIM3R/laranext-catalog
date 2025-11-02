@@ -6,5 +6,5 @@ export interface Event extends Model {
     slug: string;
     content: string;
     date: string;
-    thumbnail: Media | File | null;
+    thumbnail?: Media & Media;
 }

@@ -6,5 +6,5 @@ export interface Banner extends Model {
     subtitle: string;
     button_text: string;
     button_link: string;
-    thumbnail: Media | File | null;
+    thumbnail?: Media & Media;
 }

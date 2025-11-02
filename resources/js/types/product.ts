@@ -13,6 +13,6 @@ export interface Product {
     phone_number: string;
     price: number;
     status: string;
-    thumbnail: File | Media | null;
+    thumbnail?: Media & Media;
     category?: Category;
 }

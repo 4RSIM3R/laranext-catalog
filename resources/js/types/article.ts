@@ -7,6 +7,6 @@ export interface Article extends Model {
     slug: string;
     content: string;
     excerpt: string;
-    thumbnail: Media | File | null;
+    thumbnail?: Media & Media;
     category?: Category;
 }

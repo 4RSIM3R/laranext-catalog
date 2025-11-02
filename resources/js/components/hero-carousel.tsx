@@ -24,7 +24,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         >
             <CarouselContent>
                 {slides.map((slide) => (
-                    <CarouselItem key={slide.id} onClick={() => router.visit(slide.button_link)}>
+                    <CarouselItem key={slide.id}>
                         <div className="relative h-[400px] w-full overflow-hidden rounded-2xl md:h-[500px]">
                             <div
                                 className="absolute inset-0 bg-cover bg-center"

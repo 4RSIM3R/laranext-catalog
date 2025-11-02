@@ -5,8 +5,8 @@ export interface Video {
     title: string;
     slug: string;
     content: string;
-    thumbnail: Media | File | null;
-    video: Media | File | null;
+    thumbnail?: Media & Media;
+    video?: Media & Media;
     created_at: string;
     updated_at: string;
 }
