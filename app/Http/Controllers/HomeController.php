@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
+use App\Models\Banner;
+use App\Models\Category;
+use App\Models\Event;
+use App\Models\Product;
+use App\Models\Video;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -10,7 +16,21 @@ class HomeController extends Controller
 
     public function index()
     {
-        return Inertia::render('home');
+        $banner = Banner::all();
+        $category = Category::all();
+        $product = Product::query()->inRandomOrder()->limit(6)->get();
+        $video = Video::query()->inRandomOrder()->limit(3)->get();
+        $event = Event::query()->inRandomOrder()->limit(3)->get();
+        $article = Article::query()->inRandomOrder()->limit(3)->get();
+
+        return Inertia::render('home', [
+            'banner' => $banner,
+            'category' => $category,
+            'product' => $product,
+            'video' => $video,
+            'event' => $event,
+            'article' => $article,
+        ]);
     }
 
     public function partnership()

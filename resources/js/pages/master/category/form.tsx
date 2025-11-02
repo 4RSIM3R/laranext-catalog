@@ -1,3 +1,4 @@
+import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,12 +15,14 @@ import { FormResponse } from '@/lib/constant';
 import { slugify } from '@/lib/utils';
 import category from '@/routes/master/category';
 import { Category } from '@/types/category';
+import { Media } from '@/types/media';
 import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
 
 type FormData = {
     name: string;
     slug: string;
+    thumbnail: File | Media | null;
 };
 
 type Props = {
@@ -30,6 +33,7 @@ export default function CategoryForm({ props }: Props) {
     const { data, setData, post, put, processing, errors } = useForm<FormData>({
         name: props?.name || '',
         slug: props?.slug || '',
+        thumbnail: props?.thumbnail || null,
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,6 +85,16 @@ export default function CategoryForm({ props }: Props) {
                             disabled={true}
                         />
                         <InputError message={errors?.slug} />
+                    </div>
+                    <div className="col-span-12 flex flex-col gap-y-1.5">
+                        <Label className="text-base">Thumbnail</Label>
+                        <FileUpload
+                            media={data.thumbnail || props?.thumbnail}
+                            onChange={(file: any) => setData('thumbnail', file)}
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            maxSize={2 * 1024 * 1024}
+                            id="thumbnail"
+                        />
                     </div>
                 </CardContent>
             </Card>

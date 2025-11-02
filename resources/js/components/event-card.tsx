@@ -1,25 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Event } from '@/types/event';
 import { Link } from '@inertiajs/react';
 
-interface EventCardProps {
-    id: number;
-    title: string;
-    description: string;
-    date: string;
-    image: string;
-    url: string;
-    registerUrl?: string;
-}
+type Props = {
+    event: Event;
+};
 
-export function EventCard({
-    title,
-    description,
-    date,
-    image,
-    url,
-    registerUrl,
-}: EventCardProps) {
+export function EventCard({ event }: Props) {
     const formatDate = (dateString: string) => {
         return new Intl.DateTimeFormat('id-ID', {
             weekday: 'long',
@@ -30,27 +18,27 @@ export function EventCard({
     };
 
     return (
-        <Card className="group relative overflow-hidden transition-all hover:shadow-xl p-0">
+        <Card className="group relative overflow-hidden p-0 transition-all hover:shadow-xl">
             <div className="relative aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
                 <img
-                    src={image}
-                    alt={title}
+                    src={event.thumbnail?.original_url}
+                    alt={event.title}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
                 <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
                     <div>
                         <p className="mb-4 text-sm font-medium">
-                            {formatDate(date)}
+                            {formatDate(event.date)}
                         </p>
                         <h3 className="mb-3 text-xl leading-tight font-bold">
-                            {title}
+                            {event.title}
                         </h3>
                         <p className="mb-2 line-clamp-2 text-sm text-gray-200">
-                            {description}
+                            {event.content}
                         </p>
                         <Link
-                            href={url}
+                            href=""
                             className="inline-block text-sm font-medium text-primary underline transition-colors hover:text-primary/80"
                         >
                             Read More
@@ -61,7 +49,7 @@ export function EventCard({
                             asChild
                             className="rounded-full bg-primary px-8 hover:bg-primary/90"
                         >
-                            <Link href={registerUrl || url}>Daftar</Link>
+                            <Link href="">Daftar</Link>
                         </Button>
                     </div>
                 </div>

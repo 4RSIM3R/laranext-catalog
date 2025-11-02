@@ -6,19 +6,11 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/ui/carousel';
+import { Banner } from '@/types/banner';
 import { Link } from '@inertiajs/react';
 
-interface HeroSlide {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    categoryUrl: string;
-    categoryLabel: string;
-}
-
 interface HeroCarouselProps {
-    slides: HeroSlide[];
+    slides: Banner[];
 }
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
@@ -32,12 +24,12 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         >
             <CarouselContent>
                 {slides.map((slide) => (
-                    <CarouselItem key={slide.id}>
+                    <CarouselItem key={slide.id} onClick={() => router.visit(slide.button_link)}>
                         <div className="relative h-[400px] w-full overflow-hidden rounded-2xl md:h-[500px]">
                             <div
                                 className="absolute inset-0 bg-cover bg-center"
                                 style={{
-                                    backgroundImage: `url(${slide.image})`,
+                                    backgroundImage: `url(${typeof slide.thumbnail === 'object' && 'original_url' in slide.thumbnail ? slide.thumbnail.original_url : 'https://placehold.co/600x400'})`,
                                 }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
@@ -47,19 +39,16 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                                     {slide.title}
                                 </h1>
                                 <p className="mb-6 max-w-xl text-base text-gray-200 md:text-lg">
-                                    {slide.description}
+                                    {slide.subtitle}
                                 </p>
-                                <div>
+                                <Link href={slide.button_link}>
                                     <Button
-                                        asChild
                                         size="lg"
                                         className="bg-white text-gray-900 hover:bg-gray-100"
                                     >
-                                        <Link href={slide.categoryUrl}>
-                                            {slide.categoryLabel}
-                                        </Link>
+                                        {slide.button_text}
                                     </Button>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </CarouselItem>
