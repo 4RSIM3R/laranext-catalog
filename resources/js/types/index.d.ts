@@ -23,6 +23,7 @@ export interface NavItem {
 }
 
 export interface SharedData {
+    categories: Category[];
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
