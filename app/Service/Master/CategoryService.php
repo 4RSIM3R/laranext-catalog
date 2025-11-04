@@ -11,6 +11,9 @@ class CategoryService extends BaseService implements CategoryContract
 {
     protected Model $model;
 
+    protected array $relation = ['thumbnail'];
+
+
     public function __construct(Category $model)
     {
         $this->model = $model;

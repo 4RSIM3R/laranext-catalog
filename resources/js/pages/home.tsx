@@ -1,6 +1,7 @@
 import { CategoryCard } from '@/components/category-card';
 import { EventCard } from '@/components/event-card';
 import { HeroCarousel } from '@/components/hero-carousel';
+import { LogoCloud } from '@/components/logo-cloud';
 import { PostCard } from '@/components/post-card';
 import { ProductCard } from '@/components/product-card';
 import { SectionWrapper } from '@/components/section-wrapper';
@@ -83,7 +84,7 @@ export default function Home({
                 seeMoreUrl="/article"
                 className="bg-gray-50 py-12 dark:bg-gray-900"
             >
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="no-scrollbar flex gap-6 overflow-x-auto pb-4 lg:grid lg:grid-cols-3 xl:grid-cols-4">
                     {article.map((article) => (
                         <PostCard key={article.id} props={article} />
                     ))}
@@ -91,9 +92,9 @@ export default function Home({
             </SectionWrapper>
 
             {/* Partnership Section */}
-            {/* <SectionWrapper title="Mitra Kami">
-                <LogoCloud logos={partnerLogos} />
-            </SectionWrapper> */}
+            <SectionWrapper title="Mitra Kami">
+                <LogoCloud logos={[]} />
+            </SectionWrapper>
         </div>
     );
 }

@@ -13,6 +13,7 @@ export function CategoryCard({ props }: Props) {
                     <img
                         className="h-10 w-10 text-primary transition-transform group-hover:scale-110"
                         src={props.thumbnail?.original_url}
+                        alt={props.name}
                     />
                 </div>
                 <h3 className="max-w-[120px] text-sm font-medium text-gray-900 dark:text-gray-100">
