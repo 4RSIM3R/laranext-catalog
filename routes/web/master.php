@@ -5,6 +5,7 @@ use App\Http\Controllers\Master\BannerController;
 use App\Http\Controllers\Master\CategoryController;
 use App\Http\Controllers\Master\EventController;
 use App\Http\Controllers\Master\FileController;
+use App\Http\Controllers\Master\PartnerController;
 use App\Http\Controllers\Master\PostController;
 use App\Http\Controllers\Master\ProductController;
 use App\Http\Controllers\Master\UserController;
@@ -80,6 +81,16 @@ Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
         Route::get('{id}', [ProductController::class, 'show'])->name('show');
         Route::match(['put', 'post'], '{id}', [ProductController::class, 'update'])->name('update');
         Route::delete('{id}', [ProductController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['prefix' => 'partner', 'as' => 'partner.'], function () {
+        Route::get('', [PartnerController::class, 'index'])->name('index');
+        Route::get('fetch', [PartnerController::class, 'fetch'])->name('fetch');
+        Route::get('create', [PartnerController::class, 'create'])->name('create');
+        Route::post('store', [PartnerController::class, 'store'])->name('store');
+        Route::get('{id}', [PartnerController::class, 'show'])->name('show');
+        Route::match(['put', 'post'], '{id}', [PartnerController::class, 'update'])->name('update');
+        Route::delete('{id}', [PartnerController::class, 'destroy'])->name('destroy');
     });
 
     Route::group(['prefix' => 'video', 'as' => 'video.'], function () {

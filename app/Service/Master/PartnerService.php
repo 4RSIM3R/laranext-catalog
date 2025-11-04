@@ -11,7 +11,9 @@ class PartnerService extends BaseService implements PartnerContract
 {
     protected Model $model;
 
-    protected array $relation = ['thumbnail'];
+    protected array $relation = [];
+
+    protected array $fileKeys = ['logo'];
 
     public function __construct(Partner $model)
     {

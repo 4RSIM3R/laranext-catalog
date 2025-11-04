@@ -17,13 +17,13 @@ class HomeController extends Controller
 
     public function index()
     {
-        $banner = Banner::all();
-        $category = Category::all();
-        $product = Product::query()->inRandomOrder()->limit(6)->get();
-        $video = Video::query()->inRandomOrder()->limit(3)->get();
-        $event = Event::query()->inRandomOrder()->limit(3)->get();
-        $article = Article::query()->inRandomOrder()->limit(3)->get();
-        $partner = Partner::where('is_featured', true)->get();
+        $banner = Banner::with('media')->get();
+        $category = Category::with('media')->get();
+        $product = Product::with('media')->inRandomOrder()->limit(6)->get();
+        $video = Video::with('media')->inRandomOrder()->limit(3)->get();
+        $event = Event::with('media')->inRandomOrder()->limit(3)->get();
+        $article = Article::with('media')->inRandomOrder()->limit(3)->get();
+        $partner = Partner::with('media')->where('is_featured', true)->get();
 
         return Inertia::render('home', [
             'banner' => $banner,

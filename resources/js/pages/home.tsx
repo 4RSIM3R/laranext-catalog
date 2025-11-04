@@ -181,13 +181,29 @@ export default function Home({
                             {partner.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="flex h-32 w-48 items-center justify-center rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
+                                    className="group flex h-32 w-48 items-center justify-center rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
+                                    title={item.name}
                                 >
-                                    <img
-                                        src={item.logo?.original_url}
-                                        alt={item.name}
-                                        className="h-auto w-full object-contain grayscale transition-all hover:grayscale-0"
-                                    />
+                                    {item.logo?.original_url ? (
+                                        <img
+                                            src={item.logo.original_url}
+                                            alt={item.name}
+                                            className="h-auto max-h-20 w-full object-contain grayscale transition-all group-hover:grayscale-0"
+                                            onError={(e) => {
+                                                const target =
+                                                    e.target as HTMLImageElement;
+                                                target.style.display = 'none';
+                                                const parent = target.parentElement;
+                                                if (parent) {
+                                                    parent.innerHTML = `<span class="text-gray-400 dark:text-gray-500 font-medium">${item.name}</span>`;
+                                                }
+                                            }}
+                                        />
+                                    ) : (
+                                        <span className="text-gray-400 font-medium dark:text-gray-500">
+                                            {item.name}
+                                        </span>
+                                    )}
                                 </div>
                             ))}
                         </div>

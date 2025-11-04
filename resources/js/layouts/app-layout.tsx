@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { useSidebarState } from '@/hooks/use-sidebar-state';
-import { FormResponse } from '@/lib/constant';
 import { initial_name } from '@/lib/format';
 import backoffice from '@/routes/backoffice';
 import article from '@/routes/master/article';
@@ -32,6 +31,7 @@ import banner from '@/routes/master/banner';
 import category from '@/routes/master/category';
 import event from '@/routes/master/event';
 import file from '@/routes/master/file';
+import partner from '@/routes/master/partner';
 import product from '@/routes/master/product';
 import user from '@/routes/master/user';
 import video from '@/routes/master/video';
@@ -107,6 +107,12 @@ const navigations: MenuGroup[] = [
                 title: 'Video',
                 icon: VideoIcon,
                 url: video.index().url,
+            },
+            {
+                id: 'partner',
+                title: 'Partner',
+                icon: UserIcon,
+                url: partner.index().url,
             },
         ],
     },

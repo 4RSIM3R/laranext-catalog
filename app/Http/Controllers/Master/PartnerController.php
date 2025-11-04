@@ -54,7 +54,7 @@ class PartnerController extends Controller
     public function store(PartnerRequest $request)
     {
         $payload = $request->validated();
-        unset($payload['thumbnail']);
+        unset($payload['logo']);
         $result = $this->service->create($payload);
         return WebResponse::response($result, 'master.partner.index');
     }
@@ -62,7 +62,7 @@ class PartnerController extends Controller
     public function update(PartnerRequest $request, $id)
     {
         $payload = $request->validated();
-        unset($payload['thumbnail']);
+        unset($payload['logo']);
         $result = $this->service->update(
             [
                 ['id', '=', $id]

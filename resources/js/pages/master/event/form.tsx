@@ -1,3 +1,4 @@
+import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -15,16 +16,16 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@/components/ui/popover';
+import { Textarea } from '@/components/ui/textarea';
 import { AppLayout } from '@/layouts/app-layout';
+import { extensions, FormResponse } from '@/lib/constant';
 import { cn, slugify } from '@/lib/utils';
+import event from '@/routes/master/event';
+import { Event } from '@/types/event';
 import { useForm } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { CalendarIcon, Loader2 } from 'lucide-react';
 import RichTextEditor from 'reactjs-tiptap-editor';
-import FileUpload from '@/components/file-upload';
-import { extensions, FormResponse } from '@/lib/constant';
-import event from '@/routes/master/event';
-import { Event } from '@/types/event';
 import 'reactjs-tiptap-editor/style.css';
 
 type Props = {
@@ -37,6 +38,7 @@ export default function EventForm({ props }: Props) {
         title: props?.title || '',
         slug: props?.slug || '',
         content: props?.content || '',
+        excerpt: props?.excerpt || '',
         thumbnail: props?.thumbnail || null,
         date: props?.date || '',
     });
@@ -90,6 +92,15 @@ export default function EventForm({ props }: Props) {
                             disabled={true}
                         />
                         <InputError message={errors?.slug as string} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Excerpt</Label>
+                        <Textarea
+                            value={data.excerpt}
+                            onChange={(e) => setData('excerpt', e.target.value)}
+                            rows={3}
+                        />
+                        <InputError message={errors?.excerpt as string} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Date</Label>

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { AppLayout } from '@/layouts/app-layout';
 import { extensions, FormResponse } from '@/lib/constant';
 import { slugify } from '@/lib/utils';
@@ -30,6 +31,7 @@ export default function VideoForm({ props }: Props) {
         title: props?.title || '',
         slug: props?.slug || '',
         content: props?.content || '',
+        excerpt: props?.excerpt || '',
         thumbnail: props?.thumbnail || null,
         video: props?.video || null,
     });
@@ -83,6 +85,15 @@ export default function VideoForm({ props }: Props) {
                             disabled={true}
                         />
                         <InputError message={errors?.slug as string} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Excerpt</Label>
+                        <Textarea
+                            value={data.excerpt}
+                            onChange={(e) => setData('excerpt', e.target.value)}
+                            rows={3}
+                        />
+                        <InputError message={errors?.excerpt as string} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Content</Label>
