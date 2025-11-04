@@ -2,6 +2,14 @@ import { ProductCard } from '@/components/product-card';
 import { SimplePagination } from '@/components/simple-pagination';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -27,7 +35,7 @@ export default function ProductIndex({ props, categories }: Props) {
     const products = props.items || [];
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string>('');
-    const [showFilters, setShowFilters] = useState(false);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     // Initialize filters from URL on mount
     useEffect(() => {
@@ -83,7 +91,7 @@ export default function ProductIndex({ props, categories }: Props) {
     const hasActiveFilters = searchQuery || selectedCategory;
 
     return (
-        <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
+        <div className="min-h-screen bg-white py-12 dark:bg-gray-900">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header Section */}
                 <div className="mb-12 text-center">
@@ -101,136 +109,149 @@ export default function ProductIndex({ props, categories }: Props) {
 
                 {/* Search and Filter Section */}
                 <div className="mb-8 space-y-4">
-                    {/* Search Bar */}
-                    <div className="relative mx-auto max-w-2xl">
-                        <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                        <Input
-                            type="search"
-                            placeholder="Cari produk berdasarkan nama..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="h-12 pr-12 pl-12 text-base"
-                        />
-                        {searchQuery && (
-                            <button
-                                onClick={() => setSearchQuery('')}
-                                className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            >
-                                <X className="h-5 w-5" />
-                            </button>
-                        )}
-                    </div>
-
-                    {/* Filter Toggle Button (Mobile) */}
-                    <div className="flex justify-center md:hidden">
-                        <Button
-                            variant="outline"
-                            onClick={() => setShowFilters(!showFilters)}
-                            className="gap-2"
-                        >
-                            <Filter className="h-4 w-4" />
-                            {showFilters ? 'Sembunyikan' : 'Tampilkan'} Filter
-                        </Button>
-                    </div>
-
-                    {/* Filters */}
-                    <div
-                        className={`mx-auto max-w-4xl space-y-4 ${showFilters ? 'block' : 'hidden'} md:block`}
-                    >
-                        <div className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between dark:bg-gray-800">
-                            <div className="flex flex-1 flex-col gap-4 md:flex-row md:items-center">
-                                {/* Category Filter */}
-                                <div className="flex-1">
-                                    <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Kategori
-                                    </label>
-                                    <Select
-                                        value={selectedCategory || 'all'}
-                                        onValueChange={(value) =>
-                                            setSelectedCategory(
-                                                value === 'all' ? '' : value,
-                                            )
-                                        }
-                                    >
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Semua Kategori" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="all">
-                                                Semua Kategori
-                                            </SelectItem>
-                                            {categories.map((category) => (
-                                                <SelectItem
-                                                    key={category.id}
-                                                    value={category.id.toString()}
-                                                >
-                                                    {category.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </div>
-
-                            {/* Clear Filters Button */}
-                            {hasActiveFilters && (
-                                <Button
-                                    variant="ghost"
-                                    onClick={handleClearFilters}
-                                    className="gap-2"
+                    {/* Search Bar with Filter Button */}
+                    <div className="mx-auto flex max-w-2xl gap-2">
+                        <div className="relative flex-1">
+                            <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                            <Input
+                                type="search"
+                                placeholder="Cari produk berdasarkan nama..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="h-12 pr-12 pl-12 text-base"
+                            />
+                            {searchQuery && (
+                                <button
+                                    onClick={() => setSearchQuery('')}
+                                    className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                 >
-                                    <X className="h-4 w-4" />
-                                    Hapus Filter
-                                </Button>
+                                    <X className="h-5 w-5" />
+                                </button>
                             )}
                         </div>
 
-                        {/* Active Filters Display */}
-                        {hasActiveFilters && (
-                            <div className="flex flex-wrap items-center gap-2">
-                                <span className="text-sm text-gray-600 dark:text-gray-400">
-                                    Filter aktif:
-                                </span>
-                                {searchQuery && (
-                                    <Badge
-                                        variant="secondary"
-                                        className="gap-1"
-                                    >
-                                        Pencarian: {searchQuery}
-                                        <button
-                                            onClick={() => setSearchQuery('')}
-                                            className="ml-1 hover:text-gray-900"
+                        {/* Filter Dialog */}
+                        <Dialog
+                            open={isFilterOpen}
+                            onOpenChange={setIsFilterOpen}
+                        >
+                            <DialogTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className="h-12 gap-2"
+                                >
+                                    <Filter className="h-4 w-4" />
+                                    Filter
+                                    {hasActiveFilters && (
+                                        <Badge
+                                            variant="destructive"
+                                            className="ml-1 h-5 w-5 rounded-full p-0 text-xs"
                                         >
-                                            <X className="h-3 w-3" />
-                                        </button>
-                                    </Badge>
-                                )}
-                                {selectedCategory && (
-                                    <Badge
-                                        variant="secondary"
-                                        className="gap-1"
-                                    >
-                                        Kategori:{' '}
-                                        {
-                                            categories.find(
-                                                (c) =>
-                                                    c.id.toString() ===
-                                                    selectedCategory,
-                                            )?.name
-                                        }
-                                        <button
-                                            onClick={() =>
-                                                setSelectedCategory('')
+                                            {(searchQuery ? 1 : 0) +
+                                                (selectedCategory ? 1 : 0)}
+                                        </Badge>
+                                    )}
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                    <DialogTitle>Filter Produk</DialogTitle>
+                                    <DialogDescription>
+                                        Gunakan filter untuk mempersempit
+                                        pencarian produk Anda
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="space-y-4 py-4">
+                                    {/* Category Filter */}
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Kategori
+                                        </label>
+                                        <Select
+                                            value={selectedCategory || 'all'}
+                                            onValueChange={(value) =>
+                                                setSelectedCategory(
+                                                    value === 'all'
+                                                        ? ''
+                                                        : value,
+                                                )
                                             }
-                                            className="ml-1 hover:text-gray-900"
                                         >
-                                            <X className="h-3 w-3" />
-                                        </button>
-                                    </Badge>
-                                )}
-                            </div>
-                        )}
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Semua Kategori" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="all">
+                                                    Semua Kategori
+                                                </SelectItem>
+                                                {categories.map((category) => (
+                                                    <SelectItem
+                                                        key={category.id}
+                                                        value={category.id.toString()}
+                                                    >
+                                                        {category.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    {/* Clear Filters Button */}
+                                    {hasActiveFilters && (
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => {
+                                                handleClearFilters();
+                                                setIsFilterOpen(false);
+                                            }}
+                                            className="w-full gap-2"
+                                        >
+                                            <X className="h-4 w-4" />
+                                            Hapus Semua Filter
+                                        </Button>
+                                    )}
+                                </div>
+                            </DialogContent>
+                        </Dialog>
                     </div>
+
+                    {/* Active Filters Display */}
+                    {hasActiveFilters && (
+                        <div className="mx-auto flex max-w-2xl flex-wrap items-center gap-2">
+                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                                Filter aktif:
+                            </span>
+                            {searchQuery && (
+                                <Badge variant="secondary" className="gap-1">
+                                    Pencarian: {searchQuery}
+                                    <button
+                                        onClick={() => setSearchQuery('')}
+                                        className="ml-1 hover:text-gray-900"
+                                    >
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </Badge>
+                            )}
+                            {selectedCategory && (
+                                <Badge variant="secondary" className="gap-1">
+                                    Kategori:{' '}
+                                    {
+                                        categories.find(
+                                            (c) =>
+                                                c.id.toString() ===
+                                                selectedCategory,
+                                        )?.name
+                                    }
+                                    <button
+                                        onClick={() => setSelectedCategory('')}
+                                        className="ml-1 hover:text-gray-900"
+                                    >
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </Badge>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* Products Grid */}

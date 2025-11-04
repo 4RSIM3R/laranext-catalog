@@ -25,6 +25,7 @@ class VideoRequest extends FormRequest
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:videos,slug',
             'content' => 'required|string',
+            'excerpt' => 'required|string',
         ];
 
         if ($this->isMethod('post')) {

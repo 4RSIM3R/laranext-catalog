@@ -16,14 +16,6 @@ type Props = {
 export default function VideoDetail({ props }: Props) {
     const { video, related } = props;
 
-    const formatDate = (dateString: string) => {
-        return new Intl.DateTimeFormat('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        }).format(new Date(dateString));
-    };
-
     const getVideoUrl = () => {
         if (
             video.video &&
@@ -49,7 +41,7 @@ export default function VideoDetail({ props }: Props) {
                                 {videoUrl ? (
                                     <video
                                         controls
-                                        className="h-full w-full"
+                                        className="h-full w-full object-cover"
                                         poster={
                                             video.thumbnail &&
                                             typeof video.thumbnail ===
@@ -140,21 +132,7 @@ export default function VideoDetail({ props }: Props) {
                                     {related.map((relatedVideo) => (
                                         <VideoCard
                                             key={relatedVideo.id}
-                                            id={relatedVideo.id}
-                                            title={relatedVideo.title}
-                                            author="Lokal Berdaya"
-                                            thumbnail={
-                                                relatedVideo.thumbnail &&
-                                                typeof relatedVideo.thumbnail ===
-                                                    'object' &&
-                                                'original_url' in
-                                                    relatedVideo.thumbnail
-                                                    ? relatedVideo.thumbnail
-                                                          .original_url ||
-                                                      '/logo.png'
-                                                    : '/logo.png'
-                                            }
-                                            url={`/video/${relatedVideo.slug || relatedVideo.id}`}
+                                            props={relatedVideo}
                                         />
                                     ))}
                                 </div>

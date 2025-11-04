@@ -16,6 +16,7 @@ import { about, home, partnership } from '@/routes';
 import article from '@/routes/public/article';
 import event from '@/routes/public/event';
 import product from '@/routes/public/product';
+import video from '@/routes/public/video';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import {
@@ -43,7 +44,7 @@ export const PublicLayout = ({ children }: Props) => {
     const pages = [
         { name: 'Beranda', href: home().url },
         { name: 'Produk', href: product.index().url },
-        { name: 'Video', href: '#' },
+        { name: 'Video', href: video.index().url },
         { name: 'Event', href: event.index().url },
         { name: 'Berita', href: article.index().url },
         { name: 'Tentang Kami', href: about().url },

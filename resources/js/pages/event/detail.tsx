@@ -5,8 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { PublicLayout } from '@/layouts/public-layout';
 import { Event } from '@/types/event';
-import { Bookmark, Calendar, Clock, MapPin, Share2, Users } from 'lucide-react';
-import { useState } from 'react';
+import { Calendar, Clock, Share2 } from 'lucide-react';
 
 type Props = {
     props: {
@@ -17,7 +16,6 @@ type Props = {
 
 export default function EventDetail({ props }: Props) {
     const { event, related } = props;
-    const [isBookmarked, setIsBookmarked] = useState(false);
 
     const formatEventDate = (dateString: string) => {
         return new Intl.DateTimeFormat('id-ID', {
@@ -38,12 +36,6 @@ export default function EventDetail({ props }: Props) {
 
     const isEventPassed = (dateString: string) => {
         return new Date(dateString) < new Date();
-    };
-
-    const stripHtml = (html: string) => {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText || '';
     };
 
     const eventPassed = isEventPassed(event.date);
@@ -94,206 +86,83 @@ export default function EventDetail({ props }: Props) {
             </div>
 
             {/* Main Content */}
-            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-                    {/* Left Column - Event Details */}
-                    <div className="lg:col-span-2">
-                        {/* Event Info Cards */}
-                        <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            <Card className="p-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="rounded-lg bg-primary/10 p-3">
-                                        <Calendar className="h-6 w-6 text-primary" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                            Tanggal
-                                        </p>
-                                        <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
-                                            {formatEventDate(event.date)}
-                                        </p>
-                                    </div>
+            <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+                <div className="space-y-8">
+                    {/* Event Info Cards */}
+                    <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <Card className="p-6">
+                            <div className="flex items-start gap-4">
+                                <div className="rounded-lg bg-primary/10 p-3">
+                                    <Calendar className="h-6 w-6 text-primary" />
                                 </div>
-                            </Card>
-
-                            <Card className="p-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="rounded-lg bg-primary/10 p-3">
-                                        <Clock className="h-6 w-6 text-primary" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                            Waktu
-                                        </p>
-                                        <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
-                                            {formatEventTime(event.date)}
-                                        </p>
-                                    </div>
+                                <div>
+                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                        Tanggal
+                                    </p>
+                                    <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
+                                        {formatEventDate(event.date)}
+                                    </p>
                                 </div>
-                            </Card>
-
-                            <Card className="p-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="rounded-lg bg-primary/10 p-3">
-                                        <MapPin className="h-6 w-6 text-primary" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                            Lokasi
-                                        </p>
-                                        <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
-                                            Akan diumumkan
-                                        </p>
-                                    </div>
-                                </div>
-                            </Card>
-
-                            <Card className="p-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="rounded-lg bg-primary/10 p-3">
-                                        <Users className="h-6 w-6 text-primary" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                            Penyelenggara
-                                        </p>
-                                        <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
-                                            Lokal Berdaya
-                                        </p>
-                                    </div>
-                                </div>
-                            </Card>
-                        </div>
-
-                        {/* Event Description */}
-                        <Card className="p-6 md:p-8">
-                            <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                Tentang Acara Ini
-                            </h2>
-                            <Separator className="mb-6" />
-                            <div
-                                className="prose prose-gray dark:prose-invert max-w-none"
-                                dangerouslySetInnerHTML={{
-                                    __html:
-                                        event.content ||
-                                        '<p>Informasi detail acara akan segera diumumkan.</p>',
-                                }}
-                            />
+                            </div>
                         </Card>
 
-                        {/* Share Section */}
-                        <Card className="mt-8 p-6">
-                            <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                                Bagikan Acara
-                            </h3>
-                            <div className="flex gap-3">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => {
-                                        if (navigator.share) {
-                                            navigator.share({
-                                                title: event.title,
-                                                text: stripHtml(event.content),
-                                                url: window.location.href,
-                                            });
-                                        }
-                                    }}
-                                >
-                                    <Share2 className="mr-2 h-4 w-4" />
-                                    Bagikan
-                                </Button>
+                        <Card className="p-6">
+                            <div className="flex items-start gap-4">
+                                <div className="rounded-lg bg-primary/10 p-3">
+                                    <Clock className="h-6 w-6 text-primary" />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                        Waktu
+                                    </p>
+                                    <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
+                                        {formatEventTime(event.date)}
+                                    </p>
+                                </div>
                             </div>
                         </Card>
                     </div>
 
-                    {/* Right Column - Registration Card */}
-                    <div className="lg:col-span-1">
-                        <div className="sticky top-8">
-                            {/* Registration Card */}
-                            <Card className="overflow-hidden p-0">
-                                <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6">
-                                    <h3 className="mb-2 text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                        Gratis
-                                    </h3>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                                        Daftar sekarang untuk mengikuti acara
-                                        ini
-                                    </p>
-                                </div>
+                    {/* Event Description */}
+                    <Card className="p-6 md:p-8">
+                        <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
+                            Tentang Acara Ini
+                        </h2>
+                        <Separator className="mb-6" />
+                        <div
+                            className="prose prose-gray dark:prose-invert max-w-none"
+                            dangerouslySetInnerHTML={{
+                                __html:
+                                    event.content ||
+                                    '<p>Informasi detail acara akan segera diumumkan.</p>',
+                            }}
+                        />
+                    </Card>
 
-                                <div className="p-6">
-                                    {eventPassed ? (
-                                        <Button
-                                            disabled
-                                            size="lg"
-                                            className="w-full"
-                                        >
-                                            Acara Telah Selesai
-                                        </Button>
-                                    ) : (
-                                        <Button size="lg" className="w-full">
-                                            <Calendar className="mr-2 h-5 w-5" />
-                                            Daftar Sekarang
-                                        </Button>
-                                    )}
-
-                                    <Button
-                                        variant="outline"
-                                        size="lg"
-                                        className="mt-3 w-full"
-                                        onClick={() =>
-                                            setIsBookmarked(!isBookmarked)
-                                        }
-                                    >
-                                        <Bookmark
-                                            className={`mr-2 h-5 w-5 ${isBookmarked ? 'fill-current' : ''}`}
-                                        />
-                                        {isBookmarked
-                                            ? 'Tersimpan'
-                                            : 'Simpan Acara'}
-                                    </Button>
-                                </div>
-
-                                <Separator />
-
-                                <div className="p-6">
-                                    <h4 className="mb-4 font-semibold text-gray-900 dark:text-gray-100">
-                                        Informasi Penting
-                                    </h4>
-                                    <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                                        <li className="flex items-start gap-2">
-                                            <span className="mt-0.5 text-primary">
-                                                •
-                                            </span>
-                                            <span>
-                                                Pendaftaran dibuka hingga H-1
-                                                acara
-                                            </span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="mt-0.5 text-primary">
-                                                •
-                                            </span>
-                                            <span>
-                                                Konfirmasi kehadiran akan
-                                                dikirim via email
-                                            </span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="mt-0.5 text-primary">
-                                                •
-                                            </span>
-                                            <span>
-                                                Harap datang 15 menit sebelum
-                                                acara dimulai
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </Card>
+                    {/* Share Section */}
+                    <Card className="mt-8 p-6">
+                        <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
+                            Bagikan Acara
+                        </h3>
+                        <div className="flex gap-3">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                    if (navigator.share) {
+                                        navigator.share({
+                                            title: event.title,
+                                            text: event.excerpt,
+                                            url: window.location.href,
+                                        });
+                                    }
+                                }}
+                            >
+                                <Share2 className="mr-2 h-4 w-4" />
+                                Bagikan
+                            </Button>
                         </div>
-                    </div>
+                    </Card>
                 </div>
 
                 {/* Related Events Section */}
@@ -313,23 +182,7 @@ export default function EventDetail({ props }: Props) {
                             {related.map((relatedEvent) => (
                                 <EventCard
                                     key={relatedEvent.id}
-                                    id={relatedEvent.id}
-                                    title={relatedEvent.title}
-                                    description={stripHtml(
-                                        relatedEvent.content,
-                                    ).substring(0, 150)}
-                                    date={relatedEvent.date}
-                                    image={
-                                        relatedEvent.thumbnail &&
-                                        typeof relatedEvent.thumbnail ===
-                                            'object' &&
-                                        'original_url' in relatedEvent.thumbnail
-                                            ? relatedEvent.thumbnail
-                                                  .original_url || '/logo.png'
-                                            : '/logo.png'
-                                    }
-                                    url={`/event/${relatedEvent.slug || relatedEvent.id}`}
-                                    registerUrl={`/event/${relatedEvent.slug || relatedEvent.id}`}
+                                    props={relatedEvent}
                                 />
                             ))}
                         </div>

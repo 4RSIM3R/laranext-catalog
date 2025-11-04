@@ -5,7 +5,7 @@ import { PublicLayout } from '@/layouts/public-layout';
 import { Base } from '@/types/base';
 import { Video } from '@/types/video';
 import { router } from '@inertiajs/react';
-import { Search } from 'lucide-react';
+import { Play, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 type Props = {
@@ -43,41 +43,49 @@ export default function VideoIndex({ props }: Props) {
     }, [searchQuery]);
 
     return (
-        <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
+        <div className="min-h-screen bg-white py-12 dark:bg-gray-900">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="mb-8">
-                    <h1 className="mb-6 text-3xl font-bold text-gray-900 dark:text-gray-100">
-                        Video Gallery
-                    </h1>
+                {/* Header Section */}
+                <div className="mb-12 text-center">
+                    <div className="mb-4 flex items-center justify-center">
+                        <Play className="mr-2 h-8 w-8 text-primary" />
+                        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                            Video Gallery
+                        </h1>
+                    </div>
+                    <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+                        Jelajahi koleksi video inspiratif dan edukatif dari UMKM
+                        lokal Indonesia
+                    </p>
+                </div>
 
-                    <div className="relative max-w-md">
-                        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                {/* Search Section */}
+                <div className="mb-8">
+                    <div className="relative mx-auto max-w-2xl">
+                        <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
                         <Input
                             type="search"
-                            placeholder="Cari video..."
+                            placeholder="Cari video berdasarkan judul..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-10"
+                            className="h-12 pr-12 pl-12 text-base"
                         />
+                        {searchQuery && (
+                            <button
+                                onClick={() => setSearchQuery('')}
+                                className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            >
+                                <X className="h-5 w-5" />
+                            </button>
+                        )}
                     </div>
                 </div>
 
+                {/* Videos Grid */}
                 {videos.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-16 text-center">
                         <div className="mb-4 text-gray-400 dark:text-gray-600">
-                            <svg
-                                className="mx-auto h-24 w-24"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                                />
-                            </svg>
+                            <Play className="mx-auto h-24 w-24" />
                         </div>
                         <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
                             {searchQuery
@@ -94,21 +102,7 @@ export default function VideoIndex({ props }: Props) {
                     <>
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {videos.map((video) => (
-                                <VideoCard
-                                    key={video.id}
-                                    id={video.id}
-                                    title={video.title}
-                                    author="Lokal Berdaya"
-                                    thumbnail={
-                                        video.thumbnail &&
-                                        typeof video.thumbnail === 'object' &&
-                                        'original_url' in video.thumbnail
-                                            ? video.thumbnail.original_url ||
-                                              '/logo.png'
-                                            : '/logo.png'
-                                    }
-                                    url={`/video/${video.slug || video.id}`}
-                                />
+                                <VideoCard key={video.id} props={video} />
                             ))}
                         </div>
 
