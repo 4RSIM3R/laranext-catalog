@@ -1,19 +1,20 @@
 import { Card } from '@/components/ui/card';
+import product from '@/routes/public/product';
 import { Product } from '@/types/product';
 import { Link } from '@inertiajs/react';
 
 type Props = {
-    product: Product;
+    props: Product;
 };
 
-export function ProductCard({ product }: Props) {
+export function ProductCard({ props }: Props) {
     return (
         <Card className="group overflow-hidden p-0 transition-all hover:shadow-xl">
-            <Link href="">
+            <Link href={product.show(props.slug).url}>
                 <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <img
-                        src={product.thumbnail?.original_url}
-                        alt={product.title}
+                        src={props.thumbnail?.original_url}
+                        alt={props.title}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <a
@@ -34,12 +35,12 @@ export function ProductCard({ product }: Props) {
                 </div>
             </Link>
             <div className="p-4">
-                <Link href="">
+                <Link href={product.show(props.slug).url}>
                     <h3 className="mb-1 line-clamp-2 font-semibold text-gray-900 transition-colors hover:text-primary dark:text-gray-100">
-                        {product.title}
+                        {props.title}
                     </h3>
                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {product.category?.name}
+                        {props.category?.name}
                     </p>
                 </Link>
             </div>

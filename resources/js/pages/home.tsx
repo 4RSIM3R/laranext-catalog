@@ -38,10 +38,10 @@ export default function Home({
             </section>
 
             {/* Categories Section */}
-            <SectionWrapper title="Kategori Produk" seeMoreUrl="/categories">
+            <SectionWrapper title="Kategori Produk">
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
                     {category.map((category) => (
-                        <CategoryCard key={category.id} category={category} />
+                        <CategoryCard key={category.id} props={category} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -50,7 +50,7 @@ export default function Home({
             <SectionWrapper title="Produk Terbaru" seeMoreUrl="/products">
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {product.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product.id} props={product} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -58,12 +58,12 @@ export default function Home({
             {/* Video Tutorial Section */}
             <SectionWrapper
                 title="Video Tutorial"
-                seeMoreUrl="/videos"
+                seeMoreUrl="/video"
                 className="bg-gray-50 py-12 dark:bg-gray-900"
             >
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {video.map((video) => (
-                        <VideoCard key={video.id} video={video} />
+                        <VideoCard key={video.id} props={video} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -72,7 +72,7 @@ export default function Home({
             <SectionWrapper title="Event & Pameran" seeMoreUrl="/events">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {event.map((event) => (
-                        <EventCard key={event.id} event={event} />
+                        <EventCard key={event.id} props={event} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -80,12 +80,12 @@ export default function Home({
             {/* Posts / News Section */}
             <SectionWrapper
                 title="Berita & Artikel"
-                seeMoreUrl="/posts"
+                seeMoreUrl="/article"
                 className="bg-gray-50 py-12 dark:bg-gray-900"
             >
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {article.map((article) => (
-                        <PostCard key={article.id} article={article} />
+                        <PostCard key={article.id} props={article} />
                     ))}
                 </div>
             </SectionWrapper>

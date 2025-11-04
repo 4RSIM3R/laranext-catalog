@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Contract\Master\ProductContract;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Inertia\Inertia;
 
 class PublicProductController extends Controller
@@ -19,7 +20,7 @@ class PublicProductController extends Controller
     public function index()
     {
         $data = $this->service->all(
-            filters: ['title', 'excerpt'],
+            filters: ['title', 'excerpt', 'category_id'],
             sorts: ['title', 'created_at'],
             paginate: true,
             per_page: request()->get('per_page') ?? 12,
@@ -29,8 +30,12 @@ class PublicProductController extends Controller
             relation: ['category']
         );
 
+        // Get all categories for filter
+        $categories = Category::all();
+
         return Inertia::render('product/index', [
             'props' => $data,
+            'categories' => $categories,
         ]);
     }
 

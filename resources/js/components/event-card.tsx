@@ -1,13 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import event from '@/routes/public/event';
 import { Event } from '@/types/event';
 import { Link } from '@inertiajs/react';
 
 type Props = {
-    event: Event;
+    props: Event;
 };
 
-export function EventCard({ event }: Props) {
+export function EventCard({ props }: Props) {
     const formatDate = (dateString: string) => {
         return new Intl.DateTimeFormat('id-ID', {
             weekday: 'long',
@@ -21,27 +22,27 @@ export function EventCard({ event }: Props) {
         <Card className="group relative overflow-hidden p-0 transition-all hover:shadow-xl">
             <div className="relative aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
                 <img
-                    src={event.thumbnail?.original_url}
-                    alt={event.title}
+                    src={props.thumbnail?.original_url}
+                    alt={props.title}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
                 <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
                     <div>
                         <p className="mb-4 text-sm font-medium">
-                            {formatDate(event.date)}
+                            {formatDate(props.date)}
                         </p>
                         <h3 className="mb-3 text-xl leading-tight font-bold">
-                            {event.title}
+                            {props.title}
                         </h3>
                         <p className="mb-2 line-clamp-2 text-sm text-gray-200">
-                            {event.content}
+                            {props.content}
                         </p>
                         <Link
-                            href=""
+                            href={event.show(props.slug).url}
                             className="inline-block text-sm font-medium text-primary underline transition-colors hover:text-primary/80"
                         >
-                            Read More
+                            Selengkapnya
                         </Link>
                     </div>
                     <div className="flex justify-end">
@@ -49,7 +50,7 @@ export function EventCard({ event }: Props) {
                             asChild
                             className="rounded-full bg-primary px-8 hover:bg-primary/90"
                         >
-                            <Link href="">Daftar</Link>
+                            <Link href={event.show(props.slug).url}>Selengkapnya</Link>
                         </Button>
                     </div>
                 </div>

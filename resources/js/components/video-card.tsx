@@ -1,20 +1,21 @@
 import { Card } from '@/components/ui/card';
+import video from '@/routes/public/video';
 import { Video } from '@/types/video';
 import { Link } from '@inertiajs/react';
 import { Play } from 'lucide-react';
 
 type Props = {
-    video: Video;
+    props: Video;
 };
 
-export function VideoCard({ video }: Props) {
+export function VideoCard({ props }: Props) {
     return (
         <Card className="group overflow-hidden p-0 transition-all hover:shadow-xl">
-            <Link href="">
+            <Link href={video.show(props.slug).url}>
                 <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <img
-                        src={video.thumbnail?.original_url}
-                        alt={video.title}
+                        src={props.thumbnail?.original_url}
+                        alt={props.title}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20">
@@ -28,12 +29,12 @@ export function VideoCard({ video }: Props) {
                 </div>
             </Link>
             <div className="p-4">
-                <Link href="">
+                <Link href={video.show(props.slug).url}>
                     <h3 className="mb-2 line-clamp-2 font-semibold text-gray-900 transition-colors hover:text-primary dark:text-gray-100">
-                        {video.title}
+                        {props.title}
                     </h3>
                     <p className="text-sm font-medium text-primary">
-                        {video.slug}
+                        {props.slug}
                     </p>
                 </Link>
             </div>
