@@ -10,8 +10,8 @@ type Props = {
 
 export function VideoCard({ props }: Props) {
     return (
-        <Card className="group overflow-hidden p-0 transition-all hover:shadow-xl">
-            <Link href={video.show(props.slug).url}>
+        <Link href={video.show(props.slug).url}>
+            <Card className="group overflow-hidden p-0 transition-all hover:shadow-xl">
                 <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <img
                         src={props.thumbnail?.original_url}
@@ -27,17 +27,17 @@ export function VideoCard({ props }: Props) {
                         </div>
                     </div>
                 </div>
-            </Link>
-            <div className="p-4">
-                <Link href={video.show(props.slug).url}>
-                    <h3 className="mb-2 line-clamp-2 font-semibold text-gray-900 transition-colors hover:text-primary dark:text-gray-100">
-                        {props.title}
-                    </h3>
-                    <p className="text-sm font-medium text-primary">
-                        {props.slug}
-                    </p>
-                </Link>
-            </div>
-        </Card>
+                <div className="px-6 py-4">
+                    <Link href={video.show(props.slug).url}>
+                        <h3 className="mb-2 line-clamp-2 text-xl font-bold text-gray-900 transition-colors hover:text-primary dark:text-gray-100">
+                            {props.title}
+                        </h3>
+                        <p className="text-lg font-medium text-orange-500">
+                            Michael Buyung
+                        </p>
+                    </Link>
+                </div>
+            </Card>
+        </Link>
     );
 }

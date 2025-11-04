@@ -5,6 +5,7 @@ export interface Video {
     title: string;
     slug: string;
     content: string;
+    excerpt: string;
     thumbnail?: Media & Media;
     video?: Media & Media;
     created_at: string;

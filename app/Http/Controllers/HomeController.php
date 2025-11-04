@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Video;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ class HomeController extends Controller
         $video = Video::query()->inRandomOrder()->limit(3)->get();
         $event = Event::query()->inRandomOrder()->limit(3)->get();
         $article = Article::query()->inRandomOrder()->limit(3)->get();
+        $partner = Partner::where('is_featured', true)->get();
 
         return Inertia::render('home', [
             'banner' => $banner,
@@ -30,6 +32,7 @@ class HomeController extends Controller
             'video' => $video,
             'event' => $event,
             'article' => $article,
+            'partner' => $partner,
         ]);
     }
 

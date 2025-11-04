@@ -9,12 +9,10 @@ import { Product } from '@/types/product';
 import { Link } from '@inertiajs/react';
 import {
     Facebook,
-    Heart,
     Link2,
     Linkedin,
     MessageCircle,
     Package,
-    Store,
     Tag,
     Twitter,
 } from 'lucide-react';
@@ -29,7 +27,6 @@ type Props = {
 
 export default function ProductDetail({ props }: Props) {
     const { product: productData, related } = props;
-    const [isFavorite, setIsFavorite] = useState(false);
     const [copied, setCopied] = useState(false);
 
     const formatPrice = (price: number) => {
@@ -89,7 +86,19 @@ export default function ProductDetail({ props }: Props) {
                     {productData.category && (
                         <>
                             <span>/</span>
-                            <span>{productData.category.name}</span>
+                            <Link
+                                href={
+                                    product.index({
+                                        query: {
+                                            category_id:
+                                                productData.category.id,
+                                        },
+                                    }).url
+                                }
+                                className="transition-colors hover:text-primary"
+                            >
+                                {productData.category.name}
+                            </Link>
                         </>
                     )}
                     <span>/</span>
@@ -130,18 +139,6 @@ export default function ProductDetail({ props }: Props) {
                                             </Badge>
                                         </div>
                                     )}
-
-                                    {/* Favorite Button */}
-                                    <button
-                                        onClick={() =>
-                                            setIsFavorite(!isFavorite)
-                                        }
-                                        className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:scale-110 dark:bg-gray-800"
-                                    >
-                                        <Heart
-                                            className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600 dark:text-gray-400'}`}
-                                        />
-                                    </button>
                                 </div>
                             </Card>
 
@@ -240,100 +237,12 @@ export default function ProductDetail({ props }: Props) {
                                 <div className="p-6">
                                     <Button
                                         size="lg"
-                                        className="mb-3 w-full"
+                                        className="w-full"
                                         onClick={handleWhatsAppContact}
                                     >
                                         <MessageCircle className="mr-2 h-5 w-5" />
                                         Hubungi via WhatsApp
                                     </Button>
-
-                                    <Button
-                                        variant="outline"
-                                        size="lg"
-                                        className="w-full"
-                                        onClick={() =>
-                                            setIsFavorite(!isFavorite)
-                                        }
-                                    >
-                                        <Heart
-                                            className={`mr-2 h-5 w-5 ${isFavorite ? 'fill-current' : ''}`}
-                                        />
-                                        {isFavorite
-                                            ? 'Hapus dari Favorit'
-                                            : 'Tambah ke Favorit'}
-                                    </Button>
-                                </div>
-
-                                <Separator />
-
-                                <div className="p-6">
-                                    <h4 className="mb-4 font-semibold text-gray-900 dark:text-gray-100">
-                                        Status Produk
-                                    </h4>
-                                    <div className="space-y-3 text-sm">
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">
-                                                Kondisi
-                                            </span>
-                                            <Badge variant="secondary">
-                                                {productData.status || 'Baru'}
-                                            </Badge>
-                                        </div>
-                                        {productData.category && (
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-gray-600 dark:text-gray-400">
-                                                    Kategori
-                                                </span>
-                                                <Badge variant="outline">
-                                                    {productData.category.name}
-                                                </Badge>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </Card>
-
-                            {/* Seller Info Card */}
-                            <Card className="p-6">
-                                <div className="mb-4 flex items-center gap-3">
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                                        <Store className="h-6 w-6 text-primary" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-                                            Penjual
-                                        </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                                            UMKM Lokal Indonesia
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <Separator className="my-4" />
-
-                                <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                                    <div className="flex items-start gap-2">
-                                        <span className="mt-0.5 text-primary">
-                                            ✓
-                                        </span>
-                                        <span>Produk berkualitas terjamin</span>
-                                    </div>
-                                    <div className="flex items-start gap-2">
-                                        <span className="mt-0.5 text-primary">
-                                            ✓
-                                        </span>
-                                        <span>
-                                            Mendukung UMKM lokal Indonesia
-                                        </span>
-                                    </div>
-                                    <div className="flex items-start gap-2">
-                                        <span className="mt-0.5 text-primary">
-                                            ✓
-                                        </span>
-                                        <span>
-                                            Respons cepat melalui WhatsApp
-                                        </span>
-                                    </div>
                                 </div>
                             </Card>
 

@@ -36,7 +36,7 @@ export function EventCard({ props }: Props) {
                             {props.title}
                         </h3>
                         <p className="mb-2 line-clamp-2 text-sm text-gray-200">
-                            {props.content}
+                            {props.excerpt}
                         </p>
                         <Link
                             href={event.show(props.slug).url}

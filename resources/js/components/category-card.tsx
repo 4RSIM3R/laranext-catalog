@@ -7,7 +7,7 @@ type Props = {
 
 export function CategoryCard({ props }: Props) {
     return (
-        <Link href="">
+        <Link href={`/product?filter[category_id]=${props.id}`}>
             <div className="group flex flex-col items-center gap-3 text-center transition-all">
                 <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-gray-100 bg-white shadow-sm transition-all group-hover:border-primary/20 group-hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
                     <img
