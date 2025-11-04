@@ -96,23 +96,7 @@ export default function PostIndex({ props }: Props) {
                         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {articles.map((article) => (
                                 <div key={article.id}>
-                                    <PostCard
-                                        id={article.id}
-                                        title={article.title}
-                                        author="Lokal Berdaya"
-                                        date={article.created_at}
-                                        image={
-                                            article.thumbnail &&
-                                            typeof article.thumbnail ===
-                                                'object' &&
-                                            'original_url' in article.thumbnail
-                                                ? article.thumbnail
-                                                      .original_url ||
-                                                  '/logo.png'
-                                                : '/logo.png'
-                                        }
-                                        url={`/article/${article.slug || article.id}`}
-                                    />
+                                    <PostCard props={article} />
                                     {article.category && (
                                         <Badge
                                             variant="secondary"

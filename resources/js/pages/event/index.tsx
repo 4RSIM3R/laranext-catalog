@@ -42,12 +42,6 @@ export default function EventIndex({ props }: Props) {
         return () => clearTimeout(timeoutId);
     }, [searchQuery]);
 
-    const stripHtml = (html: string) => {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText || '';
-    };
-
     return (
         <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -100,25 +94,7 @@ export default function EventIndex({ props }: Props) {
                     <>
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                             {events.map((event) => (
-                                <EventCard
-                                    key={event.id}
-                                    id={event.id}
-                                    title={event.title}
-                                    description={stripHtml(
-                                        event.content,
-                                    ).substring(0, 150)}
-                                    date={event.date}
-                                    image={
-                                        event.thumbnail &&
-                                        typeof event.thumbnail === 'object' &&
-                                        'original_url' in event.thumbnail
-                                            ? event.thumbnail.original_url ||
-                                              '/logo.png'
-                                            : '/logo.png'
-                                    }
-                                    url={`/event/${event.slug || event.id}`}
-                                    registerUrl={`/event/${event.slug || event.id}`}
-                                />
+                                <EventCard key={event.id} props={event} />
                             ))}
                         </div>
 

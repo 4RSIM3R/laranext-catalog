@@ -286,24 +286,7 @@ export default function PostDetail({ props }: Props) {
                         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {related.map((relatedArticle) => (
                                 <div key={relatedArticle.id}>
-                                    <PostCard
-                                        id={relatedArticle.id}
-                                        title={relatedArticle.title}
-                                        author="Lokal Berdaya"
-                                        date={relatedArticle.created_at}
-                                        image={
-                                            relatedArticle.thumbnail &&
-                                            typeof relatedArticle.thumbnail ===
-                                                'object' &&
-                                            'original_url' in
-                                                relatedArticle.thumbnail
-                                                ? relatedArticle.thumbnail
-                                                      .original_url ||
-                                                  '/logo.png'
-                                                : '/logo.png'
-                                        }
-                                        url={`/article/${relatedArticle.slug || relatedArticle.id}`}
-                                    />
+                                    <PostCard props={relatedArticle} />
                                     {relatedArticle.category && (
                                         <Badge
                                             variant="secondary"

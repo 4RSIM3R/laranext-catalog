@@ -145,14 +145,18 @@ export default function ProductIndex({ props, categories }: Props) {
                                         Kategori
                                     </label>
                                     <Select
-                                        value={selectedCategory}
-                                        onValueChange={setSelectedCategory}
+                                        value={selectedCategory || 'all'}
+                                        onValueChange={(value) =>
+                                            setSelectedCategory(
+                                                value === 'all' ? '' : value,
+                                            )
+                                        }
                                     >
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Semua Kategori" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="">
+                                            <SelectItem value="all">
                                                 Semua Kategori
                                             </SelectItem>
                                             {categories.map((category) => (
