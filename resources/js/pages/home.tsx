@@ -188,19 +188,20 @@ export default function Home({
                                         <img
                                             src={item.logo.original_url}
                                             alt={item.name}
-                                            className="h-auto max-h-20 w-full object-contain grayscale transition-all group-hover:grayscale-0"
+                                            className="h-auto max-h-20 w-full object-contain transition-all"
                                             onError={(e) => {
                                                 const target =
                                                     e.target as HTMLImageElement;
                                                 target.style.display = 'none';
-                                                const parent = target.parentElement;
+                                                const parent =
+                                                    target.parentElement;
                                                 if (parent) {
                                                     parent.innerHTML = `<span class="text-gray-400 dark:text-gray-500 font-medium">${item.name}</span>`;
                                                 }
                                             }}
                                         />
                                     ) : (
-                                        <span className="text-gray-400 font-medium dark:text-gray-500">
+                                        <span className="font-medium text-gray-400 dark:text-gray-500">
                                             {item.name}
                                         </span>
                                     )}
