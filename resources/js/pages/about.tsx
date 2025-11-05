@@ -79,7 +79,7 @@ export default function About() {
                     {/* Hero Image with Overlays */}
                     <div className="relative mb-16 overflow-hidden rounded-2xl">
                         <img
-                            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000"
+                            src="/about_1.jpeg"
                             alt="Tim Lokal Berdaya"
                             className="h-[500px] w-full object-cover"
                         />
@@ -166,7 +166,7 @@ export default function About() {
                         <div className="flex items-center">
                             <div className="overflow-hidden rounded-2xl">
                                 <img
-                                    src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000"
+                                    src="/about_2.jpeg"
                                     alt="UMKM Workspace"
                                     className="h-full w-full object-cover"
                                 />
@@ -183,7 +183,7 @@ export default function About() {
                         {/* Vision */}
                         <div className="relative overflow-hidden rounded-2xl">
                             <img
-                                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=1000"
+                                src="/about_3.jpeg"
                                 alt="Team Vision"
                                 className="h-[500px] w-full object-cover"
                             />

@@ -48,7 +48,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                                     <div className="w-fit">
                                         <Button
                                             size="lg"
-                                            className="bg-white text-gray-900 hover:bg-gray-100"
+                                            className="bg-yellow-500 text-gray-900 hover:bg-yellow-600"
                                         >
                                             {slide.button_text}
                                         </Button>
