@@ -27,7 +27,6 @@ import {
     Menu,
     Phone,
     Search,
-    Twitter,
     User,
     Youtube,
 } from 'lucide-react';
@@ -39,7 +38,7 @@ type Props = {
 
 export const PublicLayout = ({ children }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { categories } = usePage<SharedData>().props;
+    const { categories, settings } = usePage<SharedData>().props;
 
     const pages = [
         { name: 'Beranda', href: home().url },
@@ -55,23 +54,27 @@ export const PublicLayout = ({ children }: Props) => {
         {
             name: 'Facebook',
             icon: Facebook,
-            href: '#',
+            href: settings.company_facebook || '#',
             username: 'Lokalberdaya',
         },
-        { name: 'Twitter', icon: Twitter, href: '#', username: 'Lokalberdaya' },
         {
             name: 'Instagram',
             icon: Instagram,
-            href: '#',
+            href: settings.company_instagram || '#',
             username: 'Lokalberdaya',
         },
         {
             name: 'LinkedIn',
             icon: Linkedin,
-            href: '#',
+            href: settings.company_linkedin || '#',
             username: 'Lokalberdaya',
         },
-        { name: 'YouTube', icon: Youtube, href: '#', username: 'Lokalberdaya' },
+        {
+            name: 'YouTube',
+            icon: Youtube,
+            href: settings.company_youtube || '#',
+            username: 'Lokalberdaya',
+        },
     ];
 
     return (
@@ -117,7 +120,8 @@ export const PublicLayout = ({ children }: Props) => {
                                     Hubungi Kami
                                 </span>
                                 <span className="text-sm font-semibold text-gray-900">
-                                    +62 813 3062 1873
+                                    {settings.contact_phone ||
+                                        '+62 813 3062 1873'}
                                 </span>
                             </div>
                         </div>
@@ -207,7 +211,7 @@ export const PublicLayout = ({ children }: Props) => {
                                         </h3>
                                         <div className="flex flex-col gap-3 px-6">
                                             <a
-                                                href="tel:+6281330621873"
+                                                href={`tel:${settings.contact_phone || '+6281330621873'}`}
                                                 className="flex items-center gap-3 text-sm"
                                             >
                                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
@@ -218,16 +222,18 @@ export const PublicLayout = ({ children }: Props) => {
                                                         Hubungi Kami
                                                     </span>
                                                     <span className="font-semibold text-gray-900">
-                                                        +62 813 3062 1873
+                                                        {settings.contact_phone ||
+                                                            '+62 813 3062 1873'}
                                                     </span>
                                                 </div>
                                             </a>
                                             <a
-                                                href="mailto:info@lokalberdaya.id"
+                                                href={`mailto:${settings.contact_email || 'info@lokalberdaya.id'}`}
                                                 className="flex items-center gap-2 text-sm text-gray-600"
                                             >
                                                 <Mail className="h-4 w-4 text-primary" />
-                                                info@lokalberdaya.id
+                                                {settings.contact_email ||
+                                                    'info@lokalberdaya.id'}
                                             </a>
                                         </div>
                                     </div>
@@ -319,11 +325,8 @@ export const PublicLayout = ({ children }: Props) => {
                                 className="h-12 w-auto"
                             />
                             <p className="text-sm leading-relaxed text-gray-400">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Et libero pretium amet nec,
-                                tristique aenean nunc. Donec ultrices feugiat
-                                ligula elit. Dignissim nulla et risus, ut est.
-                                Et consequat duis sem fames.
+                                {settings.site_description ||
+                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et libero pretium amet nec, tristique aenean nunc. Donec ultrices feugiat ligula elit. Dignissim nulla et risus, ut est. Et consequat duis sem fames.'}
                             </p>
                         </div>
 
@@ -382,20 +385,22 @@ export const PublicLayout = ({ children }: Props) => {
                             <ul className="space-y-4">
                                 <li>
                                     <a
-                                        href="mailto:Alamatemail@gmail.com"
+                                        href={`mailto:${settings.contact_email || 'info@lokalberdaya.id'}`}
                                         className="flex items-center gap-3 text-sm text-gray-300 transition-colors hover:text-primary"
                                     >
                                         <Mail className="h-5 w-5 text-primary" />
-                                        Alamatemail@gmail.com
+                                        {settings.contact_email ||
+                                            'info@lokalberdaya.id'}
                                     </a>
                                 </li>
                                 <li>
                                     <a
-                                        href="tel:082312312312"
+                                        href={`tel:${settings.contact_phone || '+6281330621873'}`}
                                         className="flex items-center gap-3 text-sm text-gray-300 transition-colors hover:text-primary"
                                     >
                                         <Phone className="h-5 w-5 text-primary" />
-                                        082312312312
+                                        {settings.contact_phone ||
+                                            '+62 813 3062 1873'}
                                     </a>
                                 </li>
                             </ul>

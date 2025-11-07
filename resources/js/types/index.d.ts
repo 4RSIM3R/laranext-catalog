@@ -24,6 +24,7 @@ export interface NavItem {
 
 export interface SharedData {
     categories: Category[];
+    settings: Record<string, string>;
     name: string;
     quote: { message: string; author: string };
     auth: Auth;

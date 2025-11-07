@@ -88,7 +88,7 @@ export default function SystemIndex() {
                             </Button>
                         </DialogTrigger>
                         <DialogContent>
-                            <p>{row.original.value} value is :</p>
+                            <p>{row.original.key} value is :</p>
                             <div className="flex items-center gap-2">
                                 <Input
                                     value={row.original.value}
