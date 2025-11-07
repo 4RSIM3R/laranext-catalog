@@ -12,7 +12,7 @@ use App\Http\Controllers\Master\UserController;
 use App\Http\Controllers\Master\VideoController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'backoffice/master', 'as' => 'master.'], function () {
+Route::group(['prefix' => 'backoffice/master', 'as' => 'master.', 'middleware' => ['auth']], function () {
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('', [UserController::class, 'index'])->name('index');
         Route::get('fetch', [UserController::class, 'fetch'])->name('fetch');

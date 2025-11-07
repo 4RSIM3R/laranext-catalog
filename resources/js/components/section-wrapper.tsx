@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
-import { ArrowRight } from 'lucide-react';
 
 interface SectionWrapperProps {
     title: string;
@@ -23,11 +22,8 @@ export function SectionWrapper({
                         {title}
                     </h2>
                     {seeMoreUrl && (
-                        <Button asChild variant="ghost" size="sm">
-                            <Link href={seeMoreUrl}>
-                                Lihat Semua
-                                <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
+                        <Button asChild className="bg-primary">
+                            <Link href={seeMoreUrl}>Lihat Semua</Link>
                         </Button>
                     )}
                 </div>

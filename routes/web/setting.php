@@ -4,7 +4,7 @@ use App\Http\Controllers\Setting\PageController;
 use App\Http\Controllers\Setting\SettingController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'backoffice/setting', 'as' => 'setting.'], function () {
+Route::group(['prefix' => 'backoffice/setting', 'as' => 'setting.', 'middleware' => ['auth']], function () {
     Route::group(['prefix' => 'setting', 'as' => 'system.'], function () {
         Route::get('', [SettingController::class, 'index'])->name('index');
         Route::get('fetch', [SettingController::class, 'fetch'])->name('fetch');
