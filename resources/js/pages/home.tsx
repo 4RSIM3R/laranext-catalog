@@ -153,10 +153,10 @@ export default function Home({
             <SectionWrapper
                 title="Berita & Artikel"
                 seeMoreUrl="/article"
-                className="bg-gray-50 py-12 dark:bg-gray-900"
+                className="bg-gray-50 py-12"
             >
                 {article.length > 0 ? (
-                    <div className="no-scrollbar flex gap-6 overflow-x-auto pb-4 lg:grid lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {article.map((article) => (
                             <PostCard key={article.id} props={article} />
                         ))}
