@@ -9,11 +9,15 @@ import { Product } from '@/types/product';
 import { Link } from '@inertiajs/react';
 import {
     Facebook,
+    Factory,
+    FileCheck,
     Link2,
     Linkedin,
+    MapPin,
     MessageCircle,
     Package,
     Tag,
+    TrendingUp,
     Twitter,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -170,6 +174,88 @@ export default function ProductDetail({ props }: Props) {
                                                 '<p>Deskripsi produk tidak tersedia.</p>',
                                         }}
                                     />
+                                </div>
+
+                                <Separator className="my-6" />
+
+                                {/* Product Information */}
+                                <div>
+                                    <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                                        Informasi Produk
+                                    </h2>
+                                    <div className="grid gap-4 sm:grid-cols-2">
+                                        {/* Manufacturer */}
+                                        {productData.manufacturer && (
+                                            <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                                                    <Factory className="h-5 w-5 text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                        Produsen
+                                                    </p>
+                                                    <p className="mt-1 text-base font-semibold text-gray-900 dark:text-gray-100">
+                                                        {
+                                                            productData.manufacturer
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Address */}
+                                        {productData.address && (
+                                            <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                                                    <MapPin className="h-5 w-5 text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                        Alamat
+                                                    </p>
+                                                    <p className="mt-1 text-base font-semibold text-gray-900 dark:text-gray-100">
+                                                        {productData.address}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* License */}
+                                        {productData.license && (
+                                            <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                                                    <FileCheck className="h-5 w-5 text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                        Izin Usaha
+                                                    </p>
+                                                    <p className="mt-1 text-base font-semibold text-gray-900 dark:text-gray-100">
+                                                        {productData.license}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Production Capacity */}
+                                        {productData.production_capacity && (
+                                            <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                                                    <TrendingUp className="h-5 w-5 text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                        Kapasitas Produksi
+                                                    </p>
+                                                    <p className="mt-1 text-base font-semibold text-gray-900 dark:text-gray-100">
+                                                        {
+                                                            productData.production_capacity
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
 
                                 <Separator className="my-6" />
