@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('excerpt');
             $table->string('phone_number')->nullable();
             $table->integer('price')->nullable();
+            $table->text('manufacturer');
+            $table->text('address');
+            $table->text('license');
+            $table->text('production_capacity');
             $table->timestamps();
             $table->index(['slug']);
         });

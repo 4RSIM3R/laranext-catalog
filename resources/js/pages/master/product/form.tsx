@@ -37,6 +37,10 @@ export default function ProductForm({ props }: Props) {
         excerpt: props?.excerpt || '',
         phone_number: props?.phone_number || '',
         price: props?.price || '',
+        manufacturer: props?.manufacturer || '',
+        address: props?.address || '',
+        license: props?.license || '',
+        production_capacity: props?.production_capacity || '',
         thumbnail: props?.thumbnail || null,
     });
 
@@ -144,6 +148,42 @@ export default function ProductForm({ props }: Props) {
                             onChange={(e) => setData('price', e.target.value)}
                         />
                         <InputError message={errors?.price} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Manufacturer</Label>
+                        <Input
+                            value={data.manufacturer}
+                            onChange={(e) =>
+                                setData('manufacturer', e.target.value)
+                            }
+                        />
+                        <InputError message={errors?.manufacturer} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Address</Label>
+                        <Input
+                            value={data.address}
+                            onChange={(e) => setData('address', e.target.value)}
+                        />
+                        <InputError message={errors?.address} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>License</Label>
+                        <Input
+                            value={data.license}
+                            onChange={(e) => setData('license', e.target.value)}
+                        />
+                        <InputError message={errors?.license} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Production Capacity</Label>
+                        <Input
+                            value={data.production_capacity}
+                            onChange={(e) =>
+                                setData('production_capacity', e.target.value)
+                            }
+                        />
+                        <InputError message={errors?.production_capacity} />
                     </div>
                     <div className="col-span-12 flex flex-col gap-y-1.5">
                         <Label className="text-base">Thumbnail</Label>

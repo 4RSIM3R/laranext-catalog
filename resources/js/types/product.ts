@@ -8,11 +8,14 @@ export interface Product {
     slug: string;
     content: string;
     excerpt: string;
-    created_at: string;
-    updated_at: string;
     phone_number: string;
     price: number;
-    status: string;
+    manufacturer: string;
+    address: string;
+    license: string;
+    production_capacity: string;
+    created_at: string;
+    updated_at: string;
     thumbnail?: Media & Media;
     category?: Category;
 }
