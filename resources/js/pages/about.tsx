@@ -1,15 +1,23 @@
-import { PublicLayout } from "@/layouts/public-layout";
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import { useState } from "react";
+} from '@/components/ui/collapsible';
+import { PublicLayout } from '@/layouts/public-layout';
+import {
+    ChevronDown,
+    ChevronRight,
+    GraduationCap,
+    Handshake,
+    Megaphone,
+} from 'lucide-react';
+import { useState } from 'react';
 
 export default function About() {
-    const [openSection, setOpenSection] = useState<string | null>("customer-service");
+    const [openSection, setOpenSection] = useState<string | null>(
+        'customer-service',
+    );
 
     const toggleSection = (section: string) => {
         setOpenSection(openSection === section ? null : section);
@@ -17,29 +25,29 @@ export default function About() {
 
     const services = [
         {
-            id: "customer-service",
-            title: "Customer Service",
+            id: 'customer-service',
+            title: 'Customer Service',
             content:
-                "Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.",
+                'Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.',
         },
         {
-            id: "online-consultation",
-            title: "Online Consultation",
+            id: 'online-consultation',
+            title: 'Online Consultation',
             content:
-                "Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.",
+                'Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.',
         },
         {
-            id: "sales-management",
-            title: "Sales Management",
+            id: 'sales-management',
+            title: 'Sales Management',
             content:
-                "Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.",
+                'Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.',
         },
     ];
 
     const missionPoints = [
-        "Meningkatkan kapasitas UMKM melalui edukasi dan pendampingan.",
-        "Membantu UMKM memasarkan produknya melalui kanal digital.",
-        "Menjadi mitra strategis perusahaan dalam menciptakan program CSR yang berdampak dan terukur.",
+        'Meningkatkan kapasitas UMKM melalui edukasi dan pendampingan.',
+        'Membantu UMKM memasarkan produknya melalui kanal digital.',
+        'Menjadi mitra strategis perusahaan dalam menciptakan program CSR yang berdampak dan terukur.',
     ];
 
     return (
@@ -86,16 +94,16 @@ export default function About() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
                         {/* Bottom Left Text Overlay */}
-                        <div className="absolute bottom-8 left-8 right-8 space-y-4 md:bottom-12 md:left-12 md:right-1/2">
+                        <div className="absolute right-8 bottom-8 left-8 space-y-4 md:right-1/2 md:bottom-12 md:left-12">
                             <p className="text-base text-white md:text-lg">
                                 <span className="font-semibold">
                                     Di setiap sudut kota dan desa,
-                                </span>{" "}
+                                </span>{' '}
                                 ada ribuan UMKM yang berjuang membangun masa
-                                depan.{" "}
+                                depan.{' '}
                                 <span className="font-semibold">
                                     Lokal Berdaya
-                                </span>{" "}
+                                </span>{' '}
                                 hadir untuk mendukung mereka melalui edukasi,
                                 promosi, dan kolaborasi dengan perusahaan yang
                                 peduli pada pemberdayaan ekonomi berkelanjutan.
@@ -144,13 +152,13 @@ export default function About() {
                                                     className={`h-5 w-5 text-gray-500 transition-transform ${
                                                         openSection ===
                                                         service.id
-                                                            ? "rotate-180"
-                                                            : ""
+                                                            ? 'rotate-180'
+                                                            : ''
                                                     }`}
                                                 />
                                             </CollapsibleTrigger>
                                             <CollapsibleContent>
-                                                <div className="border-t border-gray-100 px-6 pb-6 pt-4">
+                                                <div className="border-t border-gray-100 px-6 pt-4 pb-6">
                                                     <p className="text-gray-600">
                                                         {service.content}
                                                     </p>
@@ -206,10 +214,7 @@ export default function About() {
                             </h3>
                             <div className="space-y-6">
                                 {missionPoints.map((point, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex gap-4"
-                                    >
+                                    <div key={index} className="flex gap-4">
                                         <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
                                             {index + 1}
                                         </div>
@@ -219,6 +224,67 @@ export default function About() {
                                     </div>
                                 ))}
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Program Utama Section */}
+            <section className="bg-gray-50 py-16">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="mb-12 text-center">
+                        <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+                            Program Utama Lokal Berdaya
+                        </h2>
+                    </div>
+
+                    <div className="grid gap-8 md:grid-cols-3">
+                        {/* Column 1: Edukasi & Pengembangan Kapasitas */}
+                        <div className="flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md">
+                            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
+                                <GraduationCap className="h-10 w-10 text-primary" />
+                            </div>
+                            <h3 className="mb-4 text-xl font-bold text-gray-900">
+                                Edukasi & Pengembangan Kapasitas
+                            </h3>
+                            <p className="text-gray-600">
+                                Program pelatihan terstruktur, mentoring
+                                intensif, dan materi praktis yang dirancang
+                                untuk meningkatkan pengetahuan bisnis,
+                                pemasaran, dan branding bagi pelaku UMKM.
+                            </p>
+                        </div>
+
+                        {/* Column 2: Promosi & Strategi Branding */}
+                        <div className="flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md">
+                            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
+                                <Megaphone className="h-10 w-10 text-primary" />
+                            </div>
+                            <h3 className="mb-4 text-xl font-bold text-gray-900">
+                                Promosi & Strategi Branding
+                            </h3>
+                            <p className="text-gray-600">
+                                Dukungan penuh dalam membuka akses pasar dan
+                                memperkuat citra produk UMKM melalui kampanye
+                                pemasaran digital yang tepat sasaran dan
+                                berdampak luas.
+                            </p>
+                        </div>
+
+                        {/* Column 3: Kolaborasi CSR Berdampak */}
+                        <div className="flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md">
+                            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
+                                <Handshake className="h-10 w-10 text-primary" />
+                            </div>
+                            <h3 className="mb-4 text-xl font-bold text-gray-900">
+                                Kolaborasi CSR Berdampak
+                            </h3>
+                            <p className="text-gray-600">
+                                Inisiatif CSR yang dirancang sesuai kebutuhan
+                                perusahaan sekaligus memaksimalkan potensi UMKM
+                                binaan untuk menciptakan dampak sosial dan
+                                ekonomi yang terukur serta berkelanjutan.
+                            </p>
                         </div>
                     </div>
                 </div>
