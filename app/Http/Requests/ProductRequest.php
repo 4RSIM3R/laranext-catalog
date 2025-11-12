@@ -29,6 +29,10 @@ class ProductRequest extends FormRequest
             'excerpt' => 'required|string',
             'phone_number' => 'nullable|string|max:255',
             'price' => 'nullable|numeric',
+            'manufacturer' => 'required|string',
+            'address' => 'required|string',
+            'license' => 'required|string',
+            'production_capacity' => 'required|string',
             'thumbnail' => $this->isMethod('post') ? 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
