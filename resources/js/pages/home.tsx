@@ -181,7 +181,7 @@ export default function Home({
                             {partner.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="group flex h-32 w-48 items-center justify-center rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
+                                    className="group flex h-32 w-48 items-center justify-center p-6 transition-all"
                                     title={item.name}
                                 >
                                     {item.logo?.original_url ? (
