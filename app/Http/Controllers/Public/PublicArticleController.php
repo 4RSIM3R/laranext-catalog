@@ -26,7 +26,7 @@ class PublicArticleController extends Controller
             order_column: 'created_at',
             order_position: 'desc',
             conditions: [],
-            relation: ['category']
+            relation: []
         );
 
         return Inertia::render('article/index', [
@@ -36,9 +36,9 @@ class PublicArticleController extends Controller
 
     public function show($slug)
     {
-        $article = $this->service->findWhere(['slug' => $slug], ['category']);
+        $article = $this->service->findWhere(['slug' => $slug], []);
 
-        // Get related articles (same category or recent articles, excluding current)
+        // Get related articles (recent articles, excluding current)
         $related = $this->service->all(
             filters: [],
             sorts: ['created_at'],
@@ -49,7 +49,7 @@ class PublicArticleController extends Controller
             conditions: [
                 ['id', '!=', $article->id]
             ],
-            relation: ['category']
+            relation: []
         );
 
         // Limit to 6 related articles

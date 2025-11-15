@@ -16,8 +16,12 @@ class PartnerFactory extends Factory
      */
     public function definition(): array
     {
+        static $order = 0;
+
         return [
-            //
+            'name' => fake()->company(),
+            'is_featured' => fake()->boolean(80), // 80% chance of being featured
+            'order' => $order++,
         ];
     }
 }

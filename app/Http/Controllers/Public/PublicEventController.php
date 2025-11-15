@@ -20,10 +20,10 @@ class PublicEventController extends Controller
     {
         $data = $this->service->all(
             filters: ['title'],
-            sorts: ['title', 'date', 'created_at'],
+            sorts: ['title', 'start_date', 'created_at', 'is_completed'],
             paginate: true,
             per_page: request()->get('per_page') ?? 12,
-            order_column: 'date',
+            order_column: 'start_date',
             order_position: 'asc',
             conditions: [],
             relation: []
@@ -41,10 +41,10 @@ class PublicEventController extends Controller
         // Get related events (upcoming events, excluding current)
         $related = $this->service->all(
             filters: [],
-            sorts: ['date'],
+            sorts: ['start_date'],
             paginate: false,
             per_page: 6,
-            order_column: 'date',
+            order_column: 'start_date',
             order_position: 'asc',
             conditions: [
                 ['id', '!=', $event->id]

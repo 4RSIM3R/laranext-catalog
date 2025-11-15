@@ -26,19 +26,26 @@ export default function EventDetail({ props }: Props) {
         }).format(new Date(dateString));
     };
 
-    const formatEventTime = (dateString: string) => {
-        return new Intl.DateTimeFormat('id-ID', {
-            hour: '2-digit',
-            minute: '2-digit',
-            timeZoneName: 'short',
-        }).format(new Date(dateString));
+    const formatDateRange = () => {
+        const start = formatEventDate(event.start_date);
+        if (event.end_date && event.end_date !== event.start_date) {
+            const end = formatEventDate(event.end_date);
+            return `${start} - ${end}`;
+        }
+        return start;
     };
 
-    const isEventPassed = (dateString: string) => {
-        return new Date(dateString) < new Date();
+    const formatTimeRange = () => {
+        if (!event.start_time && !event.end_time) {
+            return 'Waktu akan diumumkan';
+        }
+        if (event.start_time && event.end_time) {
+            return `${event.start_time} - ${event.end_time}`;
+        }
+        return event.start_time || event.end_time || '-';
     };
 
-    const eventPassed = isEventPassed(event.date);
+    const eventPassed = event.is_completed;
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -100,7 +107,7 @@ export default function EventDetail({ props }: Props) {
                                         Tanggal
                                     </p>
                                     <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
-                                        {formatEventDate(event.date)}
+                                        {formatDateRange()}
                                     </p>
                                 </div>
                             </div>
@@ -116,7 +123,7 @@ export default function EventDetail({ props }: Props) {
                                         Waktu
                                     </p>
                                     <p className="mt-1 font-semibold text-gray-900 dark:text-gray-100">
-                                        {formatEventTime(event.date)}
+                                        {formatTimeRange()}
                                     </p>
                                 </div>
                             </div>

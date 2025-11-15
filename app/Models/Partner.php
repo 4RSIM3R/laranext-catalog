@@ -18,6 +18,10 @@ class Partner extends Model implements HasMedia
 
     protected $hidden = ['media'];
 
+    protected $casts = [
+        'order' => 'integer',
+    ];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')->singleFile();
@@ -26,5 +30,13 @@ class Partner extends Model implements HasMedia
     public function getLogoAttribute()
     {
         return $this->getMedia('logo')->first();
+    }
+
+    /**
+     * Scope to get partners ordered by their order field
+     */
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order', 'asc');
     }
 }

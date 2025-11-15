@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('title');
             $table->text('slug')->unique();
             $table->text('content');
             $table->string('excerpt');
+            $table->json('tags')->nullable(); // Support multiple tags like WordPress
             $table->timestamps();
             $table->index(['slug']);
         });

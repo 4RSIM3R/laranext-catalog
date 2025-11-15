@@ -27,7 +27,7 @@ class EventController extends Controller
     {
         $data = $this->service->all(
             filters: ['name'],
-            sorts: ['name', 'created_at'],
+            sorts: ['name', 'created_at', 'start_date', 'is_completed'],
             paginate: true,
             per_page: request()->get('per_page') ?? 10,
             conditions: [],

@@ -28,7 +28,7 @@ class PartnerController extends Controller
     {
         $data = $this->service->all(
             filters: ['name'],
-            sorts: ['name', 'created_at'],
+            sorts: ['name', 'created_at', 'order'],
             paginate: true,
             per_page: request()->get('per_page') ?? 10,
             conditions: [],

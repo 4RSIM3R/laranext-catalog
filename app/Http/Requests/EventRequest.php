@@ -27,9 +27,13 @@ class EventRequest extends FormRequest
             'content' => 'required|string',
             'excerpt' => 'required|string',
             'thumbnail' => $this->isMethod('post')
-                ? 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-                : 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'date' => 'required|date',
+                ? 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
+                : 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'is_completed' => 'nullable|boolean',
         ];
     }
 }

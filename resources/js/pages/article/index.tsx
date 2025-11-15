@@ -97,14 +97,21 @@ export default function PostIndex({ props }: Props) {
                             {articles.map((article) => (
                                 <div key={article.id}>
                                     <PostCard props={article} />
-                                    {article.category && (
-                                        <Badge
-                                            variant="secondary"
-                                            className="mt-3"
-                                        >
-                                            {article.category.name}
-                                        </Badge>
-                                    )}
+                                    {article.tags &&
+                                        article.tags.length > 0 && (
+                                            <div className="mt-3 flex flex-wrap gap-2">
+                                                {article.tags.map(
+                                                    (tag, index) => (
+                                                        <Badge
+                                                            key={index}
+                                                            variant="secondary"
+                                                        >
+                                                            {tag}
+                                                        </Badge>
+                                                    ),
+                                                )}
+                                            </div>
+                                        )}
                                 </div>
                             ))}
                         </div>

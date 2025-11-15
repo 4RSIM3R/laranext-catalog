@@ -68,20 +68,20 @@ export default function PostDetail({ props }: Props) {
                         >
                             Blog
                         </Link>
-                        {article.category && (
-                            <>
-                                <span>/</span>
-                                <span>{article.category.name}</span>
-                            </>
-                        )}
+                        <span>/</span>
+                        <span>Artikel</span>
                     </div>
 
-                    {/* Category Badge */}
-                    {article.category && (
-                        <Badge variant="default" className="mb-4">
-                            <Tag className="mr-1 h-3 w-3" />
-                            {article.category.name}
-                        </Badge>
+                    {/* Tags */}
+                    {article.tags && article.tags.length > 0 && (
+                        <div className="mb-4 flex flex-wrap gap-2">
+                            {article.tags.map((tag, index) => (
+                                <Badge key={index} variant="default">
+                                    <Tag className="mr-1 h-3 w-3" />
+                                    {tag}
+                                </Badge>
+                            ))}
+                        </div>
                     )}
 
                     {/* Title */}
@@ -287,14 +287,21 @@ export default function PostDetail({ props }: Props) {
                             {related.map((relatedArticle) => (
                                 <div key={relatedArticle.id}>
                                     <PostCard props={relatedArticle} />
-                                    {relatedArticle.category && (
-                                        <Badge
-                                            variant="secondary"
-                                            className="mt-3"
-                                        >
-                                            {relatedArticle.category.name}
-                                        </Badge>
-                                    )}
+                                    {relatedArticle.tags &&
+                                        relatedArticle.tags.length > 0 && (
+                                            <div className="mt-3 flex flex-wrap gap-2">
+                                                {relatedArticle.tags.map(
+                                                    (tag, index) => (
+                                                        <Badge
+                                                            key={index}
+                                                            variant="secondary"
+                                                        >
+                                                            {tag}
+                                                        </Badge>
+                                                    ),
+                                                )}
+                                            </div>
+                                        )}
                                 </div>
                             ))}
                         </div>

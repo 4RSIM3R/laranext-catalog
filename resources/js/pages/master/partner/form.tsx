@@ -22,6 +22,7 @@ import { Loader2 } from 'lucide-react';
 type FormData = {
     name: string;
     is_featured: boolean;
+    order: number;
     logo: File | Media | null;
 };
 
@@ -33,6 +34,7 @@ export default function PartnerForm({ props }: Props) {
     const { data, setData, post, processing, errors } = useForm<FormData>({
         name: props?.name || '',
         is_featured: props?.is_featured ?? true,
+        order: props?.order ?? 0,
         logo: props?.logo || null,
     });
 
@@ -74,6 +76,23 @@ export default function PartnerForm({ props }: Props) {
                             placeholder="Enter partner name"
                         />
                         <InputError message={errors?.name} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Display Order</Label>
+                        <Input
+                            type="number"
+                            value={data.order}
+                            onChange={(e) =>
+                                setData('order', parseInt(e.target.value) || 0)
+                            }
+                            placeholder="0"
+                            min="0"
+                        />
+                        <InputError message={errors?.order} />
+                        <p className="text-xs text-muted-foreground">
+                            Lower numbers appear first. You can also drag and
+                            drop to reorder.
+                        </p>
                     </div>
                     <div className="flex flex-row items-center gap-2">
                         <Checkbox

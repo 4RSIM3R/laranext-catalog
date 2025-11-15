@@ -30,7 +30,7 @@ class ArticleController extends Controller
             paginate: true,
             per_page: request()->get('per_page') ?? 10,
             conditions: [],
-            relation: ['category']
+            relation: []
         );
 
         return response()->json($data);
@@ -38,7 +38,7 @@ class ArticleController extends Controller
 
     public function show($id)
     {
-        $data = $this->service->find($id, ['category']);
+        $data = $this->service->find($id, []);
         return Inertia::render('master/article/form', [
             "props" => $data,
         ]);

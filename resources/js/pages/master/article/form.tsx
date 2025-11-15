@@ -1,6 +1,5 @@
 import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
-import { MultiSelect } from '@/components/multi-select';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -14,7 +13,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { AppLayout } from '@/layouts/app-layout';
 import { extensions, FormResponse } from '@/lib/constant';
-import { fetchCategory } from '@/lib/select';
 import { slugify } from '@/lib/utils';
 import article from '@/routes/master/article';
 import { Article } from '@/types/article';
@@ -30,7 +28,7 @@ type Props = {
 export default function PostForm({ props }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         _method: props?.id ? 'put' : 'post',
-        category_id: props?.category_id || null,
+        tags: props?.tags || [],
         thumbnail: props?.thumbnail || null,
         title: props?.title || '',
         slug: props?.slug || '',
@@ -75,17 +73,26 @@ export default function PostForm({ props }: Props) {
                 </CardHeader>
                 <CardContent className="flex h-fit flex-col gap-4">
                     <div className="flex flex-col gap-1.5">
-                        <Label>Category</Label>
-                        <MultiSelect
-                            loadOptions={fetchCategory}
-                            defaultValue={{
-                                value: props?.category_id,
-                                label: props?.category?.name ?? '',
-                            }}
-                            onChange={(v: any) =>
-                                setData('category_id', v?.value)
+                        <Label>Tags (comma-separated)</Label>
+                        <Input
+                            value={
+                                Array.isArray(data.tags)
+                                    ? data.tags.join(', ')
+                                    : ''
                             }
+                            onChange={(e) => {
+                                const tags = e.target.value
+                                    .split(',')
+                                    .map((tag) => tag.trim())
+                                    .filter((tag) => tag !== '');
+                                setData('tags', tags);
+                            }}
+                            placeholder="e.g., Berita, Pelatihan, Pengumuman"
                         />
+                        <InputError message={errors?.tags} />
+                        <p className="text-xs text-muted-foreground">
+                            Separate multiple tags with commas
+                        </p>
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Title</Label>
