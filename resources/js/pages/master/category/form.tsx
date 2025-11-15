@@ -10,6 +10,13 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { AppLayout } from '@/layouts/app-layout';
 import { FormResponse } from '@/lib/constant';
 import { slugify } from '@/lib/utils';
@@ -20,9 +27,11 @@ import { useForm } from '@inertiajs/react';
 import { Loader2 } from 'lucide-react';
 
 type FormData = {
+    _method?: 'put' | 'post';
     name: string;
     slug: string;
     thumbnail: File | Media | null;
+    type: string;
 };
 
 type Props = {
@@ -30,20 +39,28 @@ type Props = {
 };
 
 export default function CategoryForm({ props }: Props) {
-    const { data, setData, post, put, processing, errors } = useForm<FormData>({
+    const { data, setData, post, processing, errors } = useForm<FormData>({
+        _method: props?.id ? 'put' : 'post',
         name: props?.name || '',
         slug: props?.slug || '',
         thumbnail: props?.thumbnail || null,
+        type: props?.type || 'product',
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (props?.id) {
-            put(category.update(props.id).url, FormResponse);
-        } else {
-            post(category.store().url, FormResponse);
+        // Only include thumbnail if it's a new File object
+        if (!(data.thumbnail instanceof File)) {
+            data.thumbnail = null;
         }
+
+        // Always use POST when dealing with files (multipart/form-data)
+        // The _method field will tell Laravel to treat it as PUT if updating
+        const url = props?.id
+            ? category.update(props.id).url
+            : category.store().url;
+        post(url, FormResponse);
     };
 
     return (
@@ -84,6 +101,22 @@ export default function CategoryForm({ props }: Props) {
                             readOnly={true}
                             disabled={true}
                         />
+                        <InputError message={errors?.slug} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Type</Label>
+                        <Select
+                            value={data.type}
+                            onValueChange={(value) => setData('type', value)}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="product">Product</SelectItem>
+                                <SelectItem value="article">Article</SelectItem>
+                            </SelectContent>
+                        </Select>
                         <InputError message={errors?.slug} />
                     </div>
                     <div className="col-span-12 flex flex-col gap-y-1.5">

@@ -4,5 +4,6 @@ import { Model } from './model';
 export interface Category extends Model {
     name: string;
     slug: string;
-    thumbnail?: Media & Media;
+    thumbnail?: Media & File;
+    type: string;
 }
