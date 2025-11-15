@@ -82,3 +82,12 @@ export const file_size_format = (
 
     return `${size.toFixed(precision)} ${units[unitIndex]}`;
 };
+
+export const format_date = (dateString: string) => {
+    return new Intl.DateTimeFormat('id-ID', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    }).format(new Date(dateString));
+};

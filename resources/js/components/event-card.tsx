@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { format_date } from '@/lib/format';
 import event from '@/routes/public/event';
 import { Event } from '@/types/event';
 import { Link } from '@inertiajs/react';
@@ -9,19 +10,10 @@ type Props = {
 };
 
 export function EventCard({ props }: Props) {
-    const formatDate = (dateString: string) => {
-        return new Intl.DateTimeFormat('id-ID', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-        }).format(new Date(dateString));
-    };
-
     const formatDateRange = () => {
-        const start = formatDate(props.start_date);
+        const start = format_date(props.start_date);
         if (props.end_date && props.end_date !== props.start_date) {
-            const end = formatDate(props.end_date);
+            const end = format_date(props.end_date);
             return `${start} - ${end}`;
         }
         return start;

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { PublicLayout } from '@/layouts/public-layout';
+import { format_date } from '@/lib/format';
 import { Article } from '@/types/article';
 import { Link } from '@inertiajs/react';
 import { Calendar, Copy, Facebook, Linkedin, Tag, Twitter } from 'lucide-react';
@@ -19,14 +20,6 @@ type Props = {
 export default function PostDetail({ props }: Props) {
     const { article, related } = props;
     const [copied, setCopied] = useState(false);
-
-    const formatDate = (dateString: string) => {
-        return new Intl.DateTimeFormat('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        }).format(new Date(dateString));
-    };
 
     const handleCopyLink = () => {
         navigator.clipboard.writeText(window.location.href);
@@ -105,7 +98,7 @@ export default function PostDetail({ props }: Props) {
                         />
                         <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4" />
-                            <span>{formatDate(article.created_at)}</span>
+                            <span>{format_date(article.created_at)}</span>
                         </div>
                     </div>
 
@@ -238,7 +231,7 @@ export default function PostDetail({ props }: Props) {
                                                         {relatedArticle.title}
                                                     </h4>
                                                     <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
-                                                        {formatDate(
+                                                        {format_date(
                                                             relatedArticle.created_at,
                                                         )}
                                                     </p>

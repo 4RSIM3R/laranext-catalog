@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { PublicLayout } from '@/layouts/public-layout';
+import { format_date } from '@/lib/format';
 import { Event } from '@/types/event';
 import { Calendar, Clock, Share2 } from 'lucide-react';
 
@@ -17,19 +18,10 @@ type Props = {
 export default function EventDetail({ props }: Props) {
     const { event, related } = props;
 
-    const formatEventDate = (dateString: string) => {
-        return new Intl.DateTimeFormat('id-ID', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        }).format(new Date(dateString));
-    };
-
     const formatDateRange = () => {
-        const start = formatEventDate(event.start_date);
+        const start = format_date(event.start_date);
         if (event.end_date && event.end_date !== event.start_date) {
-            const end = formatEventDate(event.end_date);
+            const end = format_date(event.end_date);
             return `${start} - ${end}`;
         }
         return start;

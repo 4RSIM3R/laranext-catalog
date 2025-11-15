@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Utils\WebResponse;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class CategoryController extends Controller
 {
@@ -26,7 +27,7 @@ class CategoryController extends Controller
     public function fetch()
     {
         $data = $this->service->all(
-            filters: ['name'],
+            filters: ['name', AllowedFilter::exact('type')],
             sorts: ['name', 'created_at'],
             paginate: true,
             per_page: request()->get('per_page') ?? 10,
