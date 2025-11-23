@@ -28,7 +28,7 @@ type Props = {
 };
 
 export default function ProductForm({ props }: Props) {
-    const { data, setData, post, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         _method: props?.id ? 'put' : 'post',
         category_id: props?.category_id || null,
         title: props?.title || '',
@@ -52,11 +52,12 @@ export default function ProductForm({ props }: Props) {
             data.thumbnail = null;
         }
 
-        if (props?.id) {
-            put(product.update(props.id).url, FormResponse);
-        } else {
-            post(product.store().url, FormResponse);
-        }
+        // Always use POST when dealing with files (multipart/form-data)
+        // The _method field will tell Laravel to treat it as PUT if updating
+        const url = props?.id
+            ? product.update(props.id).url
+            : product.store().url;
+        post(url, FormResponse);
     };
 
     return (

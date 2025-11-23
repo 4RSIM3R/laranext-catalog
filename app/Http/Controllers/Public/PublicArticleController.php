@@ -19,14 +19,14 @@ class PublicArticleController extends Controller
     public function index()
     {
         $data = $this->service->all(
-            filters: ['title', 'excerpt'],
+            filters: ['title', 'excerpt', 'category_id'],
             sorts: ['title', 'created_at'],
             paginate: true,
             per_page: request()->get('per_page') ?? 12,
             order_column: 'created_at',
             order_position: 'desc',
             conditions: [],
-            relation: []
+            relation: ['category']
         );
 
         return Inertia::render('article/index', [
@@ -36,7 +36,7 @@ class PublicArticleController extends Controller
 
     public function show($slug)
     {
-        $article = $this->service->findWhere(['slug' => $slug], []);
+        $article = $this->service->findWhere(['slug' => $slug], ['category']);
 
         // Get related articles (recent articles, excluding current)
         $related = $this->service->all(
@@ -49,7 +49,7 @@ class PublicArticleController extends Controller
             conditions: [
                 ['id', '!=', $article->id]
             ],
-            relation: []
+            relation: ['category']
         );
 
         // Limit to 6 related articles

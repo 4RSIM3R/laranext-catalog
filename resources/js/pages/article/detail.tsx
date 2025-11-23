@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { PublicLayout } from '@/layouts/public-layout';
 import { format_date } from '@/lib/format';
+import articleRoute from '@/routes/public/article';
 import { Article } from '@/types/article';
 import { Link } from '@inertiajs/react';
 import { Calendar, Copy, Facebook, Linkedin, Tag, Twitter } from 'lucide-react';
@@ -56,30 +57,68 @@ export default function PostDetail({ props }: Props) {
                     {/* Breadcrumb */}
                     <div className="mb-6 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <Link
-                            href="/article"
+                            href={articleRoute.index().url}
                             className="transition-colors hover:text-primary"
                         >
                             Blog
                         </Link>
+                        {article.category && (
+                            <>
+                                <span>/</span>
+                                <Link
+                                    href={
+                                        articleRoute.index({
+                                            query: {
+                                                'filter[category_id]':
+                                                    article.category.id,
+                                            },
+                                        }).url
+                                    }
+                                    className="transition-colors hover:text-primary"
+                                >
+                                    {article.category.name}
+                                </Link>
+                            </>
+                        )}
                         <span>/</span>
-                        <span>Artikel</span>
+                        <span className="text-gray-900 dark:text-gray-100">
+                            Artikel
+                        </span>
                     </div>
 
-                    {/* Tags */}
-                    {article.tags && (
-                        <div className="mb-4 flex flex-wrap gap-2">
-                            {article.tags
-                                .split(',')
-                                .map((tag) => tag.trim())
-                                .filter((tag) => tag !== '')
-                                .map((tag, index) => (
-                                    <Badge key={index} variant="default">
-                                        <Tag className="mr-1 h-3 w-3" />
-                                        {tag}
-                                    </Badge>
-                                ))}
-                        </div>
-                    )}
+                    {/* Category and Tags */}
+                    <div className="mb-4 flex flex-wrap gap-2">
+                        {article.category && (
+                            <Link
+                                href={
+                                    articleRoute.index({
+                                        query: {
+                                            'filter[category_id]':
+                                                article.category.id,
+                                        },
+                                    }).url
+                                }
+                            >
+                                <Badge variant="default">
+                                    {article.category.name}
+                                </Badge>
+                            </Link>
+                        )}
+                        {article.tags && (
+                            <>
+                                {article.tags
+                                    .split(',')
+                                    .map((tag) => tag.trim())
+                                    .filter((tag) => tag !== '')
+                                    .map((tag, index) => (
+                                        <Badge key={index} variant="secondary">
+                                            <Tag className="mr-1 h-3 w-3" />
+                                            {tag}
+                                        </Badge>
+                                    ))}
+                            </>
+                        )}
+                    </div>
 
                     {/* Title */}
                     <h1 className="mb-6 text-3xl leading-tight font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-gray-100">
@@ -228,7 +267,12 @@ export default function PostDetail({ props }: Props) {
                                             .map((relatedArticle) => (
                                                 <Link
                                                     key={relatedArticle.id}
-                                                    href={`/article/${relatedArticle.slug || relatedArticle.id}`}
+                                                    href={
+                                                        articleRoute.show(
+                                                            relatedArticle.slug ||
+                                                                relatedArticle.id,
+                                                        ).url
+                                                    }
                                                     className="group block"
                                                 >
                                                     <h4 className="line-clamp-2 text-sm font-medium text-gray-900 transition-colors group-hover:text-primary dark:text-gray-100">
@@ -259,7 +303,7 @@ export default function PostDetail({ props }: Props) {
                                     update terbaru
                                 </p>
                                 <Button className="w-full" asChild>
-                                    <Link href="/article">
+                                    <Link href={articleRoute.index().url}>
                                         Lihat Semua Artikel
                                     </Link>
                                 </Button>
@@ -282,25 +326,10 @@ export default function PostDetail({ props }: Props) {
 
                         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {related.map((relatedArticle) => (
-                                <div key={relatedArticle.id}>
-                                    <PostCard props={relatedArticle} />
-                                    {relatedArticle.tags && (
-                                        <div className="mt-3 flex flex-wrap gap-2">
-                                            {relatedArticle.tags
-                                                .split(',')
-                                                .map((tag) => tag.trim())
-                                                .filter((tag) => tag !== '')
-                                                .map((tag, index) => (
-                                                    <Badge
-                                                        key={index}
-                                                        variant="secondary"
-                                                    >
-                                                        {tag}
-                                                    </Badge>
-                                                ))}
-                                        </div>
-                                    )}
-                                </div>
+                                <PostCard
+                                    key={relatedArticle.id}
+                                    props={relatedArticle}
+                                />
                             ))}
                         </div>
                     </div>

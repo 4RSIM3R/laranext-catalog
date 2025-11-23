@@ -21,10 +21,12 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = request()->route('id');
+
         return [
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'slug' => 'required|string|max:255|unique:products,slug,' . $this->id,
+            'slug' => 'required|string|max:255|unique:products,slug,' . $id,
             'content' => 'required|string',
             'excerpt' => 'required|string',
             'phone_number' => 'nullable|string|max:255',

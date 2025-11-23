@@ -1,6 +1,5 @@
 import { PostCard } from '@/components/post-card';
 import { SimplePagination } from '@/components/simple-pagination';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { PublicLayout } from '@/layouts/public-layout';
 import { Article } from '@/types/article';
@@ -95,25 +94,7 @@ export default function PostIndex({ props }: Props) {
                     <>
                         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {articles.map((article) => (
-                                <div key={article.id}>
-                                    <PostCard props={article} />
-                                    {article.tags && (
-                                        <div className="mt-3 flex flex-wrap gap-2">
-                                            {article.tags
-                                                .split(',')
-                                                .map((tag) => tag.trim())
-                                                .filter((tag) => tag !== '')
-                                                .map((tag, index) => (
-                                                    <Badge
-                                                        key={index}
-                                                        variant="secondary"
-                                                    >
-                                                        {tag}
-                                                    </Badge>
-                                                ))}
-                                        </div>
-                                    )}
-                                </div>
+                                <PostCard key={article.id} props={article} />
                             ))}
                         </div>
 

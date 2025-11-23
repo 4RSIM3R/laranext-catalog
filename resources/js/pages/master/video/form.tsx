@@ -26,7 +26,7 @@ type Props = {
 };
 
 export default function VideoForm({ props }: Props) {
-    const { data, setData, post, put, processing, errors } = useForm<any>({
+    const { data, setData, post, processing, errors } = useForm<any>({
         _method: props?.id ? 'put' : 'post',
         title: props?.title || '',
         slug: props?.slug || '',
@@ -49,11 +49,12 @@ export default function VideoForm({ props }: Props) {
             data.video = null;
         }
 
-        if (props?.id) {
-            put(video.update(props.id).url, FormResponse);
-        } else {
-            post(video.store().url, FormResponse);
-        }
+        // Always use POST when dealing with files (multipart/form-data)
+        // The _method field will tell Laravel to treat it as PUT if updating
+        const url = props?.id
+            ? video.update(props.id).url
+            : video.store().url;
+        post(url, FormResponse);
     };
 
     return (
