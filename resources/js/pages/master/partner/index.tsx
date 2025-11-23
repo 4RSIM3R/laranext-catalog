@@ -61,23 +61,6 @@ export default function PartnerIndex() {
             enableColumnFilter: false,
             enableHiding: false,
         }),
-        helper.accessor('is_featured', {
-            id: 'is_featured',
-            header: 'Featured',
-            enableColumnFilter: false,
-            enableHiding: false,
-            cell: (row) => (
-                <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        row.row.original.is_featured
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-gray-100 text-gray-800'
-                    }`}
-                >
-                    {row.row.original.is_featured ? 'Yes' : 'No'}
-                </span>
-            ),
-        }),
         helper.display({
             id: 'created_at',
             header: 'Created At',

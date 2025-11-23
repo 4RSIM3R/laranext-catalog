@@ -23,7 +23,7 @@ class HomeController extends Controller
         $video = Video::with('media')->inRandomOrder()->limit(3)->get();
         $event = Event::with('media')->orderBy('start_date', 'desc')->limit(3)->get();
         $article = Article::with('media')->inRandomOrder()->limit(3)->get();
-        $partner = Partner::with('media')->where('is_featured', true)->ordered()->get();
+        $partner = Partner::with('media')->ordered()->get();
 
         return Inertia::render('home', [
             'banner' => $banner,

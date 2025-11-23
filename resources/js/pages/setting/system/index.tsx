@@ -6,7 +6,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -19,7 +18,7 @@ import { Setting } from '@/types/setting';
 import { Link, useForm } from '@inertiajs/react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import axios from 'axios';
-import { Copy, Eye, Plus, Trash } from 'lucide-react';
+import { Copy, Eye, Plus } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -146,17 +145,6 @@ export default function SystemIndex() {
                                 <Eye /> Detail
                             </DropdownMenuItem>
                         </Link>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            className="text-red-500 hover:text-red-500"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setId(row.row.original.id);
-                            }}
-                        >
-                            <Trash className="text-red-500" />
-                            <span className="text-red-500">Delete</span>
-                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             ),

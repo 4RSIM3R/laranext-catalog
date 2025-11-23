@@ -8,7 +8,6 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AppLayout } from '@/layouts/app-layout';
@@ -21,7 +20,6 @@ import { Loader2 } from 'lucide-react';
 
 type FormData = {
     name: string;
-    is_featured: boolean;
     order: number;
     logo: File | Media | null;
 };
@@ -33,13 +31,17 @@ type Props = {
 export default function PartnerForm({ props }: Props) {
     const { data, setData, post, processing, errors } = useForm<FormData>({
         name: props?.name || '',
-        is_featured: props?.is_featured ?? true,
         order: props?.order ?? 0,
         logo: props?.logo || null,
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // Only include logo if it's a new File object
+        if (!(data.logo instanceof File)) {
+            data.logo = null;
+        }
 
         if (props?.id) {
             post(partner.update(props.id).url, FormResponse);
@@ -80,7 +82,8 @@ export default function PartnerForm({ props }: Props) {
                     <div className="flex flex-col gap-1.5">
                         <Label>Display Order</Label>
                         <Input
-                            type="number"
+                            type="text"
+                            inputMode="numeric"
                             value={data.order}
                             onChange={(e) =>
                                 setData('order', parseInt(e.target.value) || 0)
@@ -93,22 +96,6 @@ export default function PartnerForm({ props }: Props) {
                             Lower numbers appear first. You can also drag and
                             drop to reorder.
                         </p>
-                    </div>
-                    <div className="flex flex-row items-center gap-2">
-                        <Checkbox
-                            id="is_featured"
-                            checked={data.is_featured}
-                            onCheckedChange={(checked) =>
-                                setData('is_featured', checked === true)
-                            }
-                        />
-                        <Label
-                            htmlFor="is_featured"
-                            className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                            Featured Partner
-                        </Label>
-                        <InputError message={errors?.is_featured} />
                     </div>
                     <div className="col-span-12 flex flex-col gap-y-1.5">
                         <Label className="text-base">Logo</Label>
