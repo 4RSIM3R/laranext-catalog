@@ -8,9 +8,22 @@ export type SelectOption = {
     label: any;
 };
 
-export const fetchCategory = async (search: any): Promise<SelectOption[]> => {
+export type FetchCategoryParams = {
+    search: any;
+    type?: string;
+};
+
+export const fetchCategory = async ({
+    search,
+    type,
+}: FetchCategoryParams): Promise<SelectOption[]> => {
+    const params: Record<string, any> = { 'filter[name]': search };
+    if (type) {
+        params['filter[type]'] = type;
+    }
+
     const response = await axios.get<Base<Category[]>>(category.fetch().url, {
-        params: { 'filter[name]': search },
+        params,
     });
 
     return (response.data.items ?? []).map((e: Category) => ({

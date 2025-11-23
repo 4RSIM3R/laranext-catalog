@@ -22,8 +22,8 @@ class ArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tags' => 'nullable|array',
-            'tags.*' => 'string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'tags' => 'nullable|string',
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:articles,slug,' . $this->id,
             'content' => 'required|string',

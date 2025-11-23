@@ -66,14 +66,18 @@ export default function PostDetail({ props }: Props) {
                     </div>
 
                     {/* Tags */}
-                    {article.tags && article.tags.length > 0 && (
+                    {article.tags && (
                         <div className="mb-4 flex flex-wrap gap-2">
-                            {article.tags.map((tag, index) => (
-                                <Badge key={index} variant="default">
-                                    <Tag className="mr-1 h-3 w-3" />
-                                    {tag}
-                                </Badge>
-                            ))}
+                            {article.tags
+                                .split(',')
+                                .map((tag) => tag.trim())
+                                .filter((tag) => tag !== '')
+                                .map((tag, index) => (
+                                    <Badge key={index} variant="default">
+                                        <Tag className="mr-1 h-3 w-3" />
+                                        {tag}
+                                    </Badge>
+                                ))}
                         </div>
                     )}
 
@@ -280,21 +284,22 @@ export default function PostDetail({ props }: Props) {
                             {related.map((relatedArticle) => (
                                 <div key={relatedArticle.id}>
                                     <PostCard props={relatedArticle} />
-                                    {relatedArticle.tags &&
-                                        relatedArticle.tags.length > 0 && (
-                                            <div className="mt-3 flex flex-wrap gap-2">
-                                                {relatedArticle.tags.map(
-                                                    (tag, index) => (
-                                                        <Badge
-                                                            key={index}
-                                                            variant="secondary"
-                                                        >
-                                                            {tag}
-                                                        </Badge>
-                                                    ),
-                                                )}
-                                            </div>
-                                        )}
+                                    {relatedArticle.tags && (
+                                        <div className="mt-3 flex flex-wrap gap-2">
+                                            {relatedArticle.tags
+                                                .split(',')
+                                                .map((tag) => tag.trim())
+                                                .filter((tag) => tag !== '')
+                                                .map((tag, index) => (
+                                                    <Badge
+                                                        key={index}
+                                                        variant="secondary"
+                                                    >
+                                                        {tag}
+                                                    </Badge>
+                                                ))}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>

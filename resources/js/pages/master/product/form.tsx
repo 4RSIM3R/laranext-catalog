@@ -82,7 +82,12 @@ export default function ProductForm({ props }: Props) {
                     <div className="flex flex-col gap-1.5">
                         <Label>Category</Label>
                         <MultiSelect
-                            loadOptions={fetchCategory}
+                            loadOptions={(search) =>
+                                fetchCategory({
+                                    search,
+                                    type: 'product',
+                                })
+                            }
                             defaultValue={{
                                 value: props?.category_id,
                                 label: props?.category?.name ?? '',

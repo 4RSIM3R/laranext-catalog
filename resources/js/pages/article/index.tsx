@@ -97,21 +97,22 @@ export default function PostIndex({ props }: Props) {
                             {articles.map((article) => (
                                 <div key={article.id}>
                                     <PostCard props={article} />
-                                    {article.tags &&
-                                        article.tags.length > 0 && (
-                                            <div className="mt-3 flex flex-wrap gap-2">
-                                                {article.tags.map(
-                                                    (tag, index) => (
-                                                        <Badge
-                                                            key={index}
-                                                            variant="secondary"
-                                                        >
-                                                            {tag}
-                                                        </Badge>
-                                                    ),
-                                                )}
-                                            </div>
-                                        )}
+                                    {article.tags && (
+                                        <div className="mt-3 flex flex-wrap gap-2">
+                                            {article.tags
+                                                .split(',')
+                                                .map((tag) => tag.trim())
+                                                .filter((tag) => tag !== '')
+                                                .map((tag, index) => (
+                                                    <Badge
+                                                        key={index}
+                                                        variant="secondary"
+                                                    >
+                                                        {tag}
+                                                    </Badge>
+                                                ))}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
