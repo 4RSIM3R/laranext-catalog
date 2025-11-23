@@ -25,7 +25,7 @@ class PartnerRequest extends FormRequest
             'name' => 'required|string|max:255',
             'is_featured' => 'nullable|boolean',
             'order' => 'nullable|integer|min:0',
-            'logo' => $this->isMethod('post') ? 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048' : 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ];
     }
 }

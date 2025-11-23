@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
             'address' => 'required|string',
             'license' => 'required|string',
             'production_capacity' => 'required|string',
-            'thumbnail' => $this->isMethod('post') ? 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ];
     }
 }
