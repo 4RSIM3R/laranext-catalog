@@ -26,8 +26,8 @@ class EventController extends Controller
     public function fetch()
     {
         $data = $this->service->all(
-            filters: ['name'],
-            sorts: ['name', 'created_at', 'start_date', 'is_completed'],
+            filters: ['title'],
+            sorts: ['title', 'created_at', 'start_date'],
             paginate: true,
             per_page: request()->get('per_page') ?? 10,
             conditions: [],

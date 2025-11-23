@@ -17,11 +17,12 @@ return new class extends Migration
             $table->text('slug')->unique();
             $table->text('content');
             $table->text('excerpt');
+            $table->text('registration_link')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->timestamps();
             $table->index(['slug']);
-            $table->index(['is_completed', 'start_date']); // For filtering completed events
+            $table->index(['start_date']); // For filtering events by date
         });
     }
 

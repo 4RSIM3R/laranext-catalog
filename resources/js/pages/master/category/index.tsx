@@ -67,6 +67,13 @@ export default function CategoryIndex() {
             enableColumnFilter: false,
             enableHiding: false,
         }),
+        helper.accessor('type', {
+            id: 'type',
+            header: 'Type',
+            enableColumnFilter: false,
+            enableHiding: false,
+            cell: (row) => row.row.original.type,
+        }),
         helper.display({
             id: 'created_at',
             header: 'Created At',

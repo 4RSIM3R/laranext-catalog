@@ -14,7 +14,7 @@ class Event extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected $appends = ['thumbnail'];
+    protected $appends = ['thumbnail', 'is_completed'];
 
     protected $hidden = ['media'];
 
@@ -31,6 +31,17 @@ class Event extends Model implements HasMedia
     public function getThumbnailAttribute()
     {
         return $this->getMedia('thumbnail')->first();
+    }
+
+    public function getIsCompletedAttribute()
+    {
+        if (!$this->start_date) {
+            return false;
+        }
+
+        // Use end_date if available, otherwise use start_date
+        $comparisonDate = $this->end_date ?? $this->start_date;
+        return $comparisonDate->isPast();
     }
 
     /**

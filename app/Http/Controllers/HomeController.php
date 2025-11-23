@@ -21,7 +21,7 @@ class HomeController extends Controller
         $category = Category::with('media')->where('type', 'product')->get();
         $product = Product::with('media')->inRandomOrder()->limit(6)->get();
         $video = Video::with('media')->inRandomOrder()->limit(3)->get();
-        $event = Event::with('media')->upcoming()->limit(3)->get();
+        $event = Event::with('media')->orderBy('start_date', 'desc')->limit(3)->get();
         $article = Article::with('media')->inRandomOrder()->limit(3)->get();
         $partner = Partner::with('media')->where('is_featured', true)->ordered()->get();
 

@@ -37,7 +37,7 @@ export default function EventDetail({ props }: Props) {
         return event.start_time || event.end_time || '-';
     };
 
-    const eventPassed = event.is_completed;
+    const eventPassed = event.is_completed ?? false;
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -137,6 +137,32 @@ export default function EventDetail({ props }: Props) {
                             }}
                         />
                     </Card>
+
+                    {/* Registration Link */}
+                    {event.registration_link && (
+                        <Card className="p-6">
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
+                                        Daftar Sekarang
+                                    </h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                        Daftarkan diri Anda untuk mengikuti
+                                        acara ini
+                                    </p>
+                                </div>
+                                <Button asChild className="w-full sm:w-auto">
+                                    <a
+                                        href={event.registration_link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Daftar Acara
+                                    </a>
+                                </Button>
+                            </div>
+                        </Card>
+                    )}
 
                     {/* Share Section */}
                     <Card className="mt-8 p-6">

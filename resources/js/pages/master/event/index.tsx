@@ -18,7 +18,8 @@ import { Event } from '@/types/event';
 import { Link, useForm } from '@inertiajs/react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import axios from 'axios';
-import { Eye, Plus, Trash } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Eye, ExternalLink, Plus, Trash } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
 export default function EventIndex() {
@@ -74,6 +75,45 @@ export default function EventIndex() {
                 row.row.original.end_date
                     ? date_format(row.row.original.end_date)
                     : '-',
+        }),
+        helper.accessor('is_completed', {
+            id: 'is_completed',
+            header: 'Status',
+            enableColumnFilter: false,
+            enableHiding: false,
+            cell: (row) => (
+                <Badge
+                    variant={
+                        row.row.original.is_completed
+                            ? 'secondary'
+                            : 'default'
+                    }
+                >
+                    {row.row.original.is_completed
+                        ? 'Completed'
+                        : 'Upcoming'}
+                </Badge>
+            ),
+        }),
+        helper.display({
+            id: 'registration_link',
+            header: 'Registration',
+            enableColumnFilter: false,
+            enableHiding: false,
+            cell: (row) =>
+                row.row.original.registration_link ? (
+                    <a
+                        href={row.row.original.registration_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-primary hover:underline"
+                    >
+                        <ExternalLink className="h-4 w-4" />
+                        Link
+                    </a>
+                ) : (
+                    <span className="text-gray-400">-</span>
+                ),
         }),
         helper.display({
             id: 'created_at',
@@ -149,11 +189,11 @@ export default function EventIndex() {
                 columns={columns}
                 filterComponent={
                     <Input
-                        value={customParams['filter[name]']}
+                        value={customParams['filter[title]']}
                         onChange={(e) =>
                             setCustomParams({
                                 ...customParams,
-                                'filter[name]': e.target.value,
+                                'filter[title]': e.target.value,
                             })
                         }
                         placeholder="Search..."

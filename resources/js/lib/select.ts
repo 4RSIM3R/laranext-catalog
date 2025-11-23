@@ -17,10 +17,10 @@ export const fetchCategory = async ({
     search,
     type,
 }: FetchCategoryParams): Promise<SelectOption[]> => {
-    const params: Record<string, any> = { 'filter[name]': search };
-    if (type) {
-        params['filter[type]'] = type;
-    }
+    const params: Record<string, any> = {
+        'filter[name]': search,
+        'filter[type]': type,
+    };
 
     const response = await axios.get<Base<Category[]>>(category.fetch().url, {
         params,

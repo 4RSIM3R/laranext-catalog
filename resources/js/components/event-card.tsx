@@ -19,9 +19,11 @@ export function EventCard({ props }: Props) {
         return start;
     };
 
+    const isCompleted = props.is_completed ?? false;
+
     return (
         <Card
-            className={`group relative overflow-hidden p-0 transition-all hover:shadow-xl ${props.is_completed ? 'opacity-75 grayscale' : ''}`}
+            className={`group relative overflow-hidden p-0 transition-all hover:shadow-xl ${isCompleted ? 'opacity-75 grayscale' : ''}`}
         >
             <div className="relative aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
                 <img
@@ -30,7 +32,7 @@ export function EventCard({ props }: Props) {
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-                {props.is_completed && (
+                {isCompleted && (
                     <div className="absolute top-4 right-4 rounded-full bg-gray-500 px-3 py-1 text-xs font-medium text-white">
                         Selesai
                     </div>

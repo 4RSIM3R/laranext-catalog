@@ -6,7 +6,11 @@ export interface Event extends Model {
     slug: string;
     content: string;
     excerpt: string;
+    registration_link?: string;
     start_date: string;
     end_date?: string;
-    thumbnail?: Media & Media;
+    thumbnail?: Media;
+    is_completed?: boolean;
+    start_time?: string;
+    end_time?: string;
 }

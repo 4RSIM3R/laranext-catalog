@@ -20,7 +20,7 @@ class PublicEventController extends Controller
     {
         $data = $this->service->all(
             filters: ['title'],
-            sorts: ['title', 'start_date', 'created_at', 'is_completed'],
+            sorts: ['title', 'start_date', 'created_at'],
             paginate: true,
             per_page: request()->get('per_page') ?? 12,
             order_column: 'start_date',

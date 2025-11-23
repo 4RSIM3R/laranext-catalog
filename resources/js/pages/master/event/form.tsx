@@ -32,28 +32,20 @@ type Props = {
     props?: Event;
 };
 
-type EventFormData = {
-    _method: 'put' | 'post';
-    title: string;
-    slug: string;
-    content: string;
-    excerpt: string;
-    thumbnail: any;
-    start_date: string;
-    end_date: string;
-};
-
 export default function EventForm({ props }: Props) {
-    const { data, setData, processing, errors, post } = useForm<EventFormData>({
-        _method: props?.id ? 'put' : 'post',
-        title: props?.title || '',
-        slug: props?.slug || '',
-        content: props?.content || '',
-        excerpt: props?.excerpt || '',
-        thumbnail: props?.thumbnail || null,
-        start_date: props?.start_date || '',
-        end_date: props?.end_date || '',
-    });
+    const initialData = {
+        _method: (props?.id ? 'put' : 'post') as 'put' | 'post',
+        title: props?.title ?? '',
+        slug: props?.slug ?? '',
+        content: props?.content ?? '',
+        excerpt: props?.excerpt ?? '',
+        registration_link: props?.registration_link ?? '',
+        thumbnail: (props?.thumbnail as any) ?? null,
+        start_date: props?.start_date ?? '',
+        end_date: props?.end_date ?? '',
+    };
+
+    const { data, setData, processing, errors, post } = useForm(initialData);
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -118,6 +110,20 @@ export default function EventForm({ props }: Props) {
                             rows={3}
                         />
                         <InputError message={errors?.excerpt as string} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                        <Label>Registration Link (Optional)</Label>
+                        <Input
+                            type="url"
+                            value={data.registration_link}
+                            onChange={(e) =>
+                                setData('registration_link', e.target.value)
+                            }
+                            placeholder="https://example.com/register"
+                        />
+                        <InputError
+                            message={errors?.registration_link as string}
+                        />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex flex-col gap-1.5">
