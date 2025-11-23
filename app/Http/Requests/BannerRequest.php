@@ -26,7 +26,7 @@ class BannerRequest extends FormRequest
             'subtitle' => 'required|string|max:255',
             'button_text' => 'required|string|max:255',
             'button_link' => 'required|url',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'thumbnail' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ];
     }
 }

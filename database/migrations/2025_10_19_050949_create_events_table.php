@@ -19,9 +19,6 @@ return new class extends Migration
             $table->text('excerpt');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
-            $table->boolean('is_completed')->default(false);
             $table->timestamps();
             $table->index(['slug']);
             $table->index(['is_completed', 'start_date']); // For filtering completed events

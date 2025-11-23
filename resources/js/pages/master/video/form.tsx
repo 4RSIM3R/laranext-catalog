@@ -39,6 +39,16 @@ export default function VideoForm({ props }: Props) {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // Only include thumbnail if it's a new File object
+        if (!(data.thumbnail instanceof File)) {
+            data.thumbnail = null;
+        }
+
+        // Only include video if it's a new File object
+        if (!(data.video instanceof File)) {
+            data.video = null;
+        }
+
         if (props?.id) {
             put(video.update(props.id).url, FormResponse);
         } else {

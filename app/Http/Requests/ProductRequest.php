@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
             'address' => 'required|string',
             'license' => 'required|string',
             'production_capacity' => 'required|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'thumbnail' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ];
     }
 }

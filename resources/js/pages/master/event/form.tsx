@@ -32,8 +32,19 @@ type Props = {
     props?: Event;
 };
 
+type EventFormData = {
+    _method: 'put' | 'post';
+    title: string;
+    slug: string;
+    content: string;
+    excerpt: string;
+    thumbnail: any;
+    start_date: string;
+    end_date: string;
+};
+
 export default function EventForm({ props }: Props) {
-    const { data, setData, processing, errors, post } = useForm<any>({
+    const { data, setData, processing, errors, post } = useForm<EventFormData>({
         _method: props?.id ? 'put' : 'post',
         title: props?.title || '',
         slug: props?.slug || '',
@@ -42,13 +53,15 @@ export default function EventForm({ props }: Props) {
         thumbnail: props?.thumbnail || null,
         start_date: props?.start_date || '',
         end_date: props?.end_date || '',
-        start_time: props?.start_time || '',
-        end_time: props?.end_time || '',
-        is_completed: props?.is_completed || false,
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // Only include thumbnail if it's a new File object
+        if (!(data.thumbnail instanceof File)) {
+            data.thumbnail = null;
+        }
 
         if (props?.id) {
             post(event.update(props.id).url, FormResponse);
@@ -204,47 +217,6 @@ export default function EventForm({ props }: Props) {
                             </Popover>
                             <InputError message={errors?.end_date as string} />
                         </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="flex flex-col gap-1.5">
-                            <Label>Start Time (Optional)</Label>
-                            <Input
-                                type="time"
-                                value={data.start_time}
-                                onChange={(e) =>
-                                    setData('start_time', e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors?.start_time as string}
-                            />
-                        </div>
-                        <div className="flex flex-col gap-1.5">
-                            <Label>End Time (Optional)</Label>
-                            <Input
-                                type="time"
-                                value={data.end_time}
-                                onChange={(e) =>
-                                    setData('end_time', e.target.value)
-                                }
-                            />
-                            <InputError message={errors?.end_time as string} />
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <input
-                            type="checkbox"
-                            id="is_completed"
-                            checked={data.is_completed}
-                            onChange={(e) =>
-                                setData('is_completed', e.target.checked)
-                            }
-                            className="h-4 w-4"
-                        />
-                        <Label htmlFor="is_completed" className="text-sm">
-                            Mark event as completed
-                        </Label>
-                        <InputError message={errors?.is_completed as string} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                         <Label>Content</Label>

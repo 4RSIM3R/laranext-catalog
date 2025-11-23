@@ -26,12 +26,9 @@ class EventRequest extends FormRequest
             'slug' => 'required|string|max:255|unique:events,slug,' . $this->id,
             'content' => 'required|string',
             'excerpt' => 'required|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'thumbnail' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'start_time' => 'nullable|date_format:H:i',
-            'end_time' => 'nullable|date_format:H:i',
-            'is_completed' => 'nullable|boolean',
         ];
     }
 }

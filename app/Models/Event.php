@@ -21,7 +21,6 @@ class Event extends Model implements HasMedia
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
-        'is_completed' => 'boolean',
     ];
 
     public function registerMediaCollections(): void
@@ -35,18 +34,18 @@ class Event extends Model implements HasMedia
     }
 
     /**
-     * Scope to get only upcoming (not completed) events
+     * Scope to get only upcoming events
      */
     public function scopeUpcoming($query)
     {
-        return $query->where('is_completed', false)->orderBy('start_date', 'asc');
+        return $query->where('start_date', '>=', now())->orderBy('start_date', 'asc');
     }
 
     /**
-     * Scope to get only completed events
+     * Scope to get only past events
      */
     public function scopeCompleted($query)
     {
-        return $query->where('is_completed', true)->orderBy('start_date', 'desc');
+        return $query->where('start_date', '<', now())->orderBy('start_date', 'desc');
     }
 }

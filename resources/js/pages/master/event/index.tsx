@@ -58,12 +58,22 @@ export default function EventIndex() {
             enableColumnFilter: false,
             enableHiding: false,
         }),
-        helper.accessor('date', {
-            id: 'date',
-            header: 'Date',
+        helper.accessor('start_date', {
+            id: 'start_date',
+            header: 'Start Date',
             enableColumnFilter: false,
             enableHiding: false,
-            cell: (row) => date_format(row.row.original.date),
+            cell: (row) => date_format(row.row.original.start_date),
+        }),
+        helper.accessor('end_date', {
+            id: 'end_date',
+            header: 'End Date',
+            enableColumnFilter: false,
+            enableHiding: false,
+            cell: (row) =>
+                row.row.original.end_date
+                    ? date_format(row.row.original.end_date)
+                    : '-',
         }),
         helper.display({
             id: 'created_at',

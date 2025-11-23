@@ -47,6 +47,11 @@ export default function ProductForm({ props }: Props) {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // Only include thumbnail if it's a new File object
+        if (!(data.thumbnail instanceof File)) {
+            data.thumbnail = null;
+        }
+
         if (props?.id) {
             put(product.update(props.id).url, FormResponse);
         } else {

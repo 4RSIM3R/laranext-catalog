@@ -24,7 +24,9 @@ import {
 } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { useSidebarState } from '@/hooks/use-sidebar-state';
+import { FormResponse } from '@/lib/constant';
 import { initial_name } from '@/lib/format';
+import { logout } from '@/routes';
 import backoffice from '@/routes/backoffice';
 import article from '@/routes/master/article';
 import banner from '@/routes/master/banner';
@@ -77,12 +79,6 @@ const navigations: MenuGroup[] = [
                 title: 'Event',
                 icon: CalendarIcon,
                 url: event.index().url,
-            },
-            {
-                id: 'file',
-                title: 'File',
-                icon: ListIcon,
-                url: file.index().url,
             },
             {
                 id: 'article',
@@ -148,7 +144,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
     const onLogout = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
-        // post(logout().url, FormResponse);
+        post(logout().url, FormResponse);
     };
 
     return (

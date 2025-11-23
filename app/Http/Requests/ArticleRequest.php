@@ -28,7 +28,7 @@ class ArticleRequest extends FormRequest
             'slug' => 'required|string|max:255|unique:articles,slug,' . $this->id,
             'content' => 'required|string',
             'excerpt' => 'required|string|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'thumbnail' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ];
     }
 }
