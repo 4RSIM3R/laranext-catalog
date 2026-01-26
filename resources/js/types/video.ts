@@ -6,8 +6,8 @@ export interface Video {
     slug: string;
     content: string;
     excerpt: string;
-    thumbnail?: Media & Media;
-    video?: Media & Media;
+    youtube_url: string;
+    thumbnail?: Media;
     created_at: string;
     updated_at: string;
 }

@@ -8,13 +8,30 @@ type Props = {
     props: Video;
 };
 
+const getYouTubeVideoId = (url: string): string | null => {
+    if (!url) return null;
+    const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+    ];
+    for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match) return match[1];
+    }
+    return null;
+};
+
 export function VideoCard({ props }: Props) {
+    const youtubeId = getYouTubeVideoId(props.youtube_url);
+    const thumbnailUrl =
+        props.thumbnail?.original_url ||
+        (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : undefined);
+
     return (
         <Link href={video.show(props.slug || props.id).url}>
             <Card className="group overflow-hidden p-0 transition-all hover:shadow-xl">
                 <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <img
-                        src={props.thumbnail?.original_url}
+                        src={thumbnailUrl}
                         alt={props.title}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />

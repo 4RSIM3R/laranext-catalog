@@ -16,18 +16,19 @@ type Props = {
 export default function VideoDetail({ props }: Props) {
     const { video, related } = props;
 
-    const getVideoUrl = () => {
-        if (
-            video.video &&
-            typeof video.video === 'object' &&
-            'original_url' in video.video
-        ) {
-            return video.video.original_url;
+    const getYouTubeVideoId = (url: string): string | null => {
+        if (!url) return null;
+        const patterns = [
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+        ];
+        for (const pattern of patterns) {
+            const match = url.match(pattern);
+            if (match) return match[1];
         }
         return null;
     };
 
-    const videoUrl = getVideoUrl();
+    const youtubeId = getYouTubeVideoId(video.youtube_url);
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 dark:bg-gray-900">
@@ -38,26 +39,14 @@ export default function VideoDetail({ props }: Props) {
                         <Card className="overflow-hidden p-0">
                             {/* Video Player */}
                             <div className="relative aspect-video bg-black">
-                                {videoUrl ? (
-                                    <video
-                                        controls
-                                        className="h-full w-full object-cover"
-                                        poster={
-                                            video.thumbnail &&
-                                            typeof video.thumbnail ===
-                                                'object' &&
-                                            'original_url' in video.thumbnail
-                                                ? video.thumbnail.original_url
-                                                : undefined
-                                        }
-                                    >
-                                        <source
-                                            src={videoUrl}
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
-                                    </video>
+                                {youtubeId ? (
+                                    <iframe
+                                        className="h-full w-full"
+                                        src={`https://www.youtube.com/embed/${youtubeId}`}
+                                        title={video.title}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                    />
                                 ) : (
                                     <div className="flex h-full w-full items-center justify-center">
                                         <div className="text-center text-white">

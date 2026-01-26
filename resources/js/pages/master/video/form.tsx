@@ -32,8 +32,8 @@ export default function VideoForm({ props }: Props) {
         slug: props?.slug || '',
         content: props?.content || '',
         excerpt: props?.excerpt || '',
+        youtube_url: props?.youtube_url || '',
         thumbnail: props?.thumbnail || null,
-        video: props?.video || null,
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,11 +42,6 @@ export default function VideoForm({ props }: Props) {
         // Only include thumbnail if it's a new File object
         if (!(data.thumbnail instanceof File)) {
             data.thumbnail = null;
-        }
-
-        // Only include video if it's a new File object
-        if (!(data.video instanceof File)) {
-            data.video = null;
         }
 
         // Always use POST when dealing with files (multipart/form-data)
@@ -121,6 +116,15 @@ export default function VideoForm({ props }: Props) {
                         <InputError message={errors?.content as string} />
                     </div>
                     <div className="flex flex-col gap-1.5">
+                        <Label>YouTube URL</Label>
+                        <Input
+                            value={data.youtube_url}
+                            onChange={(e) => setData('youtube_url', e.target.value)}
+                            placeholder="https://www.youtube.com/watch?v=..."
+                        />
+                        <InputError message={errors?.youtube_url as string} />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
                         <Label>Thumbnail</Label>
                         <FileUpload
                             media={data.thumbnail || props?.thumbnail}
@@ -132,19 +136,6 @@ export default function VideoForm({ props }: Props) {
                             id="thumbnail"
                         />
                         <InputError message={errors?.thumbnail as string} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Video</Label>
-                        <FileUpload
-                            media={data.video || props?.video}
-                            onChange={(file) => {
-                                setData('video', file);
-                            }}
-                            accept="video/*"
-                            id="video"
-                            maxSize={100 * 1024 * 1024}
-                        />
-                        <InputError message={errors?.video as string} />
                     </div>
                 </CardContent>
             </Card>
