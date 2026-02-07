@@ -27,7 +27,6 @@ class VideoRequest extends FormRequest
             'content' => 'required|string',
             'excerpt' => 'required|string',
             'youtube_url' => ['required', 'url', 'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/'],
-            'thumbnail' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ];
 
         if (!$this->isMethod('post')) {

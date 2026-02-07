@@ -53,7 +53,6 @@ class VideoController extends Controller
     public function store(VideoRequest $request)
     {
         $payload = $request->validated();
-        unset($payload['thumbnail']);
         $result = $this->service->create($payload);
         return WebResponse::response($result, 'master.video.index');
     }
@@ -61,7 +60,6 @@ class VideoController extends Controller
     public function update(VideoRequest $request, $id)
     {
         $payload = $request->validated();
-        unset($payload['thumbnail']);
         $result = $this->service->update(
             [
                 ['id', '=', $id]

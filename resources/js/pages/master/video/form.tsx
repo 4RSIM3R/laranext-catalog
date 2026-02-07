@@ -1,4 +1,3 @@
-import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -33,19 +32,11 @@ export default function VideoForm({ props }: Props) {
         content: props?.content || '',
         excerpt: props?.excerpt || '',
         youtube_url: props?.youtube_url || '',
-        thumbnail: props?.thumbnail || null,
     });
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Only include thumbnail if it's a new File object
-        if (!(data.thumbnail instanceof File)) {
-            data.thumbnail = null;
-        }
-
-        // Always use POST when dealing with files (multipart/form-data)
-        // The _method field will tell Laravel to treat it as PUT if updating
         const url = props?.id
             ? video.update(props.id).url
             : video.store().url;
@@ -123,19 +114,6 @@ export default function VideoForm({ props }: Props) {
                             placeholder="https://www.youtube.com/watch?v=..."
                         />
                         <InputError message={errors?.youtube_url as string} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <Label>Thumbnail</Label>
-                        <FileUpload
-                            media={data.thumbnail || props?.thumbnail}
-                            onChange={(file) => {
-                                setData('thumbnail', file);
-                            }}
-                            accept="image/jpeg,image/png,image/jpg,image/gif,image/svg+xml"
-                            maxSize={2 * 1024 * 1024}
-                            id="thumbnail"
-                        />
-                        <InputError message={errors?.thumbnail as string} />
                     </div>
                 </CardContent>
             </Card>

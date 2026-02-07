@@ -22,9 +22,9 @@ const getYouTubeVideoId = (url: string): string | null => {
 
 export function VideoCard({ props }: Props) {
     const youtubeId = getYouTubeVideoId(props.youtube_url);
-    const thumbnailUrl =
-        props.thumbnail?.original_url ||
-        (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : undefined);
+    const thumbnailUrl = youtubeId
+        ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
+        : undefined;
 
     return (
         <Link href={video.show(props.slug || props.id).url}>
