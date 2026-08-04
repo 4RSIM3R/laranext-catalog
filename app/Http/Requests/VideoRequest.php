@@ -26,18 +26,21 @@ class VideoRequest extends FormRequest
             'slug' => 'required|string|max:255|unique:videos,slug',
             'content' => 'required|string',
             'excerpt' => 'required|string',
+            'youtube_url' => ['required', 'url', 'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/'],
         ];
 
-        if ($this->isMethod('post')) {
-            $rules['video'] = 'required|file|mimes:mp4,mov,avi,wmv,flv,mpeg,mpg,m4v,3gp,3g2,mj2,mxf,mts,m2ts,ts,mkv,webm,ogg,ogv';
-            $rules['thumbnail'] = 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120';
-        } else {
+        if (!$this->isMethod('post')) {
             $id = request()->route('id');
             $rules['slug'] = 'required|string|max:255|unique:videos,slug,' . $id;
-            $rules['video'] = 'nullable|file|mimes:mp4,mov,avi,wmv,flv,mpeg,mpg,m4v,3gp,3g2,mj2,mxf,mts,m2ts,ts,mkv,webm,ogg,ogv';
-            $rules['thumbnail'] = 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120';
         }
 
         return $rules;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'youtube_url.regex' => 'Please enter a valid YouTube URL.',
+        ];
     }
 }

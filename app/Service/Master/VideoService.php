@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class VideoService extends BaseService implements VideoContract
 {
     protected Model $model;
-    protected array $fileKeys = ['thumbnail', 'video'];
+    protected array $fileKeys = [];
 
     public function __construct(Video $model)
     {
