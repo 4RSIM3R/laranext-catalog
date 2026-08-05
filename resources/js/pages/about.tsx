@@ -28,19 +28,19 @@ export default function About() {
             id: 'customer-service',
             title: 'Customer Service',
             content:
-                'Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.',
+                'Tim Lokal Berdaya siap membantu menjawab kebutuhan informasi terkait produk UMKM, program pemberdayaan, kegiatan, hingga peluang kemitraan. Kami berkomitmen memberikan pelayanan yang responsif agar setiap pelaku usaha, perusahaan, maupun masyarakat mendapatkan pengalaman yang mudah dan nyaman.',
         },
         {
             id: 'online-consultation',
             title: 'Online Consultation',
             content:
-                'Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.',
+                'Lokal Berdaya menyediakan layanan konsultasi secara online bagi UMKM maupun perusahaan yang ingin berdiskusi mengenai pengembangan usaha, program CSR, strategi promosi, hingga peluang kolaborasi. Bersama kami, setiap ide dapat diwujudkan menjadi program yang memberikan dampak nyata bagi ekonomi lokal.',
         },
         {
             id: 'sales-management',
             title: 'Sales Management',
             content:
-                'Lorem ipsum dolor sit amet, consectetur. Turpis mattis neque, nunc, at egestas donec augue augue. Sed morbi pharetra venenatis nam.',
+                'Kami membantu UMKM meningkatkan potensi penjualan melalui strategi promosi, perluasan akses pasar, serta kolaborasi dengan berbagai mitra. Dengan pendekatan yang terintegrasi, Lokal Berdaya mendukung pelaku usaha agar mampu menjangkau lebih banyak pelanggan dan mengembangkan bisnis secara berkelanjutan.',
         },
     ];
 
@@ -128,11 +128,18 @@ export default function About() {
                     <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
                         {/* Left: Services */}
                         <div>
-                            <h3 className="mb-8 text-3xl font-bold text-gray-900">
-                                Lorem ipsum dolor sit amet,
+                            <h3 className="mb-4 text-3xl font-bold text-gray-900">
+                                Bersama Membangun Ekosistem
                                 <br />
-                                consectetur adipiscing elit.
+                                UMKM yang Berkelanjutan
                             </h3>
+                            <p className="mb-8 text-gray-600">
+                                Lokal Berdaya menghadirkan berbagai program yang
+                                menghubungkan UMKM, perusahaan, pemerintah,
+                                komunitas, dan masyarakat dalam satu ekosistem
+                                kolaboratif untuk menciptakan dampak ekonomi
+                                yang berkelanjutan.
+                            </p>
 
                             <div className="space-y-4">
                                 {services.map((service) => (
